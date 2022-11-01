@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>歪衣的博客</title>
+    <link>https://whyy1.github.io/</link>
+    <description>Recent content on 歪衣的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 01 Nov 2022 22:48:44 +0800</lastBuildDate><atom:link href="https://whyy1.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>docker常用命令</title>
+      <link>https://whyy1.github.io/post/essay/</link>
+      <pubDate>Tue, 01 Nov 2022 22:48:44 +0800</pubDate>
+      
+      <guid>https://whyy1.github.io/post/essay/</guid>
+      <description>Docker镜像创建 创建dockerflie文件 # 最低版本go的依赖 FROM golang:1.17.7 # 配置模块代理 ENV GOPROXY=https://goproxy.cn,direct # 复制文件目录下的所有代码 ADD . /whygo #默认进入文件目录 WORKDIR /whygo # 复制代码 ADD /whygo/go.mod . ADD /whygo/go.sum . # 下载依赖 RUN go mod download # 运行命令，安装依赖 # 例如 RUN npm install &amp;amp;&amp;amp; cd /app &amp;amp;&amp;amp; mkdir logs # ADD ./whygo . ENV CGO_ENABLED=0 ENV GOOS=linux ENV GOARCH=amd64 # RUN 命令可以有多个，但是可以用 &amp;amp;&amp;amp; 连接多个命令来减少层级。 # 构建exe文件，名字为demo RUN go build -tags netgo -o demo # CMD 指令只能一个，是容器启动后执行的命令，算是程序的入口。 # 默认运行 demo ENTRYPOINT [ &amp;#34;.</description>
+    </item>
+    
+  </channel>
+</rss>
