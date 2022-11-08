@@ -1,12 +1,33 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>歪衣的博客</title>
+    <title>歪衣的学习笔记</title>
     <link>https://whyy1.github.io/</link>
-    <description>Recent content on 歪衣的博客</description>
+    <description>Recent content on 歪衣的学习笔记</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 01 Nov 2022 22:48:44 +0800</lastBuildDate><atom:link href="https://whyy1.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 08 Nov 2022 23:33:06 +0800</lastBuildDate><atom:link href="https://whyy1.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Hugo博客部署流程</title>
+      <link>https://whyy1.github.io/post/hugo_add/</link>
+      <pubDate>Tue, 08 Nov 2022 23:33:06 +0800</pubDate>
+      
+      <guid>https://whyy1.github.io/post/hugo_add/</guid>
+      <description>Hugo是由Go语言实现的静态网站生成器。简单、易用、高效、易扩展、快速部署。参考了文档以及一个UP主的视频，花了一个晚上的时间弄了一个人博客，最直观的感觉就是非常快速方便。【博客地址】
+下面来做一下总结和流程回顾，首先安装可以参考视频和文档，都挺详细的。此文主要记录一些常用操作。Hugo中文网站 、参考视频。
+1.创建一个Hugo站点 进入你想要保存文件夹的路径，然后进入CMD，输入以下代码
+hugo new site y1_blog #最后为文件夹名字 之后在路径下就会创建一个名为y1_blog的文件夹
+2.选取一款皮肤主题 之后进入y1_blog文件夹，选取一款主题安装。皮肤主题网站Hugo上有挺多主题提供选择，我选择的主题是Paper，进入到y1_blog后，运行
+git submodule add https://github.com/nanxiaobei/hugo-paper themes/paper 然后在y1_blog\themes下就会多了个paper文件夹，说明已经下载好了，然后在y1_blog目录下修改 config.toml文件的theme为paper
+theme = &amp;#34;paper&amp;#34; 同时还可以设置其他一些信息
+title = &amp;#39;歪衣的学习笔记&amp;#39; #博客标题名 github = &amp;#39;whyy1&amp;#39; #github用户名 avatar = &amp;#39;https://cdn.whyy1.top/avatar.svg&amp;#39; #设置头像照片链接，格式为svg name = &amp;#39;歪衣&amp;#39; #设置博客用户名字 bio = &amp;#39;学习是稳赚不赔的投资&amp;#39; #设置个性签名 3.启动Hugo服务器 设置好之后，在y1_blog根目录下运行以下命令，就能启动Hugo服务器了。
+hugo server -D 如图最后所示，网址输入http://localhost:1313/ 就能访问了。 4.添加一篇文章 刚新建时因为没有文章，所以头像名字啥的有可能显示不出来，因此我们需要新建一篇文章，使用到的命令如下，在y1_blog\content\post\目录下就会新建一个essay.md文件，这是用Markdown格式写的一篇文章。Markdown教程
+hugo new post/essay.md 添加好之后再次运行hugo server -D启动Hugo服务器，就可以看到刚才写的文章啦。
+5.将博客部署到GitHub上 首先在GitHub上新建一个repository
+新建好后复制repository的地址，例如https://whyy1.github.io/ ，然后之后进行一系列上传Git的操作，直接上代码块，有注释，也可以参考视频13:40~20:00的内容。
+#在y1_blog/目录下CMD运行 #theme为主题，baseUrl为刚才新建的仓库地址 --buildDrafts为y1_blog/public/目录下生成静态文件 hugo --theme=paper --baseUrl=&amp;#34;https://whyy1.github.io/&amp;#34; --buildDrafts #也可以使用这个命令 hugo -D cd public/ #进入生成的静态文件文件夹，将这个文件夹上传至GitHub的仓库 git init #初始化git仓库 git add .</description>
+    </item>
+    
     <item>
       <title>docker常用命令</title>
       <link>https://whyy1.github.io/post/essay/</link>

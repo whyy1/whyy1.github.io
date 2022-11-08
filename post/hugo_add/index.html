@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html
+  class="not-ready text-sm lg:text-base"
+  style="--bg: #faf6f1"
+  lang="en-us"
+>
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+  
+  <title>Hugo博客部署流程 - 歪衣的学习笔记</title>
+
+  
+  <meta name="theme-color" />
+  
+  <meta name="description" content="Hugo是由Go语言实现的静态网站生成器。简单、易用、高效、易扩展、快速部署。参考了文档以及一个UP主的视频，花了一个晚上的时间弄了一个人博客，最直观的感觉就是非常快速方便。【博客地址】
+下面来做一下总结和流程回顾，首先安装可以参考视频和文档，都挺详细的。此文主要记录一些常用操作。Hugo中文网站 、参考视频。
+1.创建一个Hugo站点 进入你想要保存文件夹的路径，然后进入CMD，输入以下代码
+hugo new site y1_blog #最后为文件夹名字 之后在路径下就会创建一个名为y1_blog的文件夹
+2.选取一款皮肤主题 之后进入y1_blog文件夹，选取一款主题安装。皮肤主题网站Hugo上有挺多主题提供选择，我选择的主题是Paper，进入到y1_blog后，运行
+git submodule add https://github.com/nanxiaobei/hugo-paper themes/paper 然后在y1_blog\themes下就会多了个paper文件夹，说明已经下载好了，然后在y1_blog目录下修改 config.toml文件的theme为paper
+theme = &#34;paper&#34; 同时还可以设置其他一些信息
+title = &#39;歪衣的学习笔记&#39; #博客标题名 github = &#39;whyy1&#39; #github用户名 avatar = &#39;https://cdn.whyy1.top/avatar.svg&#39; #设置头像照片链接，格式为svg name = &#39;歪衣&#39; #设置博客用户名字 bio = &#39;学习是稳赚不赔的投资&#39; #设置个性签名 3.启动Hugo服务器 设置好之后，在y1_blog根目录下运行以下命令，就能启动Hugo服务器了。
+hugo server -D 如图最后所示，网址输入http://localhost:1313/ 就能访问了。 4.添加一篇文章 刚新建时因为没有文章，所以头像名字啥的有可能显示不出来，因此我们需要新建一篇文章，使用到的命令如下，在y1_blog\content\post\目录下就会新建一个essay.md文件，这是用Markdown格式写的一篇文章。Markdown教程
+hugo new post/essay.md 添加好之后再次运行hugo server -D启动Hugo服务器，就可以看到刚才写的文章啦。
+5.将博客部署到GitHub上 首先在GitHub上新建一个repository
+新建好后复制repository的地址，例如https://whyy1.github.io/ ，然后之后进行一系列上传Git的操作，直接上代码块，有注释，也可以参考视频13:40~20:00的内容。
+#在y1_blog/目录下CMD运行 #theme为主题，baseUrl为刚才新建的仓库地址 --buildDrafts为y1_blog/public/目录下生成静态文件 hugo --theme=paper --baseUrl=&#34;https://whyy1.github.io/&#34; --buildDrafts #也可以使用这个命令 hugo -D cd public/ #进入生成的静态文件文件夹，将这个文件夹上传至GitHub的仓库 git init #初始化git仓库 git add ." />
+  <meta name="author" content="" />
+  
+
+  
+  
+  
+  
+  
+  
+  <link rel="preload stylesheet" as="style" href="https://whyy1.github.io/main.min.css" />
+
+  
+
+  
+  
+  
+    
+  
+  <link
+    rel="preload"
+    as="image"
+    href="https://whyy1.github.io/theme.png"
+  />
+
+  
+  
+  
+  <link rel="preload" as="image" href="https://cdn.whyy1.top/avatar.svg" />
+  
+  
+
+  
+  <link rel="preload" as="image" href="https://whyy1.github.io/github.svg" />
+  
+  <link rel="preload" as="image" href="https://whyy1.github.io/rss.svg" />
+  
+
+  
+  <link rel="icon" href="https://whyy1.github.io/favicon.ico" />
+  <link rel="apple-touch-icon" href="https://whyy1.github.io/apple-touch-icon.png" />
+
+  
+  <meta name="generator" content="Hugo 0.106.0-DEV">
+
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <meta property="og:title" content="Hugo博客部署流程" />
+<meta property="og:description" content="Hugo是由Go语言实现的静态网站生成器。简单、易用、高效、易扩展、快速部署。参考了文档以及一个UP主的视频，花了一个晚上的时间弄了一个人博客，最直观的感觉就是非常快速方便。【博客地址】
+下面来做一下总结和流程回顾，首先安装可以参考视频和文档，都挺详细的。此文主要记录一些常用操作。Hugo中文网站 、参考视频。
+1.创建一个Hugo站点 进入你想要保存文件夹的路径，然后进入CMD，输入以下代码
+hugo new site y1_blog #最后为文件夹名字 之后在路径下就会创建一个名为y1_blog的文件夹
+2.选取一款皮肤主题 之后进入y1_blog文件夹，选取一款主题安装。皮肤主题网站Hugo上有挺多主题提供选择，我选择的主题是Paper，进入到y1_blog后，运行
+git submodule add https://github.com/nanxiaobei/hugo-paper themes/paper 然后在y1_blog\themes下就会多了个paper文件夹，说明已经下载好了，然后在y1_blog目录下修改 config.toml文件的theme为paper
+theme = &#34;paper&#34; 同时还可以设置其他一些信息
+title = &#39;歪衣的学习笔记&#39; #博客标题名 github = &#39;whyy1&#39; #github用户名 avatar = &#39;https://cdn.whyy1.top/avatar.svg&#39; #设置头像照片链接，格式为svg name = &#39;歪衣&#39; #设置博客用户名字 bio = &#39;学习是稳赚不赔的投资&#39; #设置个性签名 3.启动Hugo服务器 设置好之后，在y1_blog根目录下运行以下命令，就能启动Hugo服务器了。
+hugo server -D 如图最后所示，网址输入http://localhost:1313/ 就能访问了。 4.添加一篇文章 刚新建时因为没有文章，所以头像名字啥的有可能显示不出来，因此我们需要新建一篇文章，使用到的命令如下，在y1_blog\content\post\目录下就会新建一个essay.md文件，这是用Markdown格式写的一篇文章。Markdown教程
+hugo new post/essay.md 添加好之后再次运行hugo server -D启动Hugo服务器，就可以看到刚才写的文章啦。
+5.将博客部署到GitHub上 首先在GitHub上新建一个repository
+新建好后复制repository的地址，例如https://whyy1.github.io/ ，然后之后进行一系列上传Git的操作，直接上代码块，有注释，也可以参考视频13:40~20:00的内容。
+#在y1_blog/目录下CMD运行 #theme为主题，baseUrl为刚才新建的仓库地址 --buildDrafts为y1_blog/public/目录下生成静态文件 hugo --theme=paper --baseUrl=&#34;https://whyy1.github.io/&#34; --buildDrafts #也可以使用这个命令 hugo -D cd public/ #进入生成的静态文件文件夹，将这个文件夹上传至GitHub的仓库 git init #初始化git仓库 git add ." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://whyy1.github.io/post/hugo_add/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2022-11-08T23:33:06+08:00" />
+<meta property="article:modified_time" content="2022-11-08T23:33:06+08:00" />
+
+
+  
+  <meta itemprop="name" content="Hugo博客部署流程">
+<meta itemprop="description" content="Hugo是由Go语言实现的静态网站生成器。简单、易用、高效、易扩展、快速部署。参考了文档以及一个UP主的视频，花了一个晚上的时间弄了一个人博客，最直观的感觉就是非常快速方便。【博客地址】
+下面来做一下总结和流程回顾，首先安装可以参考视频和文档，都挺详细的。此文主要记录一些常用操作。Hugo中文网站 、参考视频。
+1.创建一个Hugo站点 进入你想要保存文件夹的路径，然后进入CMD，输入以下代码
+hugo new site y1_blog #最后为文件夹名字 之后在路径下就会创建一个名为y1_blog的文件夹
+2.选取一款皮肤主题 之后进入y1_blog文件夹，选取一款主题安装。皮肤主题网站Hugo上有挺多主题提供选择，我选择的主题是Paper，进入到y1_blog后，运行
+git submodule add https://github.com/nanxiaobei/hugo-paper themes/paper 然后在y1_blog\themes下就会多了个paper文件夹，说明已经下载好了，然后在y1_blog目录下修改 config.toml文件的theme为paper
+theme = &#34;paper&#34; 同时还可以设置其他一些信息
+title = &#39;歪衣的学习笔记&#39; #博客标题名 github = &#39;whyy1&#39; #github用户名 avatar = &#39;https://cdn.whyy1.top/avatar.svg&#39; #设置头像照片链接，格式为svg name = &#39;歪衣&#39; #设置博客用户名字 bio = &#39;学习是稳赚不赔的投资&#39; #设置个性签名 3.启动Hugo服务器 设置好之后，在y1_blog根目录下运行以下命令，就能启动Hugo服务器了。
+hugo server -D 如图最后所示，网址输入http://localhost:1313/ 就能访问了。 4.添加一篇文章 刚新建时因为没有文章，所以头像名字啥的有可能显示不出来，因此我们需要新建一篇文章，使用到的命令如下，在y1_blog\content\post\目录下就会新建一个essay.md文件，这是用Markdown格式写的一篇文章。Markdown教程
+hugo new post/essay.md 添加好之后再次运行hugo server -D启动Hugo服务器，就可以看到刚才写的文章啦。
+5.将博客部署到GitHub上 首先在GitHub上新建一个repository
+新建好后复制repository的地址，例如https://whyy1.github.io/ ，然后之后进行一系列上传Git的操作，直接上代码块，有注释，也可以参考视频13:40~20:00的内容。
+#在y1_blog/目录下CMD运行 #theme为主题，baseUrl为刚才新建的仓库地址 --buildDrafts为y1_blog/public/目录下生成静态文件 hugo --theme=paper --baseUrl=&#34;https://whyy1.github.io/&#34; --buildDrafts #也可以使用这个命令 hugo -D cd public/ #进入生成的静态文件文件夹，将这个文件夹上传至GitHub的仓库 git init #初始化git仓库 git add ."><meta itemprop="datePublished" content="2022-11-08T23:33:06+08:00" />
+<meta itemprop="dateModified" content="2022-11-08T23:33:06+08:00" />
+<meta itemprop="wordCount" content="106">
+<meta itemprop="keywords" content="" />
+  
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Hugo博客部署流程"/>
+<meta name="twitter:description" content="Hugo是由Go语言实现的静态网站生成器。简单、易用、高效、易扩展、快速部署。参考了文档以及一个UP主的视频，花了一个晚上的时间弄了一个人博客，最直观的感觉就是非常快速方便。【博客地址】
+下面来做一下总结和流程回顾，首先安装可以参考视频和文档，都挺详细的。此文主要记录一些常用操作。Hugo中文网站 、参考视频。
+1.创建一个Hugo站点 进入你想要保存文件夹的路径，然后进入CMD，输入以下代码
+hugo new site y1_blog #最后为文件夹名字 之后在路径下就会创建一个名为y1_blog的文件夹
+2.选取一款皮肤主题 之后进入y1_blog文件夹，选取一款主题安装。皮肤主题网站Hugo上有挺多主题提供选择，我选择的主题是Paper，进入到y1_blog后，运行
+git submodule add https://github.com/nanxiaobei/hugo-paper themes/paper 然后在y1_blog\themes下就会多了个paper文件夹，说明已经下载好了，然后在y1_blog目录下修改 config.toml文件的theme为paper
+theme = &#34;paper&#34; 同时还可以设置其他一些信息
+title = &#39;歪衣的学习笔记&#39; #博客标题名 github = &#39;whyy1&#39; #github用户名 avatar = &#39;https://cdn.whyy1.top/avatar.svg&#39; #设置头像照片链接，格式为svg name = &#39;歪衣&#39; #设置博客用户名字 bio = &#39;学习是稳赚不赔的投资&#39; #设置个性签名 3.启动Hugo服务器 设置好之后，在y1_blog根目录下运行以下命令，就能启动Hugo服务器了。
+hugo server -D 如图最后所示，网址输入http://localhost:1313/ 就能访问了。 4.添加一篇文章 刚新建时因为没有文章，所以头像名字啥的有可能显示不出来，因此我们需要新建一篇文章，使用到的命令如下，在y1_blog\content\post\目录下就会新建一个essay.md文件，这是用Markdown格式写的一篇文章。Markdown教程
+hugo new post/essay.md 添加好之后再次运行hugo server -D启动Hugo服务器，就可以看到刚才写的文章啦。
+5.将博客部署到GitHub上 首先在GitHub上新建一个repository
+新建好后复制repository的地址，例如https://whyy1.github.io/ ，然后之后进行一系列上传Git的操作，直接上代码块，有注释，也可以参考视频13:40~20:00的内容。
+#在y1_blog/目录下CMD运行 #theme为主题，baseUrl为刚才新建的仓库地址 --buildDrafts为y1_blog/public/目录下生成静态文件 hugo --theme=paper --baseUrl=&#34;https://whyy1.github.io/&#34; --buildDrafts #也可以使用这个命令 hugo -D cd public/ #进入生成的静态文件文件夹，将这个文件夹上传至GitHub的仓库 git init #初始化git仓库 git add ."/>
+
+  
+  
+</head>
+
+  <body class="text-black duration-200 ease-out dark:text-white">
+    <header class="mx-auto flex h-[5rem] max-w-3xl px-8 lg:justify-center">
+  <div class="relative z-50 mr-auto flex items-center">
+    <a class="-translate-x-[1px] -translate-y-0.5 text-3xl font-bold" href="https://whyy1.github.io/"
+      >歪衣的学习笔记</a
+    >
+    <a
+      class="btn-dark ml-6 h-6 w-6 shrink-0 cursor-pointer [background:url(./theme.svg)_left_center/cover_no-repeat] dark:invert dark:[background-position:right]"
+    ></a>
+  </div>
+
+  <a
+    class="btn-menu relative z-50 -mr-8 flex h-[5rem] w-[5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2.5 lg:hidden"
+  ></a>
+
+  
+  <script>
+    
+    const htmlClass = document.documentElement.classList;
+    setTimeout(() => {
+      htmlClass.remove('not-ready');
+    }, 10);
+
+    
+    const btnMenu = document.querySelector('.btn-menu');
+    btnMenu.addEventListener('click', () => {
+      htmlClass.toggle('open');
+    });
+
+    
+    const metaTheme = document.querySelector('meta[name="theme-color"]');
+    const lightBg = `"#faf6f1"`.replace(/"/g, '');
+    const setDark = (isDark) => {
+      metaTheme.setAttribute('content', isDark ? '#000' : lightBg);
+      htmlClass[isDark ? 'add' : 'remove']('dark');
+      localStorage.setItem('dark', isDark);
+    };
+
+    
+    const darkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+    if (htmlClass.contains('dark')) {
+      setDark(true);
+    } else {
+      const darkVal = localStorage.getItem('dark');
+      setDark(darkVal ? darkVal === 'true' : darkScheme.matches);
+    }
+
+    
+    darkScheme.addEventListener('change', (event) => {
+      setDark(event.matches);
+    });
+
+    
+    const btnDark = document.querySelector('.btn-dark');
+    btnDark.addEventListener('click', () => {
+      setDark(localStorage.getItem('dark') !== 'true');
+    });
+  </script>
+
+  <div
+    class="nav-wrapper fixed inset-x-0 top-full z-40 flex h-full select-none flex-col justify-center pb-16 duration-200 dark:bg-black lg:static lg:h-auto lg:flex-row lg:!bg-transparent lg:pb-0 lg:transition-none"
+  >
+    
+    
+
+    
+    <nav
+      class="mt-12 flex justify-center space-x-10 dark:invert lg:mt-0 lg:ml-12 lg:items-center lg:space-x-6"
+    >
+      
+      <a
+        class="h-8 w-8 [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
+        style="--url: url(./github.svg)"
+        href=" https://github.com/whyy1 "
+        target="_blank"
+      ></a>
+      
+      <a
+        class="h-8 w-8 [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
+        style="--url: url(./rss.svg)"
+        href=" https://whyy1.github.io/index.xml "
+        target="_blank"
+      ></a>
+      
+    </nav>
+    
+  </div>
+</header>
+
+
+    <main
+      class="prose prose-neutral relative mx-auto min-h-[calc(100%-10rem)] max-w-3xl px-8 pt-20 pb-32 dark:prose-invert"
+    >
+      
+
+<article>
+  <header class="mb-20">
+    <h1 class="!my-0 pb-2.5">Hugo博客部署流程</h1>
+
+    
+    <div class="text-sm opacity-60">
+      
+      <time>Nov 8, 2022</time>
+      
+      
+    </div>
+    
+  </header>
+
+  <section><p>Hugo是由Go语言实现的静态网站生成器。简单、易用、高效、易扩展、快速部署。参考了文档以及一个UP主的视频，花了一个晚上的时间弄了一个人博客，最直观的感觉就是非常快速方便。【<a href="https://whyy1.github.io/">博客地址</a>】<br>
+下面来做一下总结和流程回顾，首先安装可以参考视频和文档，都挺详细的。此文主要记录一些常用操作。<a href="https://gohugo.io/getting-started/quick-start/#step-3-add-a-theme">Hugo中文网站</a> 、<a href="https://www.bilibili.com/video/BV1q4411i7gL/?vd_source=9d6fcdb8a876662eb97ff69d6256d384">参考视频</a>。</p>
+<h6 id="1创建一个hugo站点">1.创建一个Hugo站点</h6>
+<p>进入你想要保存文件夹的路径，然后进入CMD，输入以下代码</p>
+<pre tabindex="0"><code>hugo new site y1_blog #最后为文件夹名字
+</code></pre><p>之后在路径下就会创建一个名为y1_blog的文件夹</p>
+<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6c1df924faf74591a95fb2887c254da1~tplv-k3u1fbpfcp-watermark.image?" alt="image.png"></p>
+<h6 id="2选取一款皮肤主题">2.选取一款皮肤主题</h6>
+<p>之后进入y1_blog文件夹，选取一款主题安装。<a href="https://www.gohugo.org/theme/">皮肤主题网站</a>Hugo上有挺多主题提供选择，我选择的主题是<a href="https://themes.gohugo.io/themes/hugo-paper/">Paper</a>，进入到y1_blog后，运行</p>
+<pre tabindex="0"><code>git submodule add https://github.com/nanxiaobei/hugo-paper themes/paper
+</code></pre><p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/3f1e1a50cd5043aaaa17493d9d4a6a64~tplv-k3u1fbpfcp-watermark.image?" alt="image.png">
+然后在y1_blog\themes下就会多了个paper文件夹，说明已经下载好了，然后在y1_blog目录下修改
+<code>config.toml</code>文件的theme为paper</p>
+<pre tabindex="0"><code>theme = &#34;paper&#34;
+</code></pre><p>同时还可以设置其他一些信息</p>
+<pre tabindex="0"><code>  title = &#39;歪衣的学习笔记&#39; #博客标题名
+
+  github = &#39;whyy1&#39; #github用户名
+
+  avatar = &#39;https://cdn.whyy1.top/avatar.svg&#39; #设置头像照片链接，格式为svg     
+  name = &#39;歪衣&#39; #设置博客用户名字
+  bio = &#39;学习是稳赚不赔的投资&#39; #设置个性签名
+</code></pre><h6 id="3启动hugo服务器">3.启动Hugo服务器</h6>
+<p>设置好之后，在y1_blog根目录下运行以下命令，就能启动Hugo服务器了。</p>
+<pre tabindex="0"><code>hugo server -D
+</code></pre><p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c579992751294e65a43c16ac336c4733~tplv-k3u1fbpfcp-watermark.image?" alt="image.png">
+如图最后所示，网址输入http://localhost:1313/ 就能访问了。
+<img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/52e56d13f0314dcb8c4d055326cfa35a~tplv-k3u1fbpfcp-watermark.image?" alt="image.png"></p>
+<h6 id="4添加一篇文章">4.添加一篇文章</h6>
+<p>刚新建时因为没有文章，所以头像名字啥的有可能显示不出来，因此我们需要新建一篇文章，使用到的命令如下，在y1_blog\content\post\目录下就会新建一个<code>essay.md</code>文件，这是用Markdown格式写的一篇文章。<a href="https://www.runoob.com/markdown/md-tutorial.html">Markdown教程</a></p>
+<pre tabindex="0"><code>hugo new post/essay.md
+</code></pre><p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6e15256df00b44b5b570dc357da32eac~tplv-k3u1fbpfcp-watermark.image?" alt="image.png">
+添加好之后再次运行<code>hugo server -D</code>启动Hugo服务器，就可以看到刚才写的文章啦。<img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/53af40f9f20c4a14b7a6c759dbcf8493~tplv-k3u1fbpfcp-watermark.image?" alt="image.png"></p>
+<h6 id="5将博客部署到github上">5.将博客部署到GitHub上</h6>
+<p>首先在GitHub上新建一个repository</p>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/78b5414cac624a4cb040592645367a6e~tplv-k3u1fbpfcp-watermark.image?" alt="image.png">
+新建好后复制repository的地址，例如https://whyy1.github.io/ ，然后之后进行一系列上传Git的操作，直接上代码块，有注释，也可以参考<a href="https://www.bilibili.com/video/BV1q4411i7gL/?vd_source=9d6fcdb8a876662eb97ff69d6256d384">视频</a>13:40~20:00的内容。</p>
+<pre tabindex="0"><code>#在y1_blog/目录下CMD运行
+
+#theme为主题，baseUrl为刚才新建的仓库地址 --buildDrafts为y1_blog/public/目录下生成静态文件
+hugo --theme=paper --baseUrl=&#34;https://whyy1.github.io/&#34; --buildDrafts 
+#也可以使用这个命令  hugo -D
+
+cd public/ #进入生成的静态文件文件夹，将这个文件夹上传至GitHub的仓库
+git init #初始化git仓库
+git add . #将y1_blog/public/目录下的文件夹全部上传
+git commit -m &#34;hugo博客部署&#34; #提交修改，备注为hugo博客部署
+git remote add origin https://github.com/whyy1/whyy1.github.io.git  #将public文件夹本地关联至GitHub仓库上
+git push -u origin master #推送修改至master分支
+#如果Git在本地没有配置好接下来需要输入GitHub的用户名还有密码
+
+#这时候在GitHub上的仓库上查看是否推送成功
+</code></pre><p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/0ec93d9c114740dba6424d1a15ee2780~tplv-k3u1fbpfcp-watermark.image?" alt="image.png">
+这样就部署成功啦，使用GitHub仓库地址来访问博客。
+<img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/959a70e1ec5b4995901822a7a0d3d5d0~tplv-k3u1fbpfcp-watermark.image?" alt="image.png"></p>
+<h6 id="6之后添加新文章">6.之后添加新文章</h6>
+<p>采用上面第四步，添加一篇新文章，编辑好内容后，使用<code>hugo -D</code>重新构建静态页面，然后再次提交y1_blog/public/的内容</p>
+</section>
+
+  
+  
+
+  
+  
+  
+  <nav class="mt-24 flex rounded-lg bg-black/[3%] text-lg dark:bg-white/[8%]">
+    
+    
+    <a
+      class="ml-auto flex w-1/2 items-center justify-end p-6 pl-3 no-underline"
+      href="https://whyy1.github.io/post/essay/"
+      ><span>docker常用命令</span><span class="ml-1.5">→</span></a
+    >
+    
+  </nav>
+  
+
+  
+  
+  <div id="disqus_thread"></div>
+  <script>
+    const disqusShortname = 'YOUR_DISQUS_SHORTNAME';
+    const script = document.createElement('script');
+    script.src = 'https://' + disqusShortname + '.disqus.com/embed.js';
+    script.setAttribute('data-timestamp', +new Date());
+    document.head.appendChild(script);
+  </script>
+  
+</article>
+
+
+    </main>
+
+    <footer class="opaco mx-auto flex h-[5rem] max-w-3xl items-center px-8 text-[0.9em] opacity-60">
+  <div class="mr-auto">
+    &copy; 2022
+    <a class="link" href="https://whyy1.github.io/">歪衣的学习笔记</a>
+  </div>
+  <a class="link mx-6" href="https://gohugo.io/" rel="noopener" target="_blank">Powered by Hugo️️</a
+  >️
+  <a class="link" href="https://github.com/nanxiaobei/hugo-paper" rel="noopener" target="_blank"
+    >▷ Paper 6</a
+  >
+</footer>
+
+  </body>
+</html>
