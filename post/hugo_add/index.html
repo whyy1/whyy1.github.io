@@ -152,7 +152,7 @@ hugo new post/essay.md 添加好之后再次运行hugo server -D启动Hugo服务
 新建好后复制repository的地址，例如https://whyy1.github.io/ ，然后之后进行一系列上传Git的操作，直接上代码块，有注释，也可以参考视频13:40~20:00的内容。
 #在y1_blog/目录下CMD运行 #theme为主题，baseUrl为刚才新建的仓库地址 --buildDrafts为y1_blog/public/目录下生成静态文件 hugo --theme=paper --baseUrl=&#34;https://whyy1.github.io/&#34; --buildDrafts #也可以使用这个命令 hugo -D cd public/ #进入生成的静态文件文件夹，将这个文件夹上传至GitHub的仓库 git init #初始化git仓库 git add ."><meta itemprop="datePublished" content="2022-11-08T23:33:06+08:00" />
 <meta itemprop="dateModified" content="2022-11-08T23:33:06+08:00" />
-<meta itemprop="wordCount" content="106">
+<meta itemprop="wordCount" content="109">
 <meta itemprop="keywords" content="" />
   
   <meta name="twitter:card" content="summary"/>
@@ -340,7 +340,7 @@ git push -u origin master #推送修改至master分支
 这样就部署成功啦，使用GitHub仓库地址来访问博客。
 <img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/959a70e1ec5b4995901822a7a0d3d5d0~tplv-k3u1fbpfcp-watermark.image?" alt="image.png"></p>
 <h6 id="6之后添加新文章">6.之后添加新文章</h6>
-<p>采用上面第四步，添加一篇新文章，编辑好内容后，使用<code>hugo -D</code>重新构建静态页面，然后再次提交y1_blog/public/的内容</p>
+<p>采用上面第四步，添加一篇新文章，编辑好内容后，使用<code>hugo --theme=paper --baseUrl=&quot;https://whyy1.github.io/&quot; --buildDrafts </code>重新构建静态页面，然后再次提交y1_blog/public/的内容</p>
 </section>
 
   
