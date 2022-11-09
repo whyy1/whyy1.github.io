@@ -13,8 +13,9 @@
       <pubDate>Tue, 08 Nov 2022 23:33:06 +0800</pubDate>
       
       <guid>https://whyy1.github.io/post/hugo_add/</guid>
-      <description>Hugo是由Go语言实现的静态网站生成器。简单、易用、高效、易扩展、快速部署。参考了文档以及一个UP主的视频，花了一个晚上的时间弄了一个人博客，最直观的感觉就是非常快速方便。【博客地址】
-下面来做一下总结和流程回顾，首先安装可以参考视频和文档，都挺详细的。此文主要记录一些常用操作。Hugo中文网站 、参考视频。
+      <description>Hugo是由Go语言实现的静态网站生成器。简单、易用、高效、易扩展、快速部署。参考了文档以及一个UP主的视频，花了一个晚上的时间弄了一个人博客，最直观的感觉就是非常快速方便。博客地址
+下面来做一下总结和流程回顾，首先需要安装Git和Hugo,可以参考视频和文档，都挺详细的。如何验证是否安装成功，运行以下命令出现版本号就说明安装成功了。
+hugo version git version 安装好后就可以开始搭建自己的个人博客啦，此文主要记录一些常用操作。Hugo中文网站 、参考视频。
 1.创建一个Hugo站点 进入你想要保存文件夹的路径，然后进入CMD，输入以下代码
 hugo new site y1_blog #最后为文件夹名字 之后在路径下就会创建一个名为y1_blog的文件夹
 2.选取一款皮肤主题 之后进入y1_blog文件夹，选取一款主题安装。皮肤主题网站Hugo上有挺多主题提供选择，我选择的主题是Paper，进入到y1_blog后，运行
@@ -25,7 +26,7 @@ hugo server -D 如图最后所示，网址输入http://localhost:1313/ 就能访
 hugo new post/essay.md 添加好之后再次运行hugo server -D启动Hugo服务器，就可以看到刚才写的文章啦。
 5.将博客部署到GitHub上 首先在GitHub上新建一个repository
 新建好后复制repository的地址，例如https://whyy1.github.io/ ，然后之后进行一系列上传Git的操作，直接上代码块，有注释，也可以参考视频13:40~20:00的内容。
-#在y1_blog/目录下CMD运行 #theme为主题，baseUrl为刚才新建的仓库地址 --buildDrafts为y1_blog/public/目录下生成静态文件 hugo --theme=paper --baseUrl=&amp;#34;https://whyy1.github.io/&amp;#34; --buildDrafts #也可以使用这个命令 hugo -D cd public/ #进入生成的静态文件文件夹，将这个文件夹上传至GitHub的仓库 git init #初始化git仓库 git add .</description>
+#在y1_blog/目录下CMD运行 #theme为主题，baseUrl为刚才新建的仓库地址 --buildDrafts为y1_blog/public/目录下生成静态文件 hugo --theme=paper --baseUrl=&amp;#34;https://whyy1.</description>
     </item>
     
     <item>
