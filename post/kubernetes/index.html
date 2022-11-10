@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html
+  class="not-ready text-sm lg:text-base"
+  style="--bg: #faf6f1"
+  lang="en-us"
+>
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+  
+  <title>Kubernetes - 歪衣的学习笔记</title>
+
+  
+  <meta name="theme-color" />
+  
+  <meta name="description" content="最近把自己一个小玩意儿用docker部署到服务器后，开始尝试了解kubernetes，但是看了一眼阿里云k8s的收费情况，作为学生党当然是选择白嫖。现阶段只是了解学习的阶段，所以选择使用minikube来学习了解k8s。参考文档
+Kubernetes 集群 Kubernetes 协调一个高可用计算机集群，每个计算机作为独立单元互相连接工作。 一个 Kubernetes 集群包含两种类型的资源:
+Master 调度整个集群
+Master节点负责管理整个集群，控制工作节点。 Nodes 负责运行应用
+Node是一个虚拟机或者物理机，作为一个工作节点。它在 Kubernetes 集群中充当工作机器的角色，应该具有Kubelet：管理 Node 而且是 Node 与 Master 通信的代理以及用于处理容器操作的工具。
+Master 管理集群，Node 用于托管正在运行的应用。 Deployment （部署） 创建 Kubernetes Deployment 配置，Deployment 指挥 Kubernetes 如何创建和更新应用程序的实例。通过修改Deployment文件来控制kubernetes来创建或是修改Pod。个人理解类似于dockerfile，表示应该如何创建Pods。
+相关命令
+# 查看 deployment kubectl get deployment # 创建命令，可以指定镜像版本 kubectl create deployment hello-node --image=registry.k8s.io/echoserver:1.4 # 也可以通过pod.yaml来部署Pod kubectl apply -f .\pod.yaml # 删除deployment kubectl delete deployment hello-minikube Pods kubernetes调度、管理的最小单位，一个Pod里面可以包含一个或多个容器，每个 Pod 有自己的虚拟IP。是运行一个应用程序的最小单元。
+相关命令
+# 查看Pods kubectl get pods # 通过命令行运行 kubectl run testapp --image=ccr." />
+  <meta name="author" content="" />
+  
+
+  
+  
+  
+  
+  
+  
+  <link rel="preload stylesheet" as="style" href="https://whyy1.github.io/main.min.css" />
+
+  
+
+  
+  
+  
+    
+  
+  <link
+    rel="preload"
+    as="image"
+    href="https://whyy1.github.io/theme.png"
+  />
+
+  
+  
+  
+  <link rel="preload" as="image" href="https://cdn.whyy1.top/avatar.svg" />
+  
+  
+
+  
+  <link rel="preload" as="image" href="https://whyy1.github.io/github.svg" />
+  
+  <link rel="preload" as="image" href="https://whyy1.github.io/rss.svg" />
+  
+
+  
+  <link rel="icon" href="https://whyy1.github.io/favicon.ico" />
+  <link rel="apple-touch-icon" href="https://whyy1.github.io/apple-touch-icon.png" />
+
+  
+  <meta name="generator" content="Hugo 0.106.0-DEV">
+
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <meta property="og:title" content="Kubernetes" />
+<meta property="og:description" content="最近把自己一个小玩意儿用docker部署到服务器后，开始尝试了解kubernetes，但是看了一眼阿里云k8s的收费情况，作为学生党当然是选择白嫖。现阶段只是了解学习的阶段，所以选择使用minikube来学习了解k8s。参考文档
+Kubernetes 集群 Kubernetes 协调一个高可用计算机集群，每个计算机作为独立单元互相连接工作。 一个 Kubernetes 集群包含两种类型的资源:
+Master 调度整个集群
+Master节点负责管理整个集群，控制工作节点。 Nodes 负责运行应用
+Node是一个虚拟机或者物理机，作为一个工作节点。它在 Kubernetes 集群中充当工作机器的角色，应该具有Kubelet：管理 Node 而且是 Node 与 Master 通信的代理以及用于处理容器操作的工具。
+Master 管理集群，Node 用于托管正在运行的应用。 Deployment （部署） 创建 Kubernetes Deployment 配置，Deployment 指挥 Kubernetes 如何创建和更新应用程序的实例。通过修改Deployment文件来控制kubernetes来创建或是修改Pod。个人理解类似于dockerfile，表示应该如何创建Pods。
+相关命令
+# 查看 deployment kubectl get deployment # 创建命令，可以指定镜像版本 kubectl create deployment hello-node --image=registry.k8s.io/echoserver:1.4 # 也可以通过pod.yaml来部署Pod kubectl apply -f .\pod.yaml # 删除deployment kubectl delete deployment hello-minikube Pods kubernetes调度、管理的最小单位，一个Pod里面可以包含一个或多个容器，每个 Pod 有自己的虚拟IP。是运行一个应用程序的最小单元。
+相关命令
+# 查看Pods kubectl get pods # 通过命令行运行 kubectl run testapp --image=ccr." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://whyy1.github.io/post/kubernetes/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2022-11-10T22:46:20+08:00" />
+<meta property="article:modified_time" content="2022-11-10T22:46:20+08:00" />
+
+
+  
+  <meta itemprop="name" content="Kubernetes">
+<meta itemprop="description" content="最近把自己一个小玩意儿用docker部署到服务器后，开始尝试了解kubernetes，但是看了一眼阿里云k8s的收费情况，作为学生党当然是选择白嫖。现阶段只是了解学习的阶段，所以选择使用minikube来学习了解k8s。参考文档
+Kubernetes 集群 Kubernetes 协调一个高可用计算机集群，每个计算机作为独立单元互相连接工作。 一个 Kubernetes 集群包含两种类型的资源:
+Master 调度整个集群
+Master节点负责管理整个集群，控制工作节点。 Nodes 负责运行应用
+Node是一个虚拟机或者物理机，作为一个工作节点。它在 Kubernetes 集群中充当工作机器的角色，应该具有Kubelet：管理 Node 而且是 Node 与 Master 通信的代理以及用于处理容器操作的工具。
+Master 管理集群，Node 用于托管正在运行的应用。 Deployment （部署） 创建 Kubernetes Deployment 配置，Deployment 指挥 Kubernetes 如何创建和更新应用程序的实例。通过修改Deployment文件来控制kubernetes来创建或是修改Pod。个人理解类似于dockerfile，表示应该如何创建Pods。
+相关命令
+# 查看 deployment kubectl get deployment # 创建命令，可以指定镜像版本 kubectl create deployment hello-node --image=registry.k8s.io/echoserver:1.4 # 也可以通过pod.yaml来部署Pod kubectl apply -f .\pod.yaml # 删除deployment kubectl delete deployment hello-minikube Pods kubernetes调度、管理的最小单位，一个Pod里面可以包含一个或多个容器，每个 Pod 有自己的虚拟IP。是运行一个应用程序的最小单元。
+相关命令
+# 查看Pods kubectl get pods # 通过命令行运行 kubectl run testapp --image=ccr."><meta itemprop="datePublished" content="2022-11-10T22:46:20+08:00" />
+<meta itemprop="dateModified" content="2022-11-10T22:46:20+08:00" />
+<meta itemprop="wordCount" content="158">
+<meta itemprop="keywords" content="" />
+  
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Kubernetes"/>
+<meta name="twitter:description" content="最近把自己一个小玩意儿用docker部署到服务器后，开始尝试了解kubernetes，但是看了一眼阿里云k8s的收费情况，作为学生党当然是选择白嫖。现阶段只是了解学习的阶段，所以选择使用minikube来学习了解k8s。参考文档
+Kubernetes 集群 Kubernetes 协调一个高可用计算机集群，每个计算机作为独立单元互相连接工作。 一个 Kubernetes 集群包含两种类型的资源:
+Master 调度整个集群
+Master节点负责管理整个集群，控制工作节点。 Nodes 负责运行应用
+Node是一个虚拟机或者物理机，作为一个工作节点。它在 Kubernetes 集群中充当工作机器的角色，应该具有Kubelet：管理 Node 而且是 Node 与 Master 通信的代理以及用于处理容器操作的工具。
+Master 管理集群，Node 用于托管正在运行的应用。 Deployment （部署） 创建 Kubernetes Deployment 配置，Deployment 指挥 Kubernetes 如何创建和更新应用程序的实例。通过修改Deployment文件来控制kubernetes来创建或是修改Pod。个人理解类似于dockerfile，表示应该如何创建Pods。
+相关命令
+# 查看 deployment kubectl get deployment # 创建命令，可以指定镜像版本 kubectl create deployment hello-node --image=registry.k8s.io/echoserver:1.4 # 也可以通过pod.yaml来部署Pod kubectl apply -f .\pod.yaml # 删除deployment kubectl delete deployment hello-minikube Pods kubernetes调度、管理的最小单位，一个Pod里面可以包含一个或多个容器，每个 Pod 有自己的虚拟IP。是运行一个应用程序的最小单元。
+相关命令
+# 查看Pods kubectl get pods # 通过命令行运行 kubectl run testapp --image=ccr."/>
+
+  
+  
+</head>
+
+  <body class="text-black duration-200 ease-out dark:text-white">
+    <header class="mx-auto flex h-[5rem] max-w-3xl px-8 lg:justify-center">
+  <div class="relative z-50 mr-auto flex items-center">
+    <a class="-translate-x-[1px] -translate-y-0.5 text-3xl font-bold" href="https://whyy1.github.io/"
+      >歪衣的学习笔记</a
+    >
+    <a
+      class="btn-dark ml-6 h-6 w-6 shrink-0 cursor-pointer [background:url(./theme.svg)_left_center/cover_no-repeat] dark:invert dark:[background-position:right]"
+    ></a>
+  </div>
+
+  <a
+    class="btn-menu relative z-50 -mr-8 flex h-[5rem] w-[5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2.5 lg:hidden"
+  ></a>
+
+  
+  <script>
+    
+    const htmlClass = document.documentElement.classList;
+    setTimeout(() => {
+      htmlClass.remove('not-ready');
+    }, 10);
+
+    
+    const btnMenu = document.querySelector('.btn-menu');
+    btnMenu.addEventListener('click', () => {
+      htmlClass.toggle('open');
+    });
+
+    
+    const metaTheme = document.querySelector('meta[name="theme-color"]');
+    const lightBg = `"#faf6f1"`.replace(/"/g, '');
+    const setDark = (isDark) => {
+      metaTheme.setAttribute('content', isDark ? '#000' : lightBg);
+      htmlClass[isDark ? 'add' : 'remove']('dark');
+      localStorage.setItem('dark', isDark);
+    };
+
+    
+    const darkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+    if (htmlClass.contains('dark')) {
+      setDark(true);
+    } else {
+      const darkVal = localStorage.getItem('dark');
+      setDark(darkVal ? darkVal === 'true' : darkScheme.matches);
+    }
+
+    
+    darkScheme.addEventListener('change', (event) => {
+      setDark(event.matches);
+    });
+
+    
+    const btnDark = document.querySelector('.btn-dark');
+    btnDark.addEventListener('click', () => {
+      setDark(localStorage.getItem('dark') !== 'true');
+    });
+  </script>
+
+  <div
+    class="nav-wrapper fixed inset-x-0 top-full z-40 flex h-full select-none flex-col justify-center pb-16 duration-200 dark:bg-black lg:static lg:h-auto lg:flex-row lg:!bg-transparent lg:pb-0 lg:transition-none"
+  >
+    
+    
+
+    
+    <nav
+      class="mt-12 flex justify-center space-x-10 dark:invert lg:mt-0 lg:ml-12 lg:items-center lg:space-x-6"
+    >
+      
+      <a
+        class="h-8 w-8 [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
+        style="--url: url(./github.svg)"
+        href=" https://github.com/whyy1 "
+        target="_blank"
+      ></a>
+      
+      <a
+        class="h-8 w-8 [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
+        style="--url: url(./rss.svg)"
+        href=" https://whyy1.github.io/index.xml "
+        target="_blank"
+      ></a>
+      
+    </nav>
+    
+  </div>
+</header>
+
+
+    <main
+      class="prose prose-neutral relative mx-auto min-h-[calc(100%-10rem)] max-w-3xl px-8 pt-20 pb-32 dark:prose-invert"
+    >
+      
+
+<article>
+  <header class="mb-20">
+    <h1 class="!my-0 pb-2.5">Kubernetes</h1>
+
+    
+    <div class="text-sm opacity-60">
+      
+      <time>Nov 10, 2022</time>
+      
+      
+    </div>
+    
+  </header>
+
+  <section><p>最近把自己一个小玩意儿用docker部署到服务器后，开始尝试了解kubernetes，但是看了一眼阿里云k8s的收费情况，作为学生党当然是选择白嫖。现阶段只是了解学习的阶段，所以选择使用minikube来学习了解k8s。<a href="https://k8s.easydoc.net/docs/dRiQjyTY/28366845/6GiNOzyZ/puf7fjYr">参考文档</a></p>
+<h2 id="kubernetes-集群">Kubernetes 集群</h2>
+<p><strong>Kubernetes 协调一个高可用计算机集群，每个计算机作为独立单元互相连接工作。</strong> 一个 Kubernetes 集群包含两种类型的资源:</p>
+<ul>
+<li><strong>Master</strong> 调度整个集群<br>
+Master节点负责管理整个集群，控制工作节点。</li>
+<li><strong>Nodes</strong> 负责运行应用<br>
+Node是一个虚拟机或者物理机，作为一个工作节点。它在 Kubernetes 集群中充当工作机器的角色，应该具有Kubelet：管理 Node 而且是 Node 与 Master 通信的代理以及用于处理容器操作的工具。<br>
+<img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/771768d5190d4caabcd22836e380cc37~tplv-k3u1fbpfcp-watermark.image?" alt="image.png">
+Master 管理集群，Node 用于托管正在运行的应用。</li>
+</ul>
+<h4 id="deployment-部署">Deployment （部署）</h4>
+<p>创建 Kubernetes <strong>Deployment</strong> 配置，Deployment 指挥 Kubernetes 如何创建和更新应用程序的实例。通过修改Deployment文件来控制kubernetes来创建或是修改Pod。个人理解类似于dockerfile，表示应该如何创建Pods。<br>
+<strong>相关命令</strong></p>
+<pre tabindex="0"><code># 查看 deployment 
+kubectl get deployment
+# 创建命令，可以指定镜像版本
+kubectl create deployment hello-node --image=registry.k8s.io/echoserver:1.4
+# 也可以通过pod.yaml来部署Pod
+kubectl apply -f .\pod.yaml
+# 删除deployment 
+kubectl delete deployment hello-minikube
+</code></pre><h4 id="pods">Pods</h4>
+<p>kubernetes调度、管理的最小单位，一个Pod里面可以包含一个或多个容器，每个 Pod 有自己的虚拟IP。是运行一个应用程序的最小单元。</p>
+<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a22865212bf54164bbfa3d4ac0773614~tplv-k3u1fbpfcp-watermark.image?" alt="image.png">
+<strong>相关命令</strong></p>
+<pre tabindex="0"><code># 查看Pods
+kubectl get pods 
+# 通过命令行运行
+kubectl run testapp --image=ccr.ccs.tencentyun.com/k8s-tutorial/test-k8s:v1
+# 如何重启一个Pods，因为并没有重启命令，是通过删除之后再次重新生成Pods来达到重启效果。
+kubectl delete pod hello-minikube 
+</code></pre><h4 id="service">Service</h4>
+<p>Kubernetes 中的服务(Service)是一种抽象概念，它定义了 Pod 的逻辑集和访问 Pod 的协议。简单来说就是通过Service来暴露服务，<strong>对集群外部提供端口</strong>。不会因为Pod的增减而改变，<strong>拥有唯一IP</strong>，提供负载均衡功能，<strong>可以自动分配流量至不同的Pod中</strong>。并且可以通过给Pod打上label(标签)，用来给不同的Pod进行分类。<br>
+<strong>相关命令</strong></p>
+<pre tabindex="0"><code># 将一个服务暴露至80端口
+kubectl expose deployment hello-minikube --type=LoadBalancer --port=8080
+# 查看创建的services,
+kubectl get services
+# 在集群外部可以使用这个命令访问
+minikube service hello-node
+# 如果部署了LoadBalancer(负载均衡器),就可以通过EXTERNAL-IP(外部IP)来访问服务
+kubectl create deployment balanced --image=docker.io/nginx:1.23
+kubectl expose deployment balanced --type=LoadBalancer --port=80
+# 启动另一个窗口中，启动隧道以为“平衡”部署创建可路由 IP：
+minikube tunnel
+# 获取LoadBalancer的外部IP
+kubectl get services balanced
+</code></pre><h4 id="伸缩扩展服务">伸缩扩展服务</h4>
+<pre tabindex="0"><code># 方法一：通过修改replicas参数来设置Deployment的副本数。
+# 进入 Pod 容器终端， -c container-name 可以指定进入哪个容器。 
+kubectl exec -it pod-name -- bash 
+# 伸缩扩展副本，设置为5个Pod
+kubectl scale deployment test-k8s --replicas=5
+# 方法二：通过K9S：一个基于curses的全屏终端UI管理工具，可以监控kubernetes集群并进行交互。
+</code></pre><p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b4f15a2b88ca4a2e93f7449478ac4396~tplv-k3u1fbpfcp-watermark.image?" alt="image.png">
+除了快速伸缩拓展副本，并且还可以进行滚动更新功能，以及快速回退版本等，最直观的感受就是非常方便了。</p>
+</section>
+
+  
+  
+
+  
+  
+  
+  <nav class="mt-24 flex rounded-lg bg-black/[3%] text-lg dark:bg-white/[8%]">
+    
+    
+    <a
+      class="ml-auto flex w-1/2 items-center justify-end p-6 pl-3 no-underline"
+      href="https://whyy1.github.io/post/hugo_add/"
+      ><span>Hugo博客部署流程</span><span class="ml-1.5">→</span></a
+    >
+    
+  </nav>
+  
+
+  
+  
+  <div id="disqus_thread"></div>
+  <script>
+    const disqusShortname = 'YOUR_DISQUS_SHORTNAME';
+    const script = document.createElement('script');
+    script.src = 'https://' + disqusShortname + '.disqus.com/embed.js';
+    script.setAttribute('data-timestamp', +new Date());
+    document.head.appendChild(script);
+  </script>
+  
+</article>
+
+
+    </main>
+
+    <footer class="opaco mx-auto flex h-[5rem] max-w-3xl items-center px-8 text-[0.9em] opacity-60">
+  <div class="mr-auto">
+    &copy; 2022
+    <a class="link" href="https://whyy1.github.io/">歪衣的学习笔记</a>
+  </div>
+  <a class="link mx-6" href="https://gohugo.io/" rel="noopener" target="_blank">Powered by Hugo️️</a
+  >️
+  <a class="link" href="https://github.com/nanxiaobei/hugo-paper" rel="noopener" target="_blank"
+    >▷ Paper 6</a
+  >
+</footer>
+
+  </body>
+</html>
