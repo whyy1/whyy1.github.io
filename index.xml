@@ -13,7 +13,8 @@
       <pubDate>Thu, 24 Nov 2022 12:10:31 +0800</pubDate>
       
       <guid>https://whyy1.github.io/post/go_revise1/</guid>
-      <description></description>
+      <description>并发：多线程程序在一个核的cpu上运行，就是并发。CPU根据时间片切分，交替执行多个程序。但是这个切换的过程我们用户是感知不道德。
+并行：多线程程序在多个核的cpu上运行，就是并行。多核CPU在同时执行多个程序 </description>
     </item>
     
     <item>
