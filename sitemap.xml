@@ -2,13 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://whyy1.github.io/post/mysql_study/</loc>
-    <lastmod>2022-11-14T23:50:17+08:00</lastmod>
-  </url><url>
     <loc>https://whyy1.github.io/post/</loc>
-    <lastmod>2022-11-14T23:50:17+08:00</lastmod>
+    <lastmod>2022-11-24T12:10:31+08:00</lastmod>
   </url><url>
     <loc>https://whyy1.github.io/</loc>
+    <lastmod>2022-11-24T12:10:31+08:00</lastmod>
+  </url><url>
+    <loc>https://whyy1.github.io/post/go_revise1/</loc>
+    <lastmod>2022-11-24T12:10:31+08:00</lastmod>
+  </url><url>
+    <loc>https://whyy1.github.io/post/mysql_study/</loc>
     <lastmod>2022-11-14T23:50:17+08:00</lastmod>
   </url><url>
     <loc>https://whyy1.github.io/post/kubernetes/</loc>
