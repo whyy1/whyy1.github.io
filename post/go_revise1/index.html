@@ -49,7 +49,7 @@
   
   <meta name="description" content="进程：进程是程序在操作系统的一次执行过程，是进行资源分配的调度的一个最小单位。（一个进程可以创建和撤销多个线程；在同一进程中线程可以并发执行）
 线程：线程是进程执行中的一个实体，是CPU调度和分派的基本单位，是比进程更小的能独立运行的基本单位。
-并发：多线程程序在一个核的cpu上运行，就是并发。CPU根据时间片切分，交替执行多个程序。但是这个切换的过程我们用户是感知不道德。
+并发：多线程程序在一个核的cpu上运行，就是并发。CPU根据时间片切分，交替执行多个程序。但是这个切换的过程我们用户是感知不到的。
 并行：多线程程序在多个核的cpu上运行，就是并行。多核CPU在同时执行多个程序
 并发和并行的区别： 并发主要由切换时间片来实现&quot;同时&quot;运行，并行则是直接利用多核实现多线程的运行，go可以设置使用核数，以发挥多核计算机的能力。
 go语言中最小资源单位为go程&mdash;-&gt;goroutine,go语言原生支持并发，就是靠goroutine实现的。 只需要在函数前增加go关键字 在go中通过通信来共享内存，而不是通过共享内存来通信 通过创建计数器WaitGroup，来保证主程不会提前退出 //创建一个计数器WaitGroup， var wg sync.WaitGroup func main() { for i := 0; i &lt; 10; i&#43;&#43; { wg.Add(1) //每启动一个go routine计数器&#43;1 go hello(i) } fmt.Println(&#34;主函数输出&#34;) wg.Wait() //等待所有计数器为0时才退出 } func hello(i int) { defer wg.Done() //goroutine运行结束后计数器-1 fmt.Println(&#34;运行go程:&#34;, i) } 管道之间通信：
@@ -113,7 +113,7 @@ go语言中最小资源单位为go程&mdash;-&gt;goroutine,go语言原生支持�
   <meta property="og:title" content="并发编程相关" />
 <meta property="og:description" content="进程：进程是程序在操作系统的一次执行过程，是进行资源分配的调度的一个最小单位。（一个进程可以创建和撤销多个线程；在同一进程中线程可以并发执行）
 线程：线程是进程执行中的一个实体，是CPU调度和分派的基本单位，是比进程更小的能独立运行的基本单位。
-并发：多线程程序在一个核的cpu上运行，就是并发。CPU根据时间片切分，交替执行多个程序。但是这个切换的过程我们用户是感知不道德。
+并发：多线程程序在一个核的cpu上运行，就是并发。CPU根据时间片切分，交替执行多个程序。但是这个切换的过程我们用户是感知不到的。
 并行：多线程程序在多个核的cpu上运行，就是并行。多核CPU在同时执行多个程序
 并发和并行的区别： 并发主要由切换时间片来实现&quot;同时&quot;运行，并行则是直接利用多核实现多线程的运行，go可以设置使用核数，以发挥多核计算机的能力。
 go语言中最小资源单位为go程&mdash;-&gt;goroutine,go语言原生支持并发，就是靠goroutine实现的。 只需要在函数前增加go关键字 在go中通过通信来共享内存，而不是通过共享内存来通信 通过创建计数器WaitGroup，来保证主程不会提前退出 //创建一个计数器WaitGroup， var wg sync.WaitGroup func main() { for i := 0; i &lt; 10; i&#43;&#43; { wg.Add(1) //每启动一个go routine计数器&#43;1 go hello(i) } fmt.Println(&#34;主函数输出&#34;) wg.Wait() //等待所有计数器为0时才退出 } func hello(i int) { defer wg.Done() //goroutine运行结束后计数器-1 fmt.Println(&#34;运行go程:&#34;, i) } 管道之间通信：
@@ -128,7 +128,7 @@ go语言中最小资源单位为go程&mdash;-&gt;goroutine,go语言原生支持�
   <meta itemprop="name" content="并发编程相关">
 <meta itemprop="description" content="进程：进程是程序在操作系统的一次执行过程，是进行资源分配的调度的一个最小单位。（一个进程可以创建和撤销多个线程；在同一进程中线程可以并发执行）
 线程：线程是进程执行中的一个实体，是CPU调度和分派的基本单位，是比进程更小的能独立运行的基本单位。
-并发：多线程程序在一个核的cpu上运行，就是并发。CPU根据时间片切分，交替执行多个程序。但是这个切换的过程我们用户是感知不道德。
+并发：多线程程序在一个核的cpu上运行，就是并发。CPU根据时间片切分，交替执行多个程序。但是这个切换的过程我们用户是感知不到的。
 并行：多线程程序在多个核的cpu上运行，就是并行。多核CPU在同时执行多个程序
 并发和并行的区别： 并发主要由切换时间片来实现&quot;同时&quot;运行，并行则是直接利用多核实现多线程的运行，go可以设置使用核数，以发挥多核计算机的能力。
 go语言中最小资源单位为go程&mdash;-&gt;goroutine,go语言原生支持并发，就是靠goroutine实现的。 只需要在函数前增加go关键字 在go中通过通信来共享内存，而不是通过共享内存来通信 通过创建计数器WaitGroup，来保证主程不会提前退出 //创建一个计数器WaitGroup， var wg sync.WaitGroup func main() { for i := 0; i &lt; 10; i&#43;&#43; { wg.Add(1) //每启动一个go routine计数器&#43;1 go hello(i) } fmt.Println(&#34;主函数输出&#34;) wg.Wait() //等待所有计数器为0时才退出 } func hello(i int) { defer wg.Done() //goroutine运行结束后计数器-1 fmt.Println(&#34;运行go程:&#34;, i) } 管道之间通信：
@@ -141,7 +141,7 @@ go语言中最小资源单位为go程&mdash;-&gt;goroutine,go语言原生支持�
 <meta name="twitter:title" content="并发编程相关"/>
 <meta name="twitter:description" content="进程：进程是程序在操作系统的一次执行过程，是进行资源分配的调度的一个最小单位。（一个进程可以创建和撤销多个线程；在同一进程中线程可以并发执行）
 线程：线程是进程执行中的一个实体，是CPU调度和分派的基本单位，是比进程更小的能独立运行的基本单位。
-并发：多线程程序在一个核的cpu上运行，就是并发。CPU根据时间片切分，交替执行多个程序。但是这个切换的过程我们用户是感知不道德。
+并发：多线程程序在一个核的cpu上运行，就是并发。CPU根据时间片切分，交替执行多个程序。但是这个切换的过程我们用户是感知不到的。
 并行：多线程程序在多个核的cpu上运行，就是并行。多核CPU在同时执行多个程序
 并发和并行的区别： 并发主要由切换时间片来实现&quot;同时&quot;运行，并行则是直接利用多核实现多线程的运行，go可以设置使用核数，以发挥多核计算机的能力。
 go语言中最小资源单位为go程&mdash;-&gt;goroutine,go语言原生支持并发，就是靠goroutine实现的。 只需要在函数前增加go关键字 在go中通过通信来共享内存，而不是通过共享内存来通信 通过创建计数器WaitGroup，来保证主程不会提前退出 //创建一个计数器WaitGroup， var wg sync.WaitGroup func main() { for i := 0; i &lt; 10; i&#43;&#43; { wg.Add(1) //每启动一个go routine计数器&#43;1 go hello(i) } fmt.Println(&#34;主函数输出&#34;) wg.Wait() //等待所有计数器为0时才退出 } func hello(i int) { defer wg.Done() //goroutine运行结束后计数器-1 fmt.Println(&#34;运行go程:&#34;, i) } 管道之间通信：
@@ -262,7 +262,7 @@ go语言中最小资源单位为go程&mdash;-&gt;goroutine,go语言原生支持�
 
   <section><p><strong>进程</strong>：进程是程序在操作系统的一次执行过程，是进行资源分配的调度的一个最小单位。（一个进程可以创建和撤销多个线程；在同一进程中线程可以并发执行）<br>
 <strong>线程</strong>：线程是进程执行中的一个实体，是CPU调度和分派的基本单位，是比进程更小的能独立运行的基本单位。<br>
-<strong>并发</strong>：多线程程序在一个核的cpu上运行，就是并发。CPU根据时间片切分，交替执行多个程序。但是这个切换的过程我们用户是感知不道德。<br>
+<strong>并发</strong>：多线程程序在一个核的cpu上运行，就是并发。CPU根据时间片切分，交替执行多个程序。但是这个切换的过程我们用户是感知不到的。<br>
 <img src="https://cdn.whyy1.top/blog_image/2.png" alt="并发"><br>
 <strong>并行</strong>：多线程程序在多个核的cpu上运行，就是并行。多核CPU在同时执行多个程序<br>
 <img src="https://cdn.whyy1.top/blog_image/3.png" alt="并行"><br>
@@ -341,6 +341,10 @@ func input(out chan&lt;- int, in &lt;-chan int) {
   
   
   <nav class="mt-24 flex rounded-lg bg-black/[3%] text-lg dark:bg-white/[8%]">
+    
+    <a class="flex w-1/2 items-center p-6 pr-3 no-underline" href="https://whyy1.github.io/post/channelroom/"
+      ><span class="mr-1.5">←</span><span>利用协程实现的本地网络聊天室</span></a
+    >
     
     
     <a

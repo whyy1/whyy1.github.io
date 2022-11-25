@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html
+  class="not-ready text-sm lg:text-base"
+  style="--bg: #faf6f1"
+  lang="en-us"
+>
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+  
+  <title>利用协程实现的本地网络聊天室 - 歪衣的学习笔记</title>
+
+  
+  <meta name="theme-color" />
+  
+  <meta name="description" content="通过原始的net包，在本地网络创建了一个聊天室，其中用到go routine并发编程、map加锁竞争使用、channel之间相互通信、切片的分割操作、定时器实现超时中断，知识点巩固很全面，下面总结一下
+针对map中的读写，可以选择加读写锁，防止读写竞争问题。 对于切片的操作还不是很熟悉，但是通过切片的一些分割操作来实现字符串和和切片的转换。 并发执行go routine时channel尽量声明空间，无缓冲通过会发生堵塞。 通过将全局通道中的数据，赋值到每个用户中自己的通道，来实现全局发送。 使用select来监听协程，并创建一个bool型channel，通过监听channel的写入来达到一些自动化操作。 实现功能 在已登录用户中发送消息。 输入who查询已登录用户信息。 输入rename|[用户名]更改名字 用户上下线提醒
+完整代码如下，因为是一个小东西，所以并没有分结构得很细，就全写在一个文件中了。 package main import ( &#34;fmt&#34; &#34;net&#34; &#34;strings&#34; &#34;sync&#34; &#34;time&#34; ) type User struct { name string id string smg chan string } var ( //用map保存所有用户信息 allUsers = make(map[string]User) //定义全局信息通道 message = make(chan string, 10) //定义针对map的读写锁 rwLock sync.RWMutex ) func main() { listener, err := net.Listen(&#34;tcp&#34;, &#34;:8080&#34;) if err != nil { fmt.Println(&#34;服务监听失败，错误为:&#34;, err) } fmt.Println(&#34;服务监听启动成功&#34;) //启动全局广播go程 go broadcast() for { fmt." />
+  <meta name="author" content="" />
+  
+
+  
+  
+  
+  
+  
+  
+  <link rel="preload stylesheet" as="style" href="https://whyy1.github.io/main.min.css" />
+
+  
+
+  
+  
+  
+    
+  
+  <link
+    rel="preload"
+    as="image"
+    href="https://whyy1.github.io/theme.png"
+  />
+
+  
+  
+  
+  <link rel="preload" as="image" href="https://cdn.whyy1.top/avatar.svg" />
+  
+  
+
+  
+  <link rel="preload" as="image" href="https://whyy1.github.io/github.svg" />
+  
+  <link rel="preload" as="image" href="https://whyy1.github.io/rss.svg" />
+  
+
+  
+  <link rel="icon" href="https://whyy1.github.io/favicon.ico" />
+  <link rel="apple-touch-icon" href="https://whyy1.github.io/apple-touch-icon.png" />
+
+  
+  <meta name="generator" content="Hugo 0.106.0-DEV">
+
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <meta property="og:title" content="利用协程实现的本地网络聊天室" />
+<meta property="og:description" content="通过原始的net包，在本地网络创建了一个聊天室，其中用到go routine并发编程、map加锁竞争使用、channel之间相互通信、切片的分割操作、定时器实现超时中断，知识点巩固很全面，下面总结一下
+针对map中的读写，可以选择加读写锁，防止读写竞争问题。 对于切片的操作还不是很熟悉，但是通过切片的一些分割操作来实现字符串和和切片的转换。 并发执行go routine时channel尽量声明空间，无缓冲通过会发生堵塞。 通过将全局通道中的数据，赋值到每个用户中自己的通道，来实现全局发送。 使用select来监听协程，并创建一个bool型channel，通过监听channel的写入来达到一些自动化操作。 实现功能 在已登录用户中发送消息。 输入who查询已登录用户信息。 输入rename|[用户名]更改名字 用户上下线提醒
+完整代码如下，因为是一个小东西，所以并没有分结构得很细，就全写在一个文件中了。 package main import ( &#34;fmt&#34; &#34;net&#34; &#34;strings&#34; &#34;sync&#34; &#34;time&#34; ) type User struct { name string id string smg chan string } var ( //用map保存所有用户信息 allUsers = make(map[string]User) //定义全局信息通道 message = make(chan string, 10) //定义针对map的读写锁 rwLock sync.RWMutex ) func main() { listener, err := net.Listen(&#34;tcp&#34;, &#34;:8080&#34;) if err != nil { fmt.Println(&#34;服务监听失败，错误为:&#34;, err) } fmt.Println(&#34;服务监听启动成功&#34;) //启动全局广播go程 go broadcast() for { fmt." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://whyy1.github.io/post/channelroom/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2022-11-25T19:14:48+08:00" />
+<meta property="article:modified_time" content="2022-11-25T19:14:48+08:00" />
+
+
+  
+  <meta itemprop="name" content="利用协程实现的本地网络聊天室">
+<meta itemprop="description" content="通过原始的net包，在本地网络创建了一个聊天室，其中用到go routine并发编程、map加锁竞争使用、channel之间相互通信、切片的分割操作、定时器实现超时中断，知识点巩固很全面，下面总结一下
+针对map中的读写，可以选择加读写锁，防止读写竞争问题。 对于切片的操作还不是很熟悉，但是通过切片的一些分割操作来实现字符串和和切片的转换。 并发执行go routine时channel尽量声明空间，无缓冲通过会发生堵塞。 通过将全局通道中的数据，赋值到每个用户中自己的通道，来实现全局发送。 使用select来监听协程，并创建一个bool型channel，通过监听channel的写入来达到一些自动化操作。 实现功能 在已登录用户中发送消息。 输入who查询已登录用户信息。 输入rename|[用户名]更改名字 用户上下线提醒
+完整代码如下，因为是一个小东西，所以并没有分结构得很细，就全写在一个文件中了。 package main import ( &#34;fmt&#34; &#34;net&#34; &#34;strings&#34; &#34;sync&#34; &#34;time&#34; ) type User struct { name string id string smg chan string } var ( //用map保存所有用户信息 allUsers = make(map[string]User) //定义全局信息通道 message = make(chan string, 10) //定义针对map的读写锁 rwLock sync.RWMutex ) func main() { listener, err := net.Listen(&#34;tcp&#34;, &#34;:8080&#34;) if err != nil { fmt.Println(&#34;服务监听失败，错误为:&#34;, err) } fmt.Println(&#34;服务监听启动成功&#34;) //启动全局广播go程 go broadcast() for { fmt."><meta itemprop="datePublished" content="2022-11-25T19:14:48+08:00" />
+<meta itemprop="dateModified" content="2022-11-25T19:14:48+08:00" />
+<meta itemprop="wordCount" content="379">
+<meta itemprop="keywords" content="" />
+  
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="利用协程实现的本地网络聊天室"/>
+<meta name="twitter:description" content="通过原始的net包，在本地网络创建了一个聊天室，其中用到go routine并发编程、map加锁竞争使用、channel之间相互通信、切片的分割操作、定时器实现超时中断，知识点巩固很全面，下面总结一下
+针对map中的读写，可以选择加读写锁，防止读写竞争问题。 对于切片的操作还不是很熟悉，但是通过切片的一些分割操作来实现字符串和和切片的转换。 并发执行go routine时channel尽量声明空间，无缓冲通过会发生堵塞。 通过将全局通道中的数据，赋值到每个用户中自己的通道，来实现全局发送。 使用select来监听协程，并创建一个bool型channel，通过监听channel的写入来达到一些自动化操作。 实现功能 在已登录用户中发送消息。 输入who查询已登录用户信息。 输入rename|[用户名]更改名字 用户上下线提醒
+完整代码如下，因为是一个小东西，所以并没有分结构得很细，就全写在一个文件中了。 package main import ( &#34;fmt&#34; &#34;net&#34; &#34;strings&#34; &#34;sync&#34; &#34;time&#34; ) type User struct { name string id string smg chan string } var ( //用map保存所有用户信息 allUsers = make(map[string]User) //定义全局信息通道 message = make(chan string, 10) //定义针对map的读写锁 rwLock sync.RWMutex ) func main() { listener, err := net.Listen(&#34;tcp&#34;, &#34;:8080&#34;) if err != nil { fmt.Println(&#34;服务监听失败，错误为:&#34;, err) } fmt.Println(&#34;服务监听启动成功&#34;) //启动全局广播go程 go broadcast() for { fmt."/>
+
+  
+  
+</head>
+
+  <body class="text-black duration-200 ease-out dark:text-white">
+    <header class="mx-auto flex h-[5rem] max-w-3xl px-8 lg:justify-center">
+  <div class="relative z-50 mr-auto flex items-center">
+    <a class="-translate-x-[1px] -translate-y-0.5 text-3xl font-bold" href="https://whyy1.github.io/"
+      >歪衣的学习笔记</a
+    >
+    <a
+      class="btn-dark ml-6 h-6 w-6 shrink-0 cursor-pointer [background:url(./theme.svg)_left_center/cover_no-repeat] dark:invert dark:[background-position:right]"
+    ></a>
+  </div>
+
+  <a
+    class="btn-menu relative z-50 -mr-8 flex h-[5rem] w-[5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2.5 lg:hidden"
+  ></a>
+
+  
+  <script>
+    
+    const htmlClass = document.documentElement.classList;
+    setTimeout(() => {
+      htmlClass.remove('not-ready');
+    }, 10);
+
+    
+    const btnMenu = document.querySelector('.btn-menu');
+    btnMenu.addEventListener('click', () => {
+      htmlClass.toggle('open');
+    });
+
+    
+    const metaTheme = document.querySelector('meta[name="theme-color"]');
+    const lightBg = `"#faf6f1"`.replace(/"/g, '');
+    const setDark = (isDark) => {
+      metaTheme.setAttribute('content', isDark ? '#000' : lightBg);
+      htmlClass[isDark ? 'add' : 'remove']('dark');
+      localStorage.setItem('dark', isDark);
+    };
+
+    
+    const darkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+    if (htmlClass.contains('dark')) {
+      setDark(true);
+    } else {
+      const darkVal = localStorage.getItem('dark');
+      setDark(darkVal ? darkVal === 'true' : darkScheme.matches);
+    }
+
+    
+    darkScheme.addEventListener('change', (event) => {
+      setDark(event.matches);
+    });
+
+    
+    const btnDark = document.querySelector('.btn-dark');
+    btnDark.addEventListener('click', () => {
+      setDark(localStorage.getItem('dark') !== 'true');
+    });
+  </script>
+
+  <div
+    class="nav-wrapper fixed inset-x-0 top-full z-40 flex h-full select-none flex-col justify-center pb-16 duration-200 dark:bg-black lg:static lg:h-auto lg:flex-row lg:!bg-transparent lg:pb-0 lg:transition-none"
+  >
+    
+    
+
+    
+    <nav
+      class="mt-12 flex justify-center space-x-10 dark:invert lg:mt-0 lg:ml-12 lg:items-center lg:space-x-6"
+    >
+      
+      <a
+        class="h-8 w-8 [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
+        style="--url: url(./github.svg)"
+        href=" https://github.com/whyy1 "
+        target="_blank"
+      ></a>
+      
+      <a
+        class="h-8 w-8 [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
+        style="--url: url(./rss.svg)"
+        href=" https://whyy1.github.io/index.xml "
+        target="_blank"
+      ></a>
+      
+    </nav>
+    
+  </div>
+</header>
+
+
+    <main
+      class="prose prose-neutral relative mx-auto min-h-[calc(100%-10rem)] max-w-3xl px-8 pt-20 pb-32 dark:prose-invert"
+    >
+      
+
+<article>
+  <header class="mb-20">
+    <h1 class="!my-0 pb-2.5">利用协程实现的本地网络聊天室</h1>
+
+    
+    <div class="text-sm opacity-60">
+      
+      <time>Nov 25, 2022</time>
+      
+      
+    </div>
+    
+  </header>
+
+  <section><p>通过原始的net包，在本地网络创建了一个聊天室，其中用到go routine并发编程、map加锁竞争使用、channel之间相互通信、切片的分割操作、定时器实现超时中断，知识点巩固很全面，下面总结一下</p>
+<ul>
+<li>针对map中的读写，可以选择加读写锁，防止读写竞争问题。</li>
+<li>对于切片的操作还不是很熟悉，但是通过切片的一些分割操作来实现字符串和和切片的转换。</li>
+<li>并发执行go routine时channel尽量声明空间，无缓冲通过会发生堵塞。</li>
+<li>通过将全局通道中的数据，赋值到每个用户中自己的通道，来实现全局发送。</li>
+<li>使用select来监听协程，并创建一个bool型channel，通过监听channel的写入来达到一些自动化操作。
+<img src="https://cdn.whyy1.top/blog_image/5.png" alt="聊天室实现效果"></li>
+</ul>
+<h2 id="实现功能">实现功能</h2>
+<ul>
+<li>在已登录用户中发送消息。</li>
+<li>输入who查询已登录用户信息。</li>
+<li>输入rename|[用户名]更改名字</li>
+<li>用户上下线提醒<br>
+完整代码如下，因为是一个小东西，所以并没有分结构得很细，就全写在一个文件中了。</li>
+</ul>
+<pre tabindex="0"><code>package main
+
+import (
+	&#34;fmt&#34;
+	&#34;net&#34;
+	&#34;strings&#34;
+	&#34;sync&#34;
+	&#34;time&#34;
+)
+
+type User struct {
+	name string
+	id   string
+	smg  chan string
+}
+
+var (
+	//用map保存所有用户信息
+	allUsers = make(map[string]User)
+	//定义全局信息通道
+	message = make(chan string, 10)
+	//定义针对map的读写锁
+	rwLock sync.RWMutex
+)
+
+func main() {
+	listener, err := net.Listen(&#34;tcp&#34;, &#34;:8080&#34;)
+	if err != nil {
+		fmt.Println(&#34;服务监听失败，错误为:&#34;, err)
+	}
+	fmt.Println(&#34;服务监听启动成功&#34;)
+	//启动全局广播go程
+	go broadcast()
+	for {
+		fmt.Println(&#34;服务监听启动中.....&#34;)
+		conn, err := listener.Accept()
+		if err != nil {
+			fmt.Println(&#34;监听连接失败，err:&#34;, err)
+		}
+		fmt.Println(&#34;建立连接成功&#34;)
+		go handler(conn)
+	}
+}
+func handler(conn net.Conn) {
+
+	fmt.Println(&#34;启动协程处理一个新连接&#34;)
+	clientAddr := conn.RemoteAddr().String()
+	newUser := User{
+		id:   clientAddr,
+		name: clientAddr,
+		smg:  make(chan string, 10),
+	}
+	rwLock.Lock()
+	//保存新连接用户信息
+	allUsers[newUser.id] = newUser
+	rwLock.Unlock()
+	//启动协程监听用户连接是否退出或超时退出
+	var isQuit = make(chan bool)
+	var restTime = make(chan bool)
+	go watch(&amp;newUser, conn, isQuit, restTime)
+
+	//启动协程将用户的smg中信息发送给client
+	go writeBackToClient(&amp;newUser, conn)
+
+	//用户上线通知，将信息存入全局消息通道
+	loginInfo := fmt.Sprintf(&#34;user:%s====&gt;login！！！&#34;, newUser.name)
+	message &lt;- loginInfo
+
+	for {
+		//读取客户端发送过来的数据
+		buf := make([]byte, 1024)
+		if cnt, err := conn.Read(buf); err != nil {
+			fmt.Println(&#34;连接读取字节错误，err:&#34;, err)
+
+			//如果主动退出或者连接断开了，设置isQuit为true，断开连接
+			//如果是主动退出的话，cnt为0，也可以设置为if cnt=0 ==&gt;isQuit &lt;- true
+			isQuit &lt;- true
+
+			return
+		} else {
+			//接收到客户端发来的信息
+			fmt.Println(&#34;服务器接受客户端发送过来的数据：&#34;, string(buf[:cnt-1]))
+			userInput := string(buf[:cnt-1])
+			//判断发送的命令是否是who
+			if len(userInput) == 3 &amp;&amp; userInput == &#34;who&#34; {
+				//创建字符串切片
+				var userInfos []string
+
+				//加读锁
+				rwLock.RLock()
+				//遍历用户表，将用户id和name拼接到字符串切片中
+				for _, user := range allUsers {
+					userInfo := fmt.Sprintf(&#34;userid:%s,username:%s。\n&#34;, user.id, user.name)
+					userInfos = append(userInfos, userInfo)
+				}
+				//解读锁
+				rwLock.RUnlock()
+
+				//将字符串切片加入换行符，然后加入到一个字符串中
+				str := strings.Join(userInfos, &#34;&#34;)
+				//相对的分割方法,将字符串分割成切片
+				//strings.Split()
+
+				//将分割好的字符串发送至当前用户的管道中
+				newUser.smg &lt;- str
+			} else if len(userInput) &gt; 6 &amp;&amp; userInput[:6] == &#34;rename&#34; {
+				//用Split方法用|切分,切片[1]为名字，更新到用户表
+				newUser.name = strings.Split(userInput, &#34;|&#34;)[1]
+				rwLock.Lock()
+				allUsers[newUser.id] = newUser
+				rwLock.Unlock()
+
+				newUser.smg &lt;- fmt.Sprintf(&#34;change name is:%s\n&#34;, newUser.name)
+			} else {
+				message &lt;- string(buf[:cnt])
+			}
+			restTime &lt;- true
+		}
+	}
+}
+
+func watch(user *User, coon net.Conn, isQuit, restTime &lt;-chan bool) {
+	for {
+		select {
+		case &lt;-isQuit:
+			logoutInfo := fmt.Sprintf(&#34;用户%s退出聊天室&#34;, user.name)
+			fmt.Println(&#34;删除用户：&#34;, user.name)
+			rwLock.Lock()
+			//在map中删除用户信息
+			delete(allUsers, user.id)
+			rwLock.Unlock()
+			//向所有用户发送退出信息
+			message &lt;- logoutInfo
+
+			//关闭与客户端的连接
+			coon.Close()
+			return
+		case &lt;-time.After(1 * time.Minute):
+			logoutInfo := fmt.Sprintf(&#34;用户%s超时退出聊天室\n&#34;, user.name)
+			fmt.Println(&#34;删除用户：&#34;, user.name)
+			rwLock.Lock()
+			//在map中删除用户信息
+			delete(allUsers, user.id)
+			rwLock.Unlock()
+			//向所有用户发送退出信息
+			message &lt;- logoutInfo
+
+			//关闭与客户端的连接
+			coon.Close()
+			return
+		case &lt;-restTime:
+		}
+	}
+}
+
+//全局广播函数，将信息发送至每个用户的管道
+func broadcast() {
+	fmt.Println(&#34;全局监听启动成功&#34;)
+	defer fmt.Println(&#34;全局广播协程退出&#34;)
+	for {
+		fmt.Println(&#34;全局广播协程启动中&#34;)
+		info := &lt;-message
+		fmt.Println(&#34;全局广播接受到数据&#34;, info)
+		rwLock.Lock()
+		for _, user := range allUsers {
+			user.smg &lt;- info
+		}
+		rwLock.Unlock()
+	}
+}
+
+func writeBackToClient(user *User, coon net.Conn) {
+	for data := range user.smg {
+		_, _ = coon.Write([]byte(data))
+	}
+}
+</code></pre></section>
+
+  
+  
+
+  
+  
+  
+  <nav class="mt-24 flex rounded-lg bg-black/[3%] text-lg dark:bg-white/[8%]">
+    
+    
+    <a
+      class="ml-auto flex w-1/2 items-center justify-end p-6 pl-3 no-underline"
+      href="https://whyy1.github.io/post/go_revise1/"
+      ><span>并发编程相关</span><span class="ml-1.5">→</span></a
+    >
+    
+  </nav>
+  
+
+  
+  
+  <div id="disqus_thread"></div>
+  <script>
+    const disqusShortname = 'YOUR_DISQUS_SHORTNAME';
+    const script = document.createElement('script');
+    script.src = 'https://' + disqusShortname + '.disqus.com/embed.js';
+    script.setAttribute('data-timestamp', +new Date());
+    document.head.appendChild(script);
+  </script>
+  
+</article>
+
+
+    </main>
+
+    <footer class="opaco mx-auto flex h-[5rem] max-w-3xl items-center px-8 text-[0.9em] opacity-60">
+  <div class="mr-auto">
+    &copy; 2022
+    <a class="link" href="https://whyy1.github.io/">歪衣的学习笔记</a>
+  </div>
+  <a class="link mx-6" href="https://gohugo.io/" rel="noopener" target="_blank">Powered by Hugo️️</a
+  >️
+  <a class="link" href="https://github.com/nanxiaobei/hugo-paper" rel="noopener" target="_blank"
+    >▷ Paper 6</a
+  >
+</footer>
+
+  </body>
+</html>
