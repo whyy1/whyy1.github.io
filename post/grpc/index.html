@@ -51,7 +51,7 @@
 下面是gRPC基础调用例子实现：
 首先需要定义proto文件，定义微服务以及消息体：
 定义好如下文件，运行protoc --go_out=. --go-grpc_out=. .\hello.proto命令。就会在当前目录下生成*.pb.go文件,生成go文件，以便使用，尽量不要去修改这个文件。
-//指定版本信息，默认为proto2 syntax = &#34;proto3&#34;; //后期生成go文件的包名，与输出文件在同一包下 package pb; //指定生成的两个*.pb.go文件输出到哪 //“/”为当前路径“/pb”则为pb文件夹下 option go_package = &#34;/pb&#34;; //定义消息体为Person message Person{ // 名字 string name = 1; // 年龄 int32 age = 2 ; } //定义RPC服务为HelloService service HelloService { //定义HelloService服务中的Hello函数 //入参和出参都是上方的Person，如果出参不同，需要另外定义message信息体 rpc Hello (Person)returns (Person); } 编写server端，注册gRPC服务提供服务
+//指定版本信息，默认为proto2 syntax = &#34;proto3&#34;; //后期生成go文件的包名，与输出文件在同一包下 package pb; //指定生成的两个*.pb.go文件输出到哪 //&#34;/&#34;为当前路径&#34;/pb&#34;则为pb文件夹下 option go_package = &#34;/pb&#34;; //定义消息体为Person message Person{ // 名字 string name = 1; // 年龄 int32 age = 2 ; } //定义RPC服务为HelloService service HelloService { //定义HelloService服务中的Hello函数 //入参和出参都是上方的Person，如果出参不同，需要另外定义message信息体 rpc Hello (Person)returns (Person); } 编写server端，注册gRPC服务提供服务
 首先需要根据定义的微服务名称HelloServer定义结构体，并在其中加入Server变量,其次需要实现微服务中定义的Hello方法，如果有多个方法需要全部实现。 接下来就可以写Server的代码主体，server端注册服务的过程大同小异，一共需要做的有四步
 使用grpc.NewServer()获取grpc服务端对象 用刚才生成pb包下的Register*Server函数注册gRPC服务 用net.Listen(&ldquo;tcp&rdquo;, Address)函数监听端口 最后使用grpcServer.Serve(lis)提供服务
 这样就可以注册一个服务gRPC服务供其他程序调用了。 const ( Address = &#34;:1234&#34; ) //根据定义的服务名称实现结构体 type HelloServer struct { //必须定义一个指针类型参数 //此处HelloServer结构中包含一个未执行的HelloServiceServer *pb." />
@@ -116,7 +116,7 @@
 下面是gRPC基础调用例子实现：
 首先需要定义proto文件，定义微服务以及消息体：
 定义好如下文件，运行protoc --go_out=. --go-grpc_out=. .\hello.proto命令。就会在当前目录下生成*.pb.go文件,生成go文件，以便使用，尽量不要去修改这个文件。
-//指定版本信息，默认为proto2 syntax = &#34;proto3&#34;; //后期生成go文件的包名，与输出文件在同一包下 package pb; //指定生成的两个*.pb.go文件输出到哪 //“/”为当前路径“/pb”则为pb文件夹下 option go_package = &#34;/pb&#34;; //定义消息体为Person message Person{ // 名字 string name = 1; // 年龄 int32 age = 2 ; } //定义RPC服务为HelloService service HelloService { //定义HelloService服务中的Hello函数 //入参和出参都是上方的Person，如果出参不同，需要另外定义message信息体 rpc Hello (Person)returns (Person); } 编写server端，注册gRPC服务提供服务
+//指定版本信息，默认为proto2 syntax = &#34;proto3&#34;; //后期生成go文件的包名，与输出文件在同一包下 package pb; //指定生成的两个*.pb.go文件输出到哪 //&#34;/&#34;为当前路径&#34;/pb&#34;则为pb文件夹下 option go_package = &#34;/pb&#34;; //定义消息体为Person message Person{ // 名字 string name = 1; // 年龄 int32 age = 2 ; } //定义RPC服务为HelloService service HelloService { //定义HelloService服务中的Hello函数 //入参和出参都是上方的Person，如果出参不同，需要另外定义message信息体 rpc Hello (Person)returns (Person); } 编写server端，注册gRPC服务提供服务
 首先需要根据定义的微服务名称HelloServer定义结构体，并在其中加入Server变量,其次需要实现微服务中定义的Hello方法，如果有多个方法需要全部实现。 接下来就可以写Server的代码主体，server端注册服务的过程大同小异，一共需要做的有四步
 使用grpc.NewServer()获取grpc服务端对象 用刚才生成pb包下的Register*Server函数注册gRPC服务 用net.Listen(&ldquo;tcp&rdquo;, Address)函数监听端口 最后使用grpcServer.Serve(lis)提供服务
 这样就可以注册一个服务gRPC服务供其他程序调用了。 const ( Address = &#34;:1234&#34; ) //根据定义的服务名称实现结构体 type HelloServer struct { //必须定义一个指针类型参数 //此处HelloServer结构中包含一个未执行的HelloServiceServer *pb." />
@@ -132,7 +132,7 @@
 下面是gRPC基础调用例子实现：
 首先需要定义proto文件，定义微服务以及消息体：
 定义好如下文件，运行protoc --go_out=. --go-grpc_out=. .\hello.proto命令。就会在当前目录下生成*.pb.go文件,生成go文件，以便使用，尽量不要去修改这个文件。
-//指定版本信息，默认为proto2 syntax = &#34;proto3&#34;; //后期生成go文件的包名，与输出文件在同一包下 package pb; //指定生成的两个*.pb.go文件输出到哪 //“/”为当前路径“/pb”则为pb文件夹下 option go_package = &#34;/pb&#34;; //定义消息体为Person message Person{ // 名字 string name = 1; // 年龄 int32 age = 2 ; } //定义RPC服务为HelloService service HelloService { //定义HelloService服务中的Hello函数 //入参和出参都是上方的Person，如果出参不同，需要另外定义message信息体 rpc Hello (Person)returns (Person); } 编写server端，注册gRPC服务提供服务
+//指定版本信息，默认为proto2 syntax = &#34;proto3&#34;; //后期生成go文件的包名，与输出文件在同一包下 package pb; //指定生成的两个*.pb.go文件输出到哪 //&#34;/&#34;为当前路径&#34;/pb&#34;则为pb文件夹下 option go_package = &#34;/pb&#34;; //定义消息体为Person message Person{ // 名字 string name = 1; // 年龄 int32 age = 2 ; } //定义RPC服务为HelloService service HelloService { //定义HelloService服务中的Hello函数 //入参和出参都是上方的Person，如果出参不同，需要另外定义message信息体 rpc Hello (Person)returns (Person); } 编写server端，注册gRPC服务提供服务
 首先需要根据定义的微服务名称HelloServer定义结构体，并在其中加入Server变量,其次需要实现微服务中定义的Hello方法，如果有多个方法需要全部实现。 接下来就可以写Server的代码主体，server端注册服务的过程大同小异，一共需要做的有四步
 使用grpc.NewServer()获取grpc服务端对象 用刚才生成pb包下的Register*Server函数注册gRPC服务 用net.Listen(&ldquo;tcp&rdquo;, Address)函数监听端口 最后使用grpcServer.Serve(lis)提供服务
 这样就可以注册一个服务gRPC服务供其他程序调用了。 const ( Address = &#34;:1234&#34; ) //根据定义的服务名称实现结构体 type HelloServer struct { //必须定义一个指针类型参数 //此处HelloServer结构中包含一个未执行的HelloServiceServer *pb."><meta itemprop="datePublished" content="2022-11-29T22:31:42+08:00" />
@@ -146,7 +146,7 @@
 下面是gRPC基础调用例子实现：
 首先需要定义proto文件，定义微服务以及消息体：
 定义好如下文件，运行protoc --go_out=. --go-grpc_out=. .\hello.proto命令。就会在当前目录下生成*.pb.go文件,生成go文件，以便使用，尽量不要去修改这个文件。
-//指定版本信息，默认为proto2 syntax = &#34;proto3&#34;; //后期生成go文件的包名，与输出文件在同一包下 package pb; //指定生成的两个*.pb.go文件输出到哪 //“/”为当前路径“/pb”则为pb文件夹下 option go_package = &#34;/pb&#34;; //定义消息体为Person message Person{ // 名字 string name = 1; // 年龄 int32 age = 2 ; } //定义RPC服务为HelloService service HelloService { //定义HelloService服务中的Hello函数 //入参和出参都是上方的Person，如果出参不同，需要另外定义message信息体 rpc Hello (Person)returns (Person); } 编写server端，注册gRPC服务提供服务
+//指定版本信息，默认为proto2 syntax = &#34;proto3&#34;; //后期生成go文件的包名，与输出文件在同一包下 package pb; //指定生成的两个*.pb.go文件输出到哪 //&#34;/&#34;为当前路径&#34;/pb&#34;则为pb文件夹下 option go_package = &#34;/pb&#34;; //定义消息体为Person message Person{ // 名字 string name = 1; // 年龄 int32 age = 2 ; } //定义RPC服务为HelloService service HelloService { //定义HelloService服务中的Hello函数 //入参和出参都是上方的Person，如果出参不同，需要另外定义message信息体 rpc Hello (Person)returns (Person); } 编写server端，注册gRPC服务提供服务
 首先需要根据定义的微服务名称HelloServer定义结构体，并在其中加入Server变量,其次需要实现微服务中定义的Hello方法，如果有多个方法需要全部实现。 接下来就可以写Server的代码主体，server端注册服务的过程大同小异，一共需要做的有四步
 使用grpc.NewServer()获取grpc服务端对象 用刚才生成pb包下的Register*Server函数注册gRPC服务 用net.Listen(&ldquo;tcp&rdquo;, Address)函数监听端口 最后使用grpcServer.Serve(lis)提供服务
 这样就可以注册一个服务gRPC服务供其他程序调用了。 const ( Address = &#34;:1234&#34; ) //根据定义的服务名称实现结构体 type HelloServer struct { //必须定义一个指针类型参数 //此处HelloServer结构中包含一个未执行的HelloServiceServer *pb."/>
@@ -273,7 +273,7 @@ syntax = &#34;proto3&#34;;
 //后期生成go文件的包名，与输出文件在同一包下
 package pb;
 //指定生成的两个*.pb.go文件输出到哪
-//“/”为当前路径“/pb”则为pb文件夹下
+//&#34;/&#34;为当前路径&#34;/pb&#34;则为pb文件夹下
 option go_package = &#34;/pb&#34;;
 //定义消息体为Person
 message Person{
