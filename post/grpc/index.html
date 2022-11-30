@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html
+  class="not-ready text-sm lg:text-base"
+  style="--bg: #faf6f1"
+  lang="en-us"
+>
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+  
+  <title>gRPC初使用 - 歪衣的学习笔记</title>
+
+  
+  <meta name="theme-color" />
+  
+  <meta name="description" content="其实之前一直有了解微服务的概念，并且也写过一篇笔记记录相关概念，现在终于开始实操。最直观的认知就是，通过RPC框架的网络通信，可以实现不同语言之间的通信，通过protobuf来进行序列化message信息体，来实现通信。在客户端只需要注册微服务，然后远程调用就可以实现类似于本地函数的调用。
+下面是gRPC基础调用例子实现：
+首先需要定义proto文件，定义微服务以及消息体：
+定义好如下文件，运行protoc --go_out=. --go-grpc_out=. .\hello.proto命令。就会在当前目录下生成*.pb.go文件,生成go文件，以便使用，尽量不要去修改这个文件。
+//指定版本信息，默认为proto2 syntax = &#34;proto3&#34;; //后期生成go文件的包名，与输出文件在同一包下 package pb; //指定生成的两个*.pb.go文件输出到哪 //“/”为当前路径“/pb”则为pb文件夹下 option go_package = &#34;/pb&#34;; //定义消息体为Person message Person{ // 名字 string name = 1; // 年龄 int32 age = 2 ; } //定义RPC服务为HelloService service HelloService { //定义HelloService服务中的Hello函数 //入参和出参都是上方的Person，如果出参不同，需要另外定义message信息体 rpc Hello (Person)returns (Person); } 编写server端，注册gRPC服务提供服务
+首先需要根据定义的微服务名称HelloServer定义结构体，并在其中加入Server变量,其次需要实现微服务中定义的Hello方法，如果有多个方法需要全部实现。 接下来就可以写Server的代码主体，server端注册服务的过程大同小异，一共需要做的有四步
+使用grpc.NewServer()获取grpc服务端对象 用刚才生成pb包下的Register*Server函数注册gRPC服务 用net.Listen(&ldquo;tcp&rdquo;, Address)函数监听端口 最后使用grpcServer.Serve(lis)提供服务
+这样就可以注册一个服务gRPC服务供其他程序调用了。 const ( Address = &#34;:1234&#34; ) //根据定义的服务名称实现结构体 type HelloServer struct { //必须定义一个指针类型参数 //此处HelloServer结构中包含一个未执行的HelloServiceServer *pb." />
+  <meta name="author" content="" />
+  
+
+  
+  
+  
+  
+  
+  
+  <link rel="preload stylesheet" as="style" href="https://whyy1.github.io/main.min.css" />
+
+  
+
+  
+  
+  
+    
+  
+  <link
+    rel="preload"
+    as="image"
+    href="https://whyy1.github.io/theme.png"
+  />
+
+  
+  
+  
+  <link rel="preload" as="image" href="https://cdn.whyy1.top/avatar.svg" />
+  
+  
+
+  
+  <link rel="preload" as="image" href="https://whyy1.github.io/github.svg" />
+  
+  <link rel="preload" as="image" href="https://whyy1.github.io/rss.svg" />
+  
+
+  
+  <link rel="icon" href="https://whyy1.github.io/favicon.ico" />
+  <link rel="apple-touch-icon" href="https://whyy1.github.io/apple-touch-icon.png" />
+
+  
+  <meta name="generator" content="Hugo 0.106.0-DEV">
+
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <meta property="og:title" content="gRPC初使用" />
+<meta property="og:description" content="其实之前一直有了解微服务的概念，并且也写过一篇笔记记录相关概念，现在终于开始实操。最直观的认知就是，通过RPC框架的网络通信，可以实现不同语言之间的通信，通过protobuf来进行序列化message信息体，来实现通信。在客户端只需要注册微服务，然后远程调用就可以实现类似于本地函数的调用。
+下面是gRPC基础调用例子实现：
+首先需要定义proto文件，定义微服务以及消息体：
+定义好如下文件，运行protoc --go_out=. --go-grpc_out=. .\hello.proto命令。就会在当前目录下生成*.pb.go文件,生成go文件，以便使用，尽量不要去修改这个文件。
+//指定版本信息，默认为proto2 syntax = &#34;proto3&#34;; //后期生成go文件的包名，与输出文件在同一包下 package pb; //指定生成的两个*.pb.go文件输出到哪 //“/”为当前路径“/pb”则为pb文件夹下 option go_package = &#34;/pb&#34;; //定义消息体为Person message Person{ // 名字 string name = 1; // 年龄 int32 age = 2 ; } //定义RPC服务为HelloService service HelloService { //定义HelloService服务中的Hello函数 //入参和出参都是上方的Person，如果出参不同，需要另外定义message信息体 rpc Hello (Person)returns (Person); } 编写server端，注册gRPC服务提供服务
+首先需要根据定义的微服务名称HelloServer定义结构体，并在其中加入Server变量,其次需要实现微服务中定义的Hello方法，如果有多个方法需要全部实现。 接下来就可以写Server的代码主体，server端注册服务的过程大同小异，一共需要做的有四步
+使用grpc.NewServer()获取grpc服务端对象 用刚才生成pb包下的Register*Server函数注册gRPC服务 用net.Listen(&ldquo;tcp&rdquo;, Address)函数监听端口 最后使用grpcServer.Serve(lis)提供服务
+这样就可以注册一个服务gRPC服务供其他程序调用了。 const ( Address = &#34;:1234&#34; ) //根据定义的服务名称实现结构体 type HelloServer struct { //必须定义一个指针类型参数 //此处HelloServer结构中包含一个未执行的HelloServiceServer *pb." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://whyy1.github.io/post/grpc/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2022-11-29T22:31:42+08:00" />
+<meta property="article:modified_time" content="2022-11-29T22:31:42+08:00" />
+
+
+  
+  <meta itemprop="name" content="gRPC初使用">
+<meta itemprop="description" content="其实之前一直有了解微服务的概念，并且也写过一篇笔记记录相关概念，现在终于开始实操。最直观的认知就是，通过RPC框架的网络通信，可以实现不同语言之间的通信，通过protobuf来进行序列化message信息体，来实现通信。在客户端只需要注册微服务，然后远程调用就可以实现类似于本地函数的调用。
+下面是gRPC基础调用例子实现：
+首先需要定义proto文件，定义微服务以及消息体：
+定义好如下文件，运行protoc --go_out=. --go-grpc_out=. .\hello.proto命令。就会在当前目录下生成*.pb.go文件,生成go文件，以便使用，尽量不要去修改这个文件。
+//指定版本信息，默认为proto2 syntax = &#34;proto3&#34;; //后期生成go文件的包名，与输出文件在同一包下 package pb; //指定生成的两个*.pb.go文件输出到哪 //“/”为当前路径“/pb”则为pb文件夹下 option go_package = &#34;/pb&#34;; //定义消息体为Person message Person{ // 名字 string name = 1; // 年龄 int32 age = 2 ; } //定义RPC服务为HelloService service HelloService { //定义HelloService服务中的Hello函数 //入参和出参都是上方的Person，如果出参不同，需要另外定义message信息体 rpc Hello (Person)returns (Person); } 编写server端，注册gRPC服务提供服务
+首先需要根据定义的微服务名称HelloServer定义结构体，并在其中加入Server变量,其次需要实现微服务中定义的Hello方法，如果有多个方法需要全部实现。 接下来就可以写Server的代码主体，server端注册服务的过程大同小异，一共需要做的有四步
+使用grpc.NewServer()获取grpc服务端对象 用刚才生成pb包下的Register*Server函数注册gRPC服务 用net.Listen(&ldquo;tcp&rdquo;, Address)函数监听端口 最后使用grpcServer.Serve(lis)提供服务
+这样就可以注册一个服务gRPC服务供其他程序调用了。 const ( Address = &#34;:1234&#34; ) //根据定义的服务名称实现结构体 type HelloServer struct { //必须定义一个指针类型参数 //此处HelloServer结构中包含一个未执行的HelloServiceServer *pb."><meta itemprop="datePublished" content="2022-11-29T22:31:42+08:00" />
+<meta itemprop="dateModified" content="2022-11-29T22:31:42+08:00" />
+<meta itemprop="wordCount" content="172">
+<meta itemprop="keywords" content="" />
+  
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="gRPC初使用"/>
+<meta name="twitter:description" content="其实之前一直有了解微服务的概念，并且也写过一篇笔记记录相关概念，现在终于开始实操。最直观的认知就是，通过RPC框架的网络通信，可以实现不同语言之间的通信，通过protobuf来进行序列化message信息体，来实现通信。在客户端只需要注册微服务，然后远程调用就可以实现类似于本地函数的调用。
+下面是gRPC基础调用例子实现：
+首先需要定义proto文件，定义微服务以及消息体：
+定义好如下文件，运行protoc --go_out=. --go-grpc_out=. .\hello.proto命令。就会在当前目录下生成*.pb.go文件,生成go文件，以便使用，尽量不要去修改这个文件。
+//指定版本信息，默认为proto2 syntax = &#34;proto3&#34;; //后期生成go文件的包名，与输出文件在同一包下 package pb; //指定生成的两个*.pb.go文件输出到哪 //“/”为当前路径“/pb”则为pb文件夹下 option go_package = &#34;/pb&#34;; //定义消息体为Person message Person{ // 名字 string name = 1; // 年龄 int32 age = 2 ; } //定义RPC服务为HelloService service HelloService { //定义HelloService服务中的Hello函数 //入参和出参都是上方的Person，如果出参不同，需要另外定义message信息体 rpc Hello (Person)returns (Person); } 编写server端，注册gRPC服务提供服务
+首先需要根据定义的微服务名称HelloServer定义结构体，并在其中加入Server变量,其次需要实现微服务中定义的Hello方法，如果有多个方法需要全部实现。 接下来就可以写Server的代码主体，server端注册服务的过程大同小异，一共需要做的有四步
+使用grpc.NewServer()获取grpc服务端对象 用刚才生成pb包下的Register*Server函数注册gRPC服务 用net.Listen(&ldquo;tcp&rdquo;, Address)函数监听端口 最后使用grpcServer.Serve(lis)提供服务
+这样就可以注册一个服务gRPC服务供其他程序调用了。 const ( Address = &#34;:1234&#34; ) //根据定义的服务名称实现结构体 type HelloServer struct { //必须定义一个指针类型参数 //此处HelloServer结构中包含一个未执行的HelloServiceServer *pb."/>
+
+  
+  
+</head>
+
+  <body class="text-black duration-200 ease-out dark:text-white">
+    <header class="mx-auto flex h-[5rem] max-w-3xl px-8 lg:justify-center">
+  <div class="relative z-50 mr-auto flex items-center">
+    <a class="-translate-x-[1px] -translate-y-0.5 text-3xl font-bold" href="https://whyy1.github.io/"
+      >歪衣的学习笔记</a
+    >
+    <a
+      class="btn-dark ml-6 h-6 w-6 shrink-0 cursor-pointer [background:url(./theme.svg)_left_center/cover_no-repeat] dark:invert dark:[background-position:right]"
+    ></a>
+  </div>
+
+  <a
+    class="btn-menu relative z-50 -mr-8 flex h-[5rem] w-[5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2.5 lg:hidden"
+  ></a>
+
+  
+  <script>
+    
+    const htmlClass = document.documentElement.classList;
+    setTimeout(() => {
+      htmlClass.remove('not-ready');
+    }, 10);
+
+    
+    const btnMenu = document.querySelector('.btn-menu');
+    btnMenu.addEventListener('click', () => {
+      htmlClass.toggle('open');
+    });
+
+    
+    const metaTheme = document.querySelector('meta[name="theme-color"]');
+    const lightBg = `"#faf6f1"`.replace(/"/g, '');
+    const setDark = (isDark) => {
+      metaTheme.setAttribute('content', isDark ? '#000' : lightBg);
+      htmlClass[isDark ? 'add' : 'remove']('dark');
+      localStorage.setItem('dark', isDark);
+    };
+
+    
+    const darkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+    if (htmlClass.contains('dark')) {
+      setDark(true);
+    } else {
+      const darkVal = localStorage.getItem('dark');
+      setDark(darkVal ? darkVal === 'true' : darkScheme.matches);
+    }
+
+    
+    darkScheme.addEventListener('change', (event) => {
+      setDark(event.matches);
+    });
+
+    
+    const btnDark = document.querySelector('.btn-dark');
+    btnDark.addEventListener('click', () => {
+      setDark(localStorage.getItem('dark') !== 'true');
+    });
+  </script>
+
+  <div
+    class="nav-wrapper fixed inset-x-0 top-full z-40 flex h-full select-none flex-col justify-center pb-16 duration-200 dark:bg-black lg:static lg:h-auto lg:flex-row lg:!bg-transparent lg:pb-0 lg:transition-none"
+  >
+    
+    
+
+    
+    <nav
+      class="mt-12 flex justify-center space-x-10 dark:invert lg:mt-0 lg:ml-12 lg:items-center lg:space-x-6"
+    >
+      
+      <a
+        class="h-8 w-8 [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
+        style="--url: url(./github.svg)"
+        href=" https://github.com/whyy1 "
+        target="_blank"
+      ></a>
+      
+      <a
+        class="h-8 w-8 [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
+        style="--url: url(./rss.svg)"
+        href=" https://whyy1.github.io/index.xml "
+        target="_blank"
+      ></a>
+      
+    </nav>
+    
+  </div>
+</header>
+
+
+    <main
+      class="prose prose-neutral relative mx-auto min-h-[calc(100%-10rem)] max-w-3xl px-8 pt-20 pb-32 dark:prose-invert"
+    >
+      
+
+<article>
+  <header class="mb-20">
+    <h1 class="!my-0 pb-2.5">gRPC初使用</h1>
+
+    
+    <div class="text-sm opacity-60">
+      
+      <time>Nov 29, 2022</time>
+      
+      
+    </div>
+    
+  </header>
+
+  <section><p>其实之前一直有了解微服务的概念，并且也写过一篇<a href="https://juejin.cn/post/7109385639824457759">笔记</a>记录相关概念，现在终于开始实操。最直观的认知就是，通过RPC框架的网络通信，可以实现不同语言之间的通信，通过protobuf来进行序列化message信息体，来实现通信。在客户端只需要注册微服务，然后远程调用就可以实现类似于本地函数的调用。<br>
+下面是gRPC基础调用例子实现：<br>
+<em><strong>首先需要定义proto文件，定义微服务以及消息体</strong></em>：<br>
+定义好如下文件，运行<code>protoc --go_out=. --go-grpc_out=. .\hello.proto</code>命令。就会在当前目录下生成*.pb.go文件,生成go文件，以便使用，尽量不要去修改这个文件。</p>
+<pre tabindex="0"><code>//指定版本信息，默认为proto2
+syntax = &#34;proto3&#34;;
+//后期生成go文件的包名，与输出文件在同一包下
+package pb;
+//指定生成的两个*.pb.go文件输出到哪
+//“/”为当前路径“/pb”则为pb文件夹下
+option go_package = &#34;/pb&#34;;
+//定义消息体为Person
+message Person{
+    //   名字
+    string name = 1;
+    //   年龄
+    int32  age = 2 ;
+}
+
+//定义RPC服务为HelloService
+service HelloService {
+    //定义HelloService服务中的Hello函数
+    //入参和出参都是上方的Person，如果出参不同，需要另外定义message信息体
+    rpc Hello (Person)returns (Person);
+}
+</code></pre><p><em><strong>编写server端，注册gRPC服务提供服务</strong></em></p>
+<ul>
+<li>
+<p>首先需要根据定义的微服务名称HelloServer定义结构体，并在其中加入Server变量,其次需要实现微服务中定义的Hello方法，如果有多个方法需要全部实现。
+<img src="https://cdn.whyy1.top/blog_image/6.png" alt="server端定义"></p>
+</li>
+<li>
+<p>接下来就可以写Server的代码主体，server端注册服务的过程大同小异，一共需要做的有四步</p>
+</li>
+</ul>
+<ol>
+<li>使用grpc.NewServer()获取grpc服务端对象</li>
+<li>用刚才生成pb包下的Register*Server函数注册gRPC服务</li>
+<li>用net.Listen(&ldquo;tcp&rdquo;, Address)函数监听端口</li>
+<li>最后使用grpcServer.Serve(lis)提供服务<br>
+这样就可以注册一个服务gRPC服务供其他程序调用了。</li>
+</ol>
+<pre tabindex="0"><code>const (
+	Address = &#34;:1234&#34;
+)
+
+//根据定义的服务名称实现结构体
+type HelloServer struct {
+	//必须定义一个指针类型参数
+	//此处HelloServer结构中包含一个未执行的HelloServiceServer
+	*pb.UnimplementedHelloServiceServer
+}
+
+//实现定义服务的Hello方法
+//为上方的结构体的私有方法，参数为context,以及定义的message体。
+//返回的应该也是一个Message体还有一个error
+func (this *HelloServer) Hello(ctx context.Context, person *pb.Person) (*pb.Person, error) {
+
+	reply := &amp;pb.Person{
+		Name: &#34;zhangsan&#34; + person.Name,
+		Age:  18,
+	}
+	return reply, nil
+}
+
+func main() {
+	//一、获取grpc服务端对象
+	grpcServer := grpc.NewServer()
+	//二、注册grpc服务
+	pb.RegisterHelloServiceServer(grpcServer, new(HelloServer))
+
+	//三、设置服务端监听
+	lis, err := net.Listen(&#34;tcp&#34;, Address)
+	if err != nil {
+		panic(err)
+	}
+	
+	//四、在指定端口上提供grpc服务
+	grpcServer.Serve(lis)
+}
+</code></pre><p><em><strong>编写client端，调用gRPC服务提供的方法</strong></em></p>
+<pre tabindex="0"><code>func main() {
+	//一、和grpc服务建立连接
+	conn, err := grpc.Dial(&#34;localhost:1234&#34;, grpc.WithInsecure())
+	if err != nil {
+		panic(err)
+	}
+	//二、获得gRPC微服务连接的客户端，
+	client := pb.NewHelloServiceClient(conn)
+	//三、调用gRPC提供的Hello方法
+	reply, err := client.Hello(context.Background(), &amp;pb.Person{Name: &#34;y1&#34;, Age: 100})
+	if err != nil {
+		panic(err)
+	}
+	//打印返回的Message信息体
+	fmt.Println(&#34;reply,&#34;, reply)
+	//四、关闭连接
+	defer conn.Close()
+}
+</code></pre><p>如下图所示，发送了name和age,然后加上了hello,并且修改了发送的age为18。
+<img src="https://cdn.whyy1.top/blog_image/8.png" alt="server端定义"></p>
+<p><strong>总结</strong><br>
+在实现时还是踩了很多坑的，光是安装protobuf以及一些插件都花了很久，然后因为看的教程不是最新的，使用的命令有一些不同，还需要自己去测试命令。不过幸好最好细细看了一下生成过程，总算是走完了全程，对于gRPC的使用的整个流程更加清晰了。</p>
+</section>
+
+  
+  
+
+  
+  
+  
+  <nav class="mt-24 flex rounded-lg bg-black/[3%] text-lg dark:bg-white/[8%]">
+    
+    
+    <a
+      class="ml-auto flex w-1/2 items-center justify-end p-6 pl-3 no-underline"
+      href="https://whyy1.github.io/post/channelroom/"
+      ><span>利用协程实现的本地网络聊天室</span><span class="ml-1.5">→</span></a
+    >
+    
+  </nav>
+  
+
+  
+  
+  <div id="disqus_thread"></div>
+  <script>
+    const disqusShortname = 'YOUR_DISQUS_SHORTNAME';
+    const script = document.createElement('script');
+    script.src = 'https://' + disqusShortname + '.disqus.com/embed.js';
+    script.setAttribute('data-timestamp', +new Date());
+    document.head.appendChild(script);
+  </script>
+  
+</article>
+
+
+    </main>
+
+    <footer class="opaco mx-auto flex h-[5rem] max-w-3xl items-center px-8 text-[0.9em] opacity-60">
+  <div class="mr-auto">
+    &copy; 2022
+    <a class="link" href="https://whyy1.github.io/">歪衣的学习笔记</a>
+  </div>
+  <a class="link mx-6" href="https://gohugo.io/" rel="noopener" target="_blank">Powered by Hugo️️</a
+  >️
+  <a class="link" href="https://github.com/nanxiaobei/hugo-paper" rel="noopener" target="_blank"
+    >▷ Paper 6</a
+  >
+</footer>
+
+  </body>
+</html>
