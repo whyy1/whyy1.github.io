@@ -369,7 +369,7 @@ func main() {
 在实现时还是踩了很多坑的，光是安装protobuf以及一些插件都花了很久，然后因为看的教程不是最新的，使用的命令有一些不同，还需要自己去测试命令。不过幸好最好细细看了一下生成过程，总算是走完了全程，对于gRPC的使用的整个流程更加清晰了。</p>
 <h1 id="更新使用consul作为服务发现">更新：使用consul作为服务发现</h1>
 <p><strong>consul:</strong>  使用consul作为服务发现，server需要将服务注册到consul上，然后client通过访问consul提供的Address和port来访问服务。这样可以在拥有大量微服务时，不需要去单独配置文件，通过consul就可以获取的微服务的地址，并且还可以进行健康检查检测服务是否运行正常来保证拥有可使用的服务。
-<img src="https://cdn.whyy1.top/blog_image/8.png" alt="consul使用原理">
+<img src="https://cdn.whyy1.top/blog_image/10.png" alt="consul使用原理">
 <em><strong>server端更新,增加consul服务注册</strong></em></p>
 <pre tabindex="0"><code>func main() {
 	//初始化consul配置
