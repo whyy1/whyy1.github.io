@@ -364,7 +364,7 @@ func main() {
 	defer conn.Close()
 }
 </code></pre><p>如下图所示，发送了name和age,然后加上了hello,并且修改了发送的age为18。
-<img src="https://cdn.whyy1.top/blog_image/7.png" alt="server端定义"></p>
+<img src="https://cdn.whyy1.top/blog_image/1.png" alt="server端定义"></p>
 <p><strong>总结</strong><br>
 在实现时还是踩了很多坑的，光是安装protobuf以及一些插件都花了很久，然后因为看的教程不是最新的，使用的命令有一些不同，还需要自己去测试命令。不过幸好最好细细看了一下生成过程，总算是走完了全程，对于gRPC的使用的整个流程更加清晰了。</p>
 <h1 id="更新使用consul作为服务发现">更新：使用consul作为服务发现</h1>
