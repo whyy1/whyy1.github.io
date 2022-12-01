@@ -42,7 +42,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
   
-  <title>gRPC的定义以及简单使用 - 歪衣的学习笔记</title>
+  <title>gRPC的定义以及简单使用(增加consul做为服务发现) - 歪衣的学习笔记</title>
 
   
   <meta name="theme-color" />
@@ -111,7 +111,7 @@
   
   
   
-  <meta property="og:title" content="gRPC的定义以及简单使用" />
+  <meta property="og:title" content="gRPC的定义以及简单使用(增加consul做为服务发现)" />
 <meta property="og:description" content="其实之前一直有了解微服务的概念，并且也写过一篇笔记记录相关概念，现在终于开始实操。最直观的认知就是，通过RPC框架的网络通信，可以实现不同语言之间的通信，通过protobuf来进行序列化message信息体，来实现通信。在客户端只需要注册微服务，然后远程调用就可以实现类似于本地函数的调用。
 下面是gRPC基础调用例子实现：
 首先需要定义proto文件，定义微服务以及消息体：
@@ -127,7 +127,7 @@
 
 
   
-  <meta itemprop="name" content="gRPC的定义以及简单使用">
+  <meta itemprop="name" content="gRPC的定义以及简单使用(增加consul做为服务发现)">
 <meta itemprop="description" content="其实之前一直有了解微服务的概念，并且也写过一篇笔记记录相关概念，现在终于开始实操。最直观的认知就是，通过RPC框架的网络通信，可以实现不同语言之间的通信，通过protobuf来进行序列化message信息体，来实现通信。在客户端只需要注册微服务，然后远程调用就可以实现类似于本地函数的调用。
 下面是gRPC基础调用例子实现：
 首先需要定义proto文件，定义微服务以及消息体：
@@ -137,11 +137,11 @@
 使用grpc.NewServer()获取grpc服务端对象 用刚才生成pb包下的Register*Server函数注册gRPC服务 用net.Listen(&ldquo;tcp&rdquo;, Address)函数监听端口 最后使用grpcServer.Serve(lis)提供服务
 这样就可以注册一个服务gRPC服务供其他程序调用了。 const ( Address = &#34;:1234&#34; ) //根据定义的服务名称实现结构体 type HelloServer struct { //必须定义一个指针类型参数 //此处HelloServer结构中包含一个未执行的HelloServiceServer *pb."><meta itemprop="datePublished" content="2022-11-29T22:31:42+08:00" />
 <meta itemprop="dateModified" content="2022-11-29T22:31:42+08:00" />
-<meta itemprop="wordCount" content="172">
+<meta itemprop="wordCount" content="309">
 <meta itemprop="keywords" content="" />
   
   <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="gRPC的定义以及简单使用"/>
+<meta name="twitter:title" content="gRPC的定义以及简单使用(增加consul做为服务发现)"/>
 <meta name="twitter:description" content="其实之前一直有了解微服务的概念，并且也写过一篇笔记记录相关概念，现在终于开始实操。最直观的认知就是，通过RPC框架的网络通信，可以实现不同语言之间的通信，通过protobuf来进行序列化message信息体，来实现通信。在客户端只需要注册微服务，然后远程调用就可以实现类似于本地函数的调用。
 下面是gRPC基础调用例子实现：
 首先需要定义proto文件，定义微服务以及消息体：
@@ -252,7 +252,7 @@
 
 <article>
   <header class="mb-20">
-    <h1 class="!my-0 pb-2.5">gRPC的定义以及简单使用</h1>
+    <h1 class="!my-0 pb-2.5">gRPC的定义以及简单使用(增加consul做为服务发现)</h1>
 
     
     <div class="text-sm opacity-60">
@@ -364,9 +364,76 @@ func main() {
 	defer conn.Close()
 }
 </code></pre><p>如下图所示，发送了name和age,然后加上了hello,并且修改了发送的age为18。
-<img src="https://cdn.whyy1.top/blog_image/8.png" alt="server端定义"></p>
+<img src="https://cdn.whyy1.top/blog_image/7.png" alt="server端定义"></p>
 <p><strong>总结</strong><br>
 在实现时还是踩了很多坑的，光是安装protobuf以及一些插件都花了很久，然后因为看的教程不是最新的，使用的命令有一些不同，还需要自己去测试命令。不过幸好最好细细看了一下生成过程，总算是走完了全程，对于gRPC的使用的整个流程更加清晰了。</p>
+<h1 id="更新使用consul作为服务发现">更新：使用consul作为服务发现</h1>
+<p><strong>consul</strong>使用consul作为服务发现，server需要将服务注册到consul上，然后client通过访问consul提供的Address和port来访问服务。这样可以在拥有大量微服务时，不需要去单独配置文件，通过consul就可以获取的微服务的地址，并且还可以进行健康检查检测服务是否运行正常来保证拥有可使用的服务。
+<img src="https://cdn.whyy1.top/blog_image/8.png" alt="consul使用原理">
+<em><strong>server端更新,增加consul服务注册</strong></em></p>
+<pre tabindex="0"><code>func main() {
+	//初始化consul配置
+	consulConfig := api.DefaultConfig()
+	//获取consul对象
+	consulClient, err := api.NewClient(consulConfig)
+	if err != nil {
+		fmt.Println(&#34;consul客户端获取失败，err为：&#34;, err)
+		return
+	}
+	//注册服务，服务的常规配置
+	reg := api.AgentServiceRegistration{
+		ID:      &#34;1&#34;,                             //服务ID唯一，之后注销服务需要用到ID
+		Tags:    []string{&#34;testHello&#34;, &#34;consul&#34;}, //服务别名
+		Name:    &#34;HelloServer&#34;,                   //服务名称
+		Address: &#34;127.0.0.1&#34;,                     //提供服务的IP
+		Port:    8088,                            //提供服务的端口
+		Check: &amp;api.AgentServiceCheck{ //健康检查的信息设置
+			TCP:      &#34;127.0.0.1:8088&#34;, //与上方服务提供的TCP信息相同
+			Timeout:  &#34;5s&#34;,             //检测健康检查超时时间
+			Interval: &#34;5s&#34;,             //发送健康检查的时间间隔多少秒
+		},
+	}
+	//注册服务到consul上
+	err = consulClient.Agent().ServiceRegister(&amp;reg)
+	if err != nil {
+		fmt.Println(&#34;服务注册到consul失败，err为：&#34;, err)
+		return
+	}
+	//注销服务使用下面这行，参数为consul注册的ID
+	//consulClient.Agent().ServiceDeregister(&#34;1&#34;)
+
+	fmt.Println(&#34;consul启动成功&#34;)
+	//上半部分为使用consul注册服务发现
+	//----------------下方为gRPC提供服务代码----------------
+}
+</code></pre><p><em><strong>client端更新</strong></em></p>
+<pre tabindex="0"><code>func main() {
+	//初始化consul配置
+	consulConfig := api.DefaultConfig()
+	//获取consul客户端
+	consulClient, _ := api.NewClient(consulConfig)
+	//获取consul地址,得到提供的服务信息
+	//参数：1.服务名称，2.服务别名3.是否通过检查检查4.额外查询信息，默认为nil
+	serverEntry, _, _ := consulClient.Health().Service(&#34;HelloServer&#34;, &#34;consul&#34;, true, &amp;api.QueryOptions{})
+
+	//用consul获取到的服务地址与gRPC建立连接
+	//使用serverEntry中的Address和port拼接，然后和gRPC服务建立连接
+	conn, err := grpc.Dial(serverEntry[0].Service.Address+&#34;:&#34;+strconv.Itoa(serverEntry[0].Service.Port), grpc.WithInsecure())
+	if err != nil {
+		panic(err)
+	}
+	//上半部分为使用consul获取服务
+	//----------------下方为gRPC代码-------------------------------------
+	//一、和grpc服务建立连接
+	//conn, err := grpc.Dial(&#34;localhost:8088&#34;, grpc.WithInsecure()) //原本的gRPC连接代码
+	//if err != nil {
+	//	panic(err)
+	//}
+}
+</code></pre><p><strong>服务发现启动成功</strong><br>
+在运行server端时要先将consul按照默认命令<code>consul agent -dev</code>启动。
+<img src="https://cdn.whyy1.top/blog_image/9.png" alt="consul使用原理">
+可以看到已经成功注册了HelloServer服务并通过了健康检查，并且client也成功通过consul返回的地址访问微服务。</p>
 </section>
 
   
