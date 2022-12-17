@@ -155,7 +155,7 @@ go get github.com/go-micro/plugins/v4/registry/consul
 go get github.com/go-micro/plugins/v4/registry/consul
 //初始化consul配置 consulReg := consul.NewRegistry() //创建一个microService,使用consul默认配置 consulService := micro.NewService( micro.Registry(consulReg), ) request := getCaptcha.CallRequest{} //创建micro客户端，第一个参数为服务名称，第二个参数为上面创建的consulService的Client microClient := getCaptcha."><meta itemprop="datePublished" content="2022-12-17T21:20:07+08:00" />
 <meta itemprop="dateModified" content="2022-12-17T21:20:07+08:00" />
-<meta itemprop="wordCount" content="96">
+<meta itemprop="wordCount" content="97">
 <meta itemprop="keywords" content="" />
   
   <meta name="twitter:card" content="summary"/>
@@ -301,14 +301,14 @@ go get github.com/go-micro/plugins/v4/registry/consul
 <li>使用go-micro new命令初始化服务</li>
 </ul>
 <p>使用命令<code>go-micro new service helloworld</code> 就会在当前路径下创建helloworl文件夹，其中包含一个service类型的微服务。</p>
-<p><img src="" alt="新建微服务图片">
+<p><img src="https://cdn.whyy1.top/blog_image/12.png" alt="新建微服务图片">
 紧接着我们去修改proto文件，因为他初始化设置了很多参数，用来测试微服务是否能连接成功，所以我们只需要保留Call方法以及对应传入参数Request和传出参数Response。</p>
 <p>定义好proto文件后，我们创建出对应的微服务go文件</p>
 <pre tabindex="0"><code>//首先需要下载依赖
 make
 //然后创建出按照proto文件生成的所需要的微服务go文件
 make proto
-</code></pre><p><img src="" alt="修改后的handler文件">
+</code></pre><p><img src="https://cdn.whyy1.top/blog_image/14.png" alt="修改后的handler文件">
 我们只保留了Call方法，然后在Call方法中实现所需要的功能，用Request和Response来传输数据。</p>
 <h2 id="最后我们们修改main文件增加consul作为服务发现">最后我们们修改main文件，增加consul作为服务发现</h2>
 <p>首先需要导入consul依赖,终端下运行<br>
@@ -327,7 +327,7 @@ make proto
 	)
 
     ``````
-</code></pre><p><img src="" alt="新建微服务图片"><br>
+</code></pre><p><img src="https://cdn.whyy1.top/blog_image/15.png" alt="新建微服务图片"><br>
 这样一个微服务端就定义好了，接下来我们就可以在客户端中调用了。</p>
 <h2 id="在client调用微服务的call函数">在client调用微服务的Call函数</h2>
 <p>首先依然需要在client导入consul依赖,终端下运行<br>
@@ -349,7 +349,8 @@ make proto
 		fmt.Println(&#34;microClient调用Call方法失败，错误为：&#34;, err)
 		return
 	}
-</code></pre><p>这就是使用go-micro框架实现微服务的完整流程了</p>
+</code></pre><p>这就是使用go-micro框架实现微服务的完整流程了。</p>
+<p><a href="https://www.cnblogs.com/bossma/archive/2022/04/25/16188603.html">consul笔记</a></p>
 </section>
 
   
