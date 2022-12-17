@@ -51,8 +51,7 @@
 go-micro框架安装、使用 go-micro GitHub网址
 首先在windows上安装go-micro go install github.com/go-micro/cli/cmd/go-micro@latest 或者 安装成功后输入go-micro -v查看是否安装成功
 使用go-micro new命令初始化服务 使用命令go-micro new service helloworld 就会在当前路径下创建helloworl文件夹，其中包含一个service类型的微服务。
-紧接着我们去修改proto文件，因为他初始化设置了很多参数，用来测试微服务是否能连接成功，所以我们只需要保留Call方法以及对应传入参数Request和传出参数Response。
-定义好proto文件后，我们创建出对应的微服务go文件
+紧接着我们去修改proto文件，因为他初始化设置了很多参数，用来测试微服务是否能连接成功，所以我们只需要保留Call方法以及对应传入参数Request和传出参数Response。 定义好proto文件后，我们创建出对应的微服务go文件
 //首先需要下载依赖 make //然后创建出按照proto文件生成的所需要的微服务go文件 make proto 我们只保留了Call方法，然后在Call方法中实现所需要的功能，用Request和Response来传输数据。
 最后我们们修改main文件，增加consul作为服务发现 首先需要导入consul依赖,终端下运行
 go get github.com/go-micro/plugins/v4/registry/consul
@@ -122,8 +121,7 @@ go get github.com/go-micro/plugins/v4/registry/consul
 go-micro框架安装、使用 go-micro GitHub网址
 首先在windows上安装go-micro go install github.com/go-micro/cli/cmd/go-micro@latest 或者 安装成功后输入go-micro -v查看是否安装成功
 使用go-micro new命令初始化服务 使用命令go-micro new service helloworld 就会在当前路径下创建helloworl文件夹，其中包含一个service类型的微服务。
-紧接着我们去修改proto文件，因为他初始化设置了很多参数，用来测试微服务是否能连接成功，所以我们只需要保留Call方法以及对应传入参数Request和传出参数Response。
-定义好proto文件后，我们创建出对应的微服务go文件
+紧接着我们去修改proto文件，因为他初始化设置了很多参数，用来测试微服务是否能连接成功，所以我们只需要保留Call方法以及对应传入参数Request和传出参数Response。 定义好proto文件后，我们创建出对应的微服务go文件
 //首先需要下载依赖 make //然后创建出按照proto文件生成的所需要的微服务go文件 make proto 我们只保留了Call方法，然后在Call方法中实现所需要的功能，用Request和Response来传输数据。
 最后我们们修改main文件，增加consul作为服务发现 首先需要导入consul依赖,终端下运行
 go get github.com/go-micro/plugins/v4/registry/consul
@@ -144,8 +142,7 @@ go get github.com/go-micro/plugins/v4/registry/consul
 go-micro框架安装、使用 go-micro GitHub网址
 首先在windows上安装go-micro go install github.com/go-micro/cli/cmd/go-micro@latest 或者 安装成功后输入go-micro -v查看是否安装成功
 使用go-micro new命令初始化服务 使用命令go-micro new service helloworld 就会在当前路径下创建helloworl文件夹，其中包含一个service类型的微服务。
-紧接着我们去修改proto文件，因为他初始化设置了很多参数，用来测试微服务是否能连接成功，所以我们只需要保留Call方法以及对应传入参数Request和传出参数Response。
-定义好proto文件后，我们创建出对应的微服务go文件
+紧接着我们去修改proto文件，因为他初始化设置了很多参数，用来测试微服务是否能连接成功，所以我们只需要保留Call方法以及对应传入参数Request和传出参数Response。 定义好proto文件后，我们创建出对应的微服务go文件
 //首先需要下载依赖 make //然后创建出按照proto文件生成的所需要的微服务go文件 make proto 我们只保留了Call方法，然后在Call方法中实现所需要的功能，用Request和Response来传输数据。
 最后我们们修改main文件，增加consul作为服务发现 首先需要导入consul依赖,终端下运行
 go get github.com/go-micro/plugins/v4/registry/consul
@@ -164,8 +161,7 @@ go get github.com/go-micro/plugins/v4/registry/consul
 go-micro框架安装、使用 go-micro GitHub网址
 首先在windows上安装go-micro go install github.com/go-micro/cli/cmd/go-micro@latest 或者 安装成功后输入go-micro -v查看是否安装成功
 使用go-micro new命令初始化服务 使用命令go-micro new service helloworld 就会在当前路径下创建helloworl文件夹，其中包含一个service类型的微服务。
-紧接着我们去修改proto文件，因为他初始化设置了很多参数，用来测试微服务是否能连接成功，所以我们只需要保留Call方法以及对应传入参数Request和传出参数Response。
-定义好proto文件后，我们创建出对应的微服务go文件
+紧接着我们去修改proto文件，因为他初始化设置了很多参数，用来测试微服务是否能连接成功，所以我们只需要保留Call方法以及对应传入参数Request和传出参数Response。 定义好proto文件后，我们创建出对应的微服务go文件
 //首先需要下载依赖 make //然后创建出按照proto文件生成的所需要的微服务go文件 make proto 我们只保留了Call方法，然后在Call方法中实现所需要的功能，用Request和Response来传输数据。
 最后我们们修改main文件，增加consul作为服务发现 首先需要导入consul依赖,终端下运行
 go get github.com/go-micro/plugins/v4/registry/consul
@@ -302,8 +298,9 @@ go get github.com/go-micro/plugins/v4/registry/consul
 </ul>
 <p>使用命令<code>go-micro new service helloworld</code> 就会在当前路径下创建helloworl文件夹，其中包含一个service类型的微服务。</p>
 <p><img src="https://cdn.whyy1.top/blog_image/12.png" alt="新建微服务图片">
-紧接着我们去修改proto文件，因为他初始化设置了很多参数，用来测试微服务是否能连接成功，所以我们只需要保留Call方法以及对应传入参数Request和传出参数Response。</p>
-<p>定义好proto文件后，我们创建出对应的微服务go文件</p>
+紧接着我们去修改proto文件，因为他初始化设置了很多参数，用来测试微服务是否能连接成功，所以我们只需要保留Call方法以及对应传入参数Request和传出参数Response。
+<img src="https://cdn.whyy1.top/blog_image/13.png" alt="修改proto文件">
+定义好proto文件后，我们创建出对应的微服务go文件</p>
 <pre tabindex="0"><code>//首先需要下载依赖
 make
 //然后创建出按照proto文件生成的所需要的微服务go文件
