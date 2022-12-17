@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html
+  class="not-ready text-sm lg:text-base"
+  style="--bg: #faf6f1"
+  lang="en-us"
+>
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+  
+  <title>Go-micro框架使用踩坑笔记 - 歪衣的学习笔记</title>
+
+  
+  <meta name="theme-color" />
+  
+  <meta name="description" content="真的，没想到平常买东西碰上了假货，没想到敲代码用框架也用上假的了。起初是安装micro框架，GitHub上搜出来的micro已经不支持go-micro的一些用法，但是它极为相似，第一次使用我也不太熟悉，弄了很久发现为啥micro框架生成的代码不大对劲，然后在网上找到一篇教程，才终于解答疑惑。go-micro安装
+go-micro框架安装、使用 go-micro GitHub网址
+首先在windows上安装go-micro go install github.com/go-micro/cli/cmd/go-micro@latest 或者 安装成功后输入go-micro -v查看是否安装成功
+使用go-micro new命令初始化服务 使用命令go-micro new service helloworld 就会在当前路径下创建helloworl文件夹，其中包含一个service类型的微服务。
+紧接着我们去修改proto文件，因为他初始化设置了很多参数，用来测试微服务是否能连接成功，所以我们只需要保留Call方法以及对应传入参数Request和传出参数Response。
+定义好proto文件后，我们创建出对应的微服务go文件
+//首先需要下载依赖 make //然后创建出按照proto文件生成的所需要的微服务go文件 make proto 我们只保留了Call方法，然后在Call方法中实现所需要的功能，用Request和Response来传输数据。
+最后我们们修改main文件，增加consul作为服务发现 首先需要导入consul依赖,终端下运行
+go get github.com/go-micro/plugins/v4/registry/consul
+然后修改mian函数增加consul
+//初始化consul配置 consulReg := consul.NewRegistry() // Create service srv := micro.NewService() srv.Init( micro.Name(service), micro.Version(version), micro.Registry(consulReg), //使用consul作为服务发现 micro.Address(&#34;127.0.0.1:1111&#34;), //增加consul服务指定的地址 ) `````` 这样一个微服务端就定义好了，接下来我们就可以在客户端中调用了。
+在client调用微服务的Call函数 首先依然需要在client导入consul依赖,终端下运行
+go get github.com/go-micro/plugins/v4/registry/consul
+//初始化consul配置 consulReg := consul.NewRegistry() //创建一个microService,使用consul默认配置 consulService := micro.NewService( micro.Registry(consulReg), ) request := getCaptcha.CallRequest{} //创建micro客户端，第一个参数为服务名称，第二个参数为上面创建的consulService的Client microClient := getCaptcha." />
+  <meta name="author" content="" />
+  
+
+  
+  
+  
+  
+  
+  
+  <link rel="preload stylesheet" as="style" href="https://whyy1.github.io/main.min.css" />
+
+  
+
+  
+  
+  
+    
+  
+  <link
+    rel="preload"
+    as="image"
+    href="https://whyy1.github.io/theme.png"
+  />
+
+  
+  
+  
+  <link rel="preload" as="image" href="https://cdn.whyy1.top/avatar.svg" />
+  
+  
+
+  
+  <link rel="preload" as="image" href="https://whyy1.github.io/github.svg" />
+  
+  <link rel="preload" as="image" href="https://whyy1.github.io/rss.svg" />
+  
+
+  
+  <link rel="icon" href="https://whyy1.github.io/favicon.ico" />
+  <link rel="apple-touch-icon" href="https://whyy1.github.io/apple-touch-icon.png" />
+
+  
+  <meta name="generator" content="Hugo 0.106.0-DEV">
+
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <meta property="og:title" content="Go-micro框架使用踩坑笔记" />
+<meta property="og:description" content="真的，没想到平常买东西碰上了假货，没想到敲代码用框架也用上假的了。起初是安装micro框架，GitHub上搜出来的micro已经不支持go-micro的一些用法，但是它极为相似，第一次使用我也不太熟悉，弄了很久发现为啥micro框架生成的代码不大对劲，然后在网上找到一篇教程，才终于解答疑惑。go-micro安装
+go-micro框架安装、使用 go-micro GitHub网址
+首先在windows上安装go-micro go install github.com/go-micro/cli/cmd/go-micro@latest 或者 安装成功后输入go-micro -v查看是否安装成功
+使用go-micro new命令初始化服务 使用命令go-micro new service helloworld 就会在当前路径下创建helloworl文件夹，其中包含一个service类型的微服务。
+紧接着我们去修改proto文件，因为他初始化设置了很多参数，用来测试微服务是否能连接成功，所以我们只需要保留Call方法以及对应传入参数Request和传出参数Response。
+定义好proto文件后，我们创建出对应的微服务go文件
+//首先需要下载依赖 make //然后创建出按照proto文件生成的所需要的微服务go文件 make proto 我们只保留了Call方法，然后在Call方法中实现所需要的功能，用Request和Response来传输数据。
+最后我们们修改main文件，增加consul作为服务发现 首先需要导入consul依赖,终端下运行
+go get github.com/go-micro/plugins/v4/registry/consul
+然后修改mian函数增加consul
+//初始化consul配置 consulReg := consul.NewRegistry() // Create service srv := micro.NewService() srv.Init( micro.Name(service), micro.Version(version), micro.Registry(consulReg), //使用consul作为服务发现 micro.Address(&#34;127.0.0.1:1111&#34;), //增加consul服务指定的地址 ) `````` 这样一个微服务端就定义好了，接下来我们就可以在客户端中调用了。
+在client调用微服务的Call函数 首先依然需要在client导入consul依赖,终端下运行
+go get github.com/go-micro/plugins/v4/registry/consul
+//初始化consul配置 consulReg := consul.NewRegistry() //创建一个microService,使用consul默认配置 consulService := micro.NewService( micro.Registry(consulReg), ) request := getCaptcha.CallRequest{} //创建micro客户端，第一个参数为服务名称，第二个参数为上面创建的consulService的Client microClient := getCaptcha." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://whyy1.github.io/post/go-micro/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2022-12-17T21:20:07+08:00" />
+<meta property="article:modified_time" content="2022-12-17T21:20:07+08:00" />
+
+
+  
+  <meta itemprop="name" content="Go-micro框架使用踩坑笔记">
+<meta itemprop="description" content="真的，没想到平常买东西碰上了假货，没想到敲代码用框架也用上假的了。起初是安装micro框架，GitHub上搜出来的micro已经不支持go-micro的一些用法，但是它极为相似，第一次使用我也不太熟悉，弄了很久发现为啥micro框架生成的代码不大对劲，然后在网上找到一篇教程，才终于解答疑惑。go-micro安装
+go-micro框架安装、使用 go-micro GitHub网址
+首先在windows上安装go-micro go install github.com/go-micro/cli/cmd/go-micro@latest 或者 安装成功后输入go-micro -v查看是否安装成功
+使用go-micro new命令初始化服务 使用命令go-micro new service helloworld 就会在当前路径下创建helloworl文件夹，其中包含一个service类型的微服务。
+紧接着我们去修改proto文件，因为他初始化设置了很多参数，用来测试微服务是否能连接成功，所以我们只需要保留Call方法以及对应传入参数Request和传出参数Response。
+定义好proto文件后，我们创建出对应的微服务go文件
+//首先需要下载依赖 make //然后创建出按照proto文件生成的所需要的微服务go文件 make proto 我们只保留了Call方法，然后在Call方法中实现所需要的功能，用Request和Response来传输数据。
+最后我们们修改main文件，增加consul作为服务发现 首先需要导入consul依赖,终端下运行
+go get github.com/go-micro/plugins/v4/registry/consul
+然后修改mian函数增加consul
+//初始化consul配置 consulReg := consul.NewRegistry() // Create service srv := micro.NewService() srv.Init( micro.Name(service), micro.Version(version), micro.Registry(consulReg), //使用consul作为服务发现 micro.Address(&#34;127.0.0.1:1111&#34;), //增加consul服务指定的地址 ) `````` 这样一个微服务端就定义好了，接下来我们就可以在客户端中调用了。
+在client调用微服务的Call函数 首先依然需要在client导入consul依赖,终端下运行
+go get github.com/go-micro/plugins/v4/registry/consul
+//初始化consul配置 consulReg := consul.NewRegistry() //创建一个microService,使用consul默认配置 consulService := micro.NewService( micro.Registry(consulReg), ) request := getCaptcha.CallRequest{} //创建micro客户端，第一个参数为服务名称，第二个参数为上面创建的consulService的Client microClient := getCaptcha."><meta itemprop="datePublished" content="2022-12-17T21:20:07+08:00" />
+<meta itemprop="dateModified" content="2022-12-17T21:20:07+08:00" />
+<meta itemprop="wordCount" content="96">
+<meta itemprop="keywords" content="" />
+  
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Go-micro框架使用踩坑笔记"/>
+<meta name="twitter:description" content="真的，没想到平常买东西碰上了假货，没想到敲代码用框架也用上假的了。起初是安装micro框架，GitHub上搜出来的micro已经不支持go-micro的一些用法，但是它极为相似，第一次使用我也不太熟悉，弄了很久发现为啥micro框架生成的代码不大对劲，然后在网上找到一篇教程，才终于解答疑惑。go-micro安装
+go-micro框架安装、使用 go-micro GitHub网址
+首先在windows上安装go-micro go install github.com/go-micro/cli/cmd/go-micro@latest 或者 安装成功后输入go-micro -v查看是否安装成功
+使用go-micro new命令初始化服务 使用命令go-micro new service helloworld 就会在当前路径下创建helloworl文件夹，其中包含一个service类型的微服务。
+紧接着我们去修改proto文件，因为他初始化设置了很多参数，用来测试微服务是否能连接成功，所以我们只需要保留Call方法以及对应传入参数Request和传出参数Response。
+定义好proto文件后，我们创建出对应的微服务go文件
+//首先需要下载依赖 make //然后创建出按照proto文件生成的所需要的微服务go文件 make proto 我们只保留了Call方法，然后在Call方法中实现所需要的功能，用Request和Response来传输数据。
+最后我们们修改main文件，增加consul作为服务发现 首先需要导入consul依赖,终端下运行
+go get github.com/go-micro/plugins/v4/registry/consul
+然后修改mian函数增加consul
+//初始化consul配置 consulReg := consul.NewRegistry() // Create service srv := micro.NewService() srv.Init( micro.Name(service), micro.Version(version), micro.Registry(consulReg), //使用consul作为服务发现 micro.Address(&#34;127.0.0.1:1111&#34;), //增加consul服务指定的地址 ) `````` 这样一个微服务端就定义好了，接下来我们就可以在客户端中调用了。
+在client调用微服务的Call函数 首先依然需要在client导入consul依赖,终端下运行
+go get github.com/go-micro/plugins/v4/registry/consul
+//初始化consul配置 consulReg := consul.NewRegistry() //创建一个microService,使用consul默认配置 consulService := micro.NewService( micro.Registry(consulReg), ) request := getCaptcha.CallRequest{} //创建micro客户端，第一个参数为服务名称，第二个参数为上面创建的consulService的Client microClient := getCaptcha."/>
+
+  
+  
+</head>
+
+  <body class="text-black duration-200 ease-out dark:text-white">
+    <header class="mx-auto flex h-[5rem] max-w-3xl px-8 lg:justify-center">
+  <div class="relative z-50 mr-auto flex items-center">
+    <a class="-translate-x-[1px] -translate-y-0.5 text-3xl font-bold" href="https://whyy1.github.io/"
+      >歪衣的学习笔记</a
+    >
+    <a
+      class="btn-dark ml-6 h-6 w-6 shrink-0 cursor-pointer [background:url(./theme.svg)_left_center/cover_no-repeat] dark:invert dark:[background-position:right]"
+    ></a>
+  </div>
+
+  <a
+    class="btn-menu relative z-50 -mr-8 flex h-[5rem] w-[5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2.5 lg:hidden"
+  ></a>
+
+  
+  <script>
+    
+    const htmlClass = document.documentElement.classList;
+    setTimeout(() => {
+      htmlClass.remove('not-ready');
+    }, 10);
+
+    
+    const btnMenu = document.querySelector('.btn-menu');
+    btnMenu.addEventListener('click', () => {
+      htmlClass.toggle('open');
+    });
+
+    
+    const metaTheme = document.querySelector('meta[name="theme-color"]');
+    const lightBg = `"#faf6f1"`.replace(/"/g, '');
+    const setDark = (isDark) => {
+      metaTheme.setAttribute('content', isDark ? '#000' : lightBg);
+      htmlClass[isDark ? 'add' : 'remove']('dark');
+      localStorage.setItem('dark', isDark);
+    };
+
+    
+    const darkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+    if (htmlClass.contains('dark')) {
+      setDark(true);
+    } else {
+      const darkVal = localStorage.getItem('dark');
+      setDark(darkVal ? darkVal === 'true' : darkScheme.matches);
+    }
+
+    
+    darkScheme.addEventListener('change', (event) => {
+      setDark(event.matches);
+    });
+
+    
+    const btnDark = document.querySelector('.btn-dark');
+    btnDark.addEventListener('click', () => {
+      setDark(localStorage.getItem('dark') !== 'true');
+    });
+  </script>
+
+  <div
+    class="nav-wrapper fixed inset-x-0 top-full z-40 flex h-full select-none flex-col justify-center pb-16 duration-200 dark:bg-black lg:static lg:h-auto lg:flex-row lg:!bg-transparent lg:pb-0 lg:transition-none"
+  >
+    
+    
+
+    
+    <nav
+      class="mt-12 flex justify-center space-x-10 dark:invert lg:mt-0 lg:ml-12 lg:items-center lg:space-x-6"
+    >
+      
+      <a
+        class="h-8 w-8 [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
+        style="--url: url(./github.svg)"
+        href=" https://github.com/whyy1 "
+        target="_blank"
+      ></a>
+      
+      <a
+        class="h-8 w-8 [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
+        style="--url: url(./rss.svg)"
+        href=" https://whyy1.github.io/index.xml "
+        target="_blank"
+      ></a>
+      
+    </nav>
+    
+  </div>
+</header>
+
+
+    <main
+      class="prose prose-neutral relative mx-auto min-h-[calc(100%-10rem)] max-w-3xl px-8 pt-20 pb-32 dark:prose-invert"
+    >
+      
+
+<article>
+  <header class="mb-20">
+    <h1 class="!my-0 pb-2.5">Go-micro框架使用踩坑笔记</h1>
+
+    
+    <div class="text-sm opacity-60">
+      
+      <time>Dec 17, 2022</time>
+      
+      
+    </div>
+    
+  </header>
+
+  <section><p>真的，没想到平常买东西碰上了假货，没想到敲代码用框架也用上假的了。起初是安装micro框架，GitHub上搜出来的micro已经不支持go-micro的一些用法，但是它极为相似，第一次使用我也不太熟悉，弄了很久发现为啥micro框架生成的代码不大对劲，然后在网上找到一篇教程，才终于解答疑惑。<a href="https://huaweicloud.csdn.net/63311e42d3efff3090b52cb1.html?spm=1001.2101.3001.6650.3&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Eactivity-3-123610827-blog-127120364.pc_relevant_aa2&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Eactivity-3-123610827-blog-127120364.pc_relevant_aa2&amp;utm_relevant_index=6">go-micro安装</a></p>
+<h2 id="go-micro框架安装使用">go-micro框架安装、使用</h2>
+<p><a href="https://github.com/go-micro/cli">go-micro GitHub网址</a></p>
+<ul>
+<li>首先在windows上安装go-micro</li>
+</ul>
+<pre tabindex="0"><code>go install github.com/go-micro/cli/cmd/go-micro@latest
+或者
+</code></pre><p>安装成功后输入<code>go-micro -v</code>查看是否安装成功</p>
+<ul>
+<li>使用go-micro new命令初始化服务</li>
+</ul>
+<p>使用命令<code>go-micro new service helloworld</code> 就会在当前路径下创建helloworl文件夹，其中包含一个service类型的微服务。</p>
+<p><img src="" alt="新建微服务图片">
+紧接着我们去修改proto文件，因为他初始化设置了很多参数，用来测试微服务是否能连接成功，所以我们只需要保留Call方法以及对应传入参数Request和传出参数Response。</p>
+<p>定义好proto文件后，我们创建出对应的微服务go文件</p>
+<pre tabindex="0"><code>//首先需要下载依赖
+make
+//然后创建出按照proto文件生成的所需要的微服务go文件
+make proto
+</code></pre><p><img src="" alt="修改后的handler文件">
+我们只保留了Call方法，然后在Call方法中实现所需要的功能，用Request和Response来传输数据。</p>
+<h2 id="最后我们们修改main文件增加consul作为服务发现">最后我们们修改main文件，增加consul作为服务发现</h2>
+<p>首先需要导入consul依赖,终端下运行<br>
+<code>go get github.com/go-micro/plugins/v4/registry/consul</code></p>
+<p>然后修改mian函数增加consul</p>
+<pre tabindex="0"><code>//初始化consul配置
+	consulReg := consul.NewRegistry()
+
+	// Create service
+	srv := micro.NewService()
+	srv.Init(
+		micro.Name(service),
+		micro.Version(version),
+		micro.Registry(consulReg),       //使用consul作为服务发现
+		micro.Address(&#34;127.0.0.1:1111&#34;), //增加consul服务指定的地址
+	)
+
+    ``````
+</code></pre><p><img src="" alt="新建微服务图片"><br>
+这样一个微服务端就定义好了，接下来我们就可以在客户端中调用了。</p>
+<h2 id="在client调用微服务的call函数">在client调用微服务的Call函数</h2>
+<p>首先依然需要在client导入consul依赖,终端下运行<br>
+<code>go get github.com/go-micro/plugins/v4/registry/consul</code></p>
+<pre tabindex="0"><code>	//初始化consul配置
+	consulReg := consul.NewRegistry()
+	//创建一个microService,使用consul默认配置
+	consulService := micro.NewService(
+		micro.Registry(consulReg),
+	)
+	request := getCaptcha.CallRequest{}
+	//创建micro客户端，第一个参数为服务名称，第二个参数为上面创建的consulService的Client
+	microClient := getCaptcha.NewGetCaptchaService(&#34;getCaptcha&#34;, consulService.Client())
+	//micro客户端调用call方法，使用resp接收返回的数据，
+	//第一个参数为context.TODO( ) , 指定一个不为空的Context
+	//第二个参数为request消息体
+	resp, err := microClient.Call(context.TODO(), &amp;request)
+	if err != nil {
+		fmt.Println(&#34;microClient调用Call方法失败，错误为：&#34;, err)
+		return
+	}
+</code></pre><p>这就是使用go-micro框架实现微服务的完整流程了</p>
+</section>
+
+  
+  
+
+  
+  
+  
+  <nav class="mt-24 flex rounded-lg bg-black/[3%] text-lg dark:bg-white/[8%]">
+    
+    
+    <a
+      class="ml-auto flex w-1/2 items-center justify-end p-6 pl-3 no-underline"
+      href="https://whyy1.github.io/post/grpc/"
+      ><span>gRPC的定义以及简单使用(增加consul做为服务发现)</span><span class="ml-1.5">→</span></a
+    >
+    
+  </nav>
+  
+
+  
+  
+  <div id="disqus_thread"></div>
+  <script>
+    const disqusShortname = 'YOUR_DISQUS_SHORTNAME';
+    const script = document.createElement('script');
+    script.src = 'https://' + disqusShortname + '.disqus.com/embed.js';
+    script.setAttribute('data-timestamp', +new Date());
+    document.head.appendChild(script);
+  </script>
+  
+</article>
+
+
+    </main>
+
+    <footer class="opaco mx-auto flex h-[5rem] max-w-3xl items-center px-8 text-[0.9em] opacity-60">
+  <div class="mr-auto">
+    &copy; 2022
+    <a class="link" href="https://whyy1.github.io/">歪衣的学习笔记</a>
+  </div>
+  <a class="link mx-6" href="https://gohugo.io/" rel="noopener" target="_blank">Powered by Hugo️️</a
+  >️
+  <a class="link" href="https://github.com/nanxiaobei/hugo-paper" rel="noopener" target="_blank"
+    >▷ Paper 6</a
+  >
+</footer>
+
+  </body>
+</html>

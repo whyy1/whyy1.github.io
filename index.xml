@@ -6,7 +6,29 @@
     <description>Recent content on 歪衣的学习笔记</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 29 Nov 2022 22:31:42 +0800</lastBuildDate><atom:link href="https://whyy1.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 17 Dec 2022 21:20:07 +0800</lastBuildDate><atom:link href="https://whyy1.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Go-micro框架使用踩坑笔记</title>
+      <link>https://whyy1.github.io/post/go-micro/</link>
+      <pubDate>Sat, 17 Dec 2022 21:20:07 +0800</pubDate>
+      
+      <guid>https://whyy1.github.io/post/go-micro/</guid>
+      <description>真的，没想到平常买东西碰上了假货，没想到敲代码用框架也用上假的了。起初是安装micro框架，GitHub上搜出来的micro已经不支持go-micro的一些用法，但是它极为相似，第一次使用我也不太熟悉，弄了很久发现为啥micro框架生成的代码不大对劲，然后在网上找到一篇教程，才终于解答疑惑。go-micro安装
+go-micro框架安装、使用 go-micro GitHub网址
+首先在windows上安装go-micro go install github.com/go-micro/cli/cmd/go-micro@latest 或者 安装成功后输入go-micro -v查看是否安装成功
+使用go-micro new命令初始化服务 使用命令go-micro new service helloworld 就会在当前路径下创建helloworl文件夹，其中包含一个service类型的微服务。
+紧接着我们去修改proto文件，因为他初始化设置了很多参数，用来测试微服务是否能连接成功，所以我们只需要保留Call方法以及对应传入参数Request和传出参数Response。
+定义好proto文件后，我们创建出对应的微服务go文件
+//首先需要下载依赖 make //然后创建出按照proto文件生成的所需要的微服务go文件 make proto 我们只保留了Call方法，然后在Call方法中实现所需要的功能，用Request和Response来传输数据。
+最后我们们修改main文件，增加consul作为服务发现 首先需要导入consul依赖,终端下运行
+go get github.com/go-micro/plugins/v4/registry/consul
+然后修改mian函数增加consul
+//初始化consul配置 consulReg := consul.NewRegistry() // Create service srv := micro.NewService() srv.Init( micro.Name(service), micro.Version(version), micro.Registry(consulReg), //使用consul作为服务发现 micro.Address(&amp;#34;127.0.0.1:1111&amp;#34;), //增加consul服务指定的地址 ) `````` 这样一个微服务端就定义好了，接下来我们就可以在客户端中调用了。
+在client调用微服务的Call函数 首先依然需要在client导入consul依赖,终端下运行
+go get github.com/go-micro/plugins/v4/registry/consul
+//初始化consul配置 consulReg := consul.NewRegistry() //创建一个microService,使用consul默认配置 consulService := micro.NewService( micro.Registry(consulReg), ) request := getCaptcha.CallRequest{} //创建micro客户端，第一个参数为服务名称，第二个参数为上面创建的consulService的Client microClient := getCaptcha.</description>
+    </item>
+    
     <item>
       <title>gRPC的定义以及简单使用(增加consul做为服务发现)</title>
       <link>https://whyy1.github.io/post/grpc/</link>
