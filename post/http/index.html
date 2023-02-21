@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html
+  class="not-ready text-sm lg:text-base"
+  style="--bg: #faf6f1"
+  lang="en-us"
+>
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+  
+  <title>Http - 歪衣的学习笔记</title>
+
+  
+  <meta name="theme-color" />
+  
+  <meta name="description" content="TCP/IP四层网络模型 应用层（协议:HTTP(超文本传送协议),FTP(文件传送协议),Telnet(远程终端协议),DNS(域名系统),SMTP(简单邮件传送协议)） 服务于用户的层次，工作在操作系统中的用户态，应用层以下工作在内核态。
+传输层 （协议:TCP,UDP） TCP(传输控制协议): 大部分应用使用的传输层协议，比如HTTP应用层协议。相比UDP它的特点就是能做到可靠传输，而依赖的就是流量控制、超时重传、拥塞控制、等机制，都是为了保证数据包能可靠传输数据包大小超过MSS(TCP 最大报文段长度为1460=1500-20(tcp头)-20(IP头))。
+超时重传：TCP发送方发送报文后，需要接收方返回确认报文，只有接收到确认报文才会继续发送报文。不然的话超过计时器时间没有接收到确认报文，就会重新发送之前的报文。（需要对发送报文和确认报文进行编号） 确认丢失：当接收到重复的确认报文丢弃并继续发送 TCP报文首部字段：20字节
+源端口和目的端口各2字节 序号:4字节，当前报文段第一个字节的序号，例如序号为301.长度为200字节 确认号:4字节，代表下一个报文段的第一个字节数序号，按照上面说法这个值为：501，即501之前的都收到了 确认ACK: 1bit，ACK为1时确认号字段才有效，建立连接后全都置为1 同步SYN: 1bit,置为1时为请求连接状态或接收连接状态，SYN为1、ACK为0时代表请求连接报文，连接成功后SYN、ACK都为1 终止FIN:1bit,为1时用于释放连接 窗口:2字节，0~2^16-1,用于表示发送此报文一方的接收窗口 数据偏移 保留 紧急URG:1bit,置为1代表紧急报文要尽快优先传送,1字节 推送PSH:1bit, 复位RST:1bit,为1代表TCP连接出现差错，需要重新创建连接 UDP(用户报数据报协议):只在IP数据报的基础上增加了很少一些功能，复用和分用，特点：尽最大的可能传输，不保证可靠交付、无连接的、UDP首部开销小(8字节:2源端口2目的端口2长度2检验和)、没有拥塞控制、
+网络层(协议:IP) IP协议会将传输层的报文作为数据部分，再加上IP包头组装成IP报文，一般分片为一个MTU(1500字节)，
+数据链路层 TCP三次握手 " />
+  <meta name="author" content="" />
+  
+
+  
+  
+  
+  
+  
+  
+  <link rel="preload stylesheet" as="style" href="https://whyy1.github.io/main.min.css" />
+
+  
+
+  
+  
+  
+    
+  
+  <link
+    rel="preload"
+    as="image"
+    href="https://whyy1.github.io/theme.png"
+  />
+
+  
+  
+  
+  <link rel="preload" as="image" href="https://cdn.whyy1.top/avatar.svg" />
+  
+  
+
+  
+  <link rel="preload" as="image" href="https://whyy1.github.io/github.svg" />
+  
+  <link rel="preload" as="image" href="https://whyy1.github.io/rss.svg" />
+  
+
+  
+  <link rel="icon" href="https://whyy1.github.io/favicon.ico" />
+  <link rel="apple-touch-icon" href="https://whyy1.github.io/apple-touch-icon.png" />
+
+  
+  <meta name="generator" content="Hugo 0.106.0-DEV">
+
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <meta property="og:title" content="Http" />
+<meta property="og:description" content="TCP/IP四层网络模型 应用层（协议:HTTP(超文本传送协议),FTP(文件传送协议),Telnet(远程终端协议),DNS(域名系统),SMTP(简单邮件传送协议)） 服务于用户的层次，工作在操作系统中的用户态，应用层以下工作在内核态。
+传输层 （协议:TCP,UDP） TCP(传输控制协议): 大部分应用使用的传输层协议，比如HTTP应用层协议。相比UDP它的特点就是能做到可靠传输，而依赖的就是流量控制、超时重传、拥塞控制、等机制，都是为了保证数据包能可靠传输数据包大小超过MSS(TCP 最大报文段长度为1460=1500-20(tcp头)-20(IP头))。
+超时重传：TCP发送方发送报文后，需要接收方返回确认报文，只有接收到确认报文才会继续发送报文。不然的话超过计时器时间没有接收到确认报文，就会重新发送之前的报文。（需要对发送报文和确认报文进行编号） 确认丢失：当接收到重复的确认报文丢弃并继续发送 TCP报文首部字段：20字节
+源端口和目的端口各2字节 序号:4字节，当前报文段第一个字节的序号，例如序号为301.长度为200字节 确认号:4字节，代表下一个报文段的第一个字节数序号，按照上面说法这个值为：501，即501之前的都收到了 确认ACK: 1bit，ACK为1时确认号字段才有效，建立连接后全都置为1 同步SYN: 1bit,置为1时为请求连接状态或接收连接状态，SYN为1、ACK为0时代表请求连接报文，连接成功后SYN、ACK都为1 终止FIN:1bit,为1时用于释放连接 窗口:2字节，0~2^16-1,用于表示发送此报文一方的接收窗口 数据偏移 保留 紧急URG:1bit,置为1代表紧急报文要尽快优先传送,1字节 推送PSH:1bit, 复位RST:1bit,为1代表TCP连接出现差错，需要重新创建连接 UDP(用户报数据报协议):只在IP数据报的基础上增加了很少一些功能，复用和分用，特点：尽最大的可能传输，不保证可靠交付、无连接的、UDP首部开销小(8字节:2源端口2目的端口2长度2检验和)、没有拥塞控制、
+网络层(协议:IP) IP协议会将传输层的报文作为数据部分，再加上IP包头组装成IP报文，一般分片为一个MTU(1500字节)，
+数据链路层 TCP三次握手 " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://whyy1.github.io/post/http/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2023-02-21T19:03:23+08:00" />
+<meta property="article:modified_time" content="2023-02-21T19:03:23+08:00" />
+
+
+  
+  <meta itemprop="name" content="Http">
+<meta itemprop="description" content="TCP/IP四层网络模型 应用层（协议:HTTP(超文本传送协议),FTP(文件传送协议),Telnet(远程终端协议),DNS(域名系统),SMTP(简单邮件传送协议)） 服务于用户的层次，工作在操作系统中的用户态，应用层以下工作在内核态。
+传输层 （协议:TCP,UDP） TCP(传输控制协议): 大部分应用使用的传输层协议，比如HTTP应用层协议。相比UDP它的特点就是能做到可靠传输，而依赖的就是流量控制、超时重传、拥塞控制、等机制，都是为了保证数据包能可靠传输数据包大小超过MSS(TCP 最大报文段长度为1460=1500-20(tcp头)-20(IP头))。
+超时重传：TCP发送方发送报文后，需要接收方返回确认报文，只有接收到确认报文才会继续发送报文。不然的话超过计时器时间没有接收到确认报文，就会重新发送之前的报文。（需要对发送报文和确认报文进行编号） 确认丢失：当接收到重复的确认报文丢弃并继续发送 TCP报文首部字段：20字节
+源端口和目的端口各2字节 序号:4字节，当前报文段第一个字节的序号，例如序号为301.长度为200字节 确认号:4字节，代表下一个报文段的第一个字节数序号，按照上面说法这个值为：501，即501之前的都收到了 确认ACK: 1bit，ACK为1时确认号字段才有效，建立连接后全都置为1 同步SYN: 1bit,置为1时为请求连接状态或接收连接状态，SYN为1、ACK为0时代表请求连接报文，连接成功后SYN、ACK都为1 终止FIN:1bit,为1时用于释放连接 窗口:2字节，0~2^16-1,用于表示发送此报文一方的接收窗口 数据偏移 保留 紧急URG:1bit,置为1代表紧急报文要尽快优先传送,1字节 推送PSH:1bit, 复位RST:1bit,为1代表TCP连接出现差错，需要重新创建连接 UDP(用户报数据报协议):只在IP数据报的基础上增加了很少一些功能，复用和分用，特点：尽最大的可能传输，不保证可靠交付、无连接的、UDP首部开销小(8字节:2源端口2目的端口2长度2检验和)、没有拥塞控制、
+网络层(协议:IP) IP协议会将传输层的报文作为数据部分，再加上IP包头组装成IP报文，一般分片为一个MTU(1500字节)，
+数据链路层 TCP三次握手 "><meta itemprop="datePublished" content="2023-02-21T19:03:23+08:00" />
+<meta itemprop="dateModified" content="2023-02-21T19:03:23+08:00" />
+<meta itemprop="wordCount" content="30">
+<meta itemprop="keywords" content="" />
+  
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Http"/>
+<meta name="twitter:description" content="TCP/IP四层网络模型 应用层（协议:HTTP(超文本传送协议),FTP(文件传送协议),Telnet(远程终端协议),DNS(域名系统),SMTP(简单邮件传送协议)） 服务于用户的层次，工作在操作系统中的用户态，应用层以下工作在内核态。
+传输层 （协议:TCP,UDP） TCP(传输控制协议): 大部分应用使用的传输层协议，比如HTTP应用层协议。相比UDP它的特点就是能做到可靠传输，而依赖的就是流量控制、超时重传、拥塞控制、等机制，都是为了保证数据包能可靠传输数据包大小超过MSS(TCP 最大报文段长度为1460=1500-20(tcp头)-20(IP头))。
+超时重传：TCP发送方发送报文后，需要接收方返回确认报文，只有接收到确认报文才会继续发送报文。不然的话超过计时器时间没有接收到确认报文，就会重新发送之前的报文。（需要对发送报文和确认报文进行编号） 确认丢失：当接收到重复的确认报文丢弃并继续发送 TCP报文首部字段：20字节
+源端口和目的端口各2字节 序号:4字节，当前报文段第一个字节的序号，例如序号为301.长度为200字节 确认号:4字节，代表下一个报文段的第一个字节数序号，按照上面说法这个值为：501，即501之前的都收到了 确认ACK: 1bit，ACK为1时确认号字段才有效，建立连接后全都置为1 同步SYN: 1bit,置为1时为请求连接状态或接收连接状态，SYN为1、ACK为0时代表请求连接报文，连接成功后SYN、ACK都为1 终止FIN:1bit,为1时用于释放连接 窗口:2字节，0~2^16-1,用于表示发送此报文一方的接收窗口 数据偏移 保留 紧急URG:1bit,置为1代表紧急报文要尽快优先传送,1字节 推送PSH:1bit, 复位RST:1bit,为1代表TCP连接出现差错，需要重新创建连接 UDP(用户报数据报协议):只在IP数据报的基础上增加了很少一些功能，复用和分用，特点：尽最大的可能传输，不保证可靠交付、无连接的、UDP首部开销小(8字节:2源端口2目的端口2长度2检验和)、没有拥塞控制、
+网络层(协议:IP) IP协议会将传输层的报文作为数据部分，再加上IP包头组装成IP报文，一般分片为一个MTU(1500字节)，
+数据链路层 TCP三次握手 "/>
+
+  
+  
+</head>
+
+  <body class="text-black duration-200 ease-out dark:text-white">
+    <header class="mx-auto flex h-[5rem] max-w-3xl px-8 lg:justify-center">
+  <div class="relative z-50 mr-auto flex items-center">
+    <a class="-translate-x-[1px] -translate-y-0.5 text-3xl font-bold" href="https://whyy1.github.io/"
+      >歪衣的学习笔记</a
+    >
+    <a
+      class="btn-dark ml-6 h-6 w-6 shrink-0 cursor-pointer [background:url(./theme.svg)_left_center/cover_no-repeat] dark:invert dark:[background-position:right]"
+    ></a>
+  </div>
+
+  <a
+    class="btn-menu relative z-50 -mr-8 flex h-[5rem] w-[5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2.5 lg:hidden"
+  ></a>
+
+  
+  <script>
+    
+    const htmlClass = document.documentElement.classList;
+    setTimeout(() => {
+      htmlClass.remove('not-ready');
+    }, 10);
+
+    
+    const btnMenu = document.querySelector('.btn-menu');
+    btnMenu.addEventListener('click', () => {
+      htmlClass.toggle('open');
+    });
+
+    
+    const metaTheme = document.querySelector('meta[name="theme-color"]');
+    const lightBg = `"#faf6f1"`.replace(/"/g, '');
+    const setDark = (isDark) => {
+      metaTheme.setAttribute('content', isDark ? '#000' : lightBg);
+      htmlClass[isDark ? 'add' : 'remove']('dark');
+      localStorage.setItem('dark', isDark);
+    };
+
+    
+    const darkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+    if (htmlClass.contains('dark')) {
+      setDark(true);
+    } else {
+      const darkVal = localStorage.getItem('dark');
+      setDark(darkVal ? darkVal === 'true' : darkScheme.matches);
+    }
+
+    
+    darkScheme.addEventListener('change', (event) => {
+      setDark(event.matches);
+    });
+
+    
+    const btnDark = document.querySelector('.btn-dark');
+    btnDark.addEventListener('click', () => {
+      setDark(localStorage.getItem('dark') !== 'true');
+    });
+  </script>
+
+  <div
+    class="nav-wrapper fixed inset-x-0 top-full z-40 flex h-full select-none flex-col justify-center pb-16 duration-200 dark:bg-black lg:static lg:h-auto lg:flex-row lg:!bg-transparent lg:pb-0 lg:transition-none"
+  >
+    
+    
+
+    
+    <nav
+      class="mt-12 flex justify-center space-x-10 dark:invert lg:mt-0 lg:ml-12 lg:items-center lg:space-x-6"
+    >
+      
+      <a
+        class="h-8 w-8 [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
+        style="--url: url(./github.svg)"
+        href=" https://github.com/whyy1 "
+        target="_blank"
+      ></a>
+      
+      <a
+        class="h-8 w-8 [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
+        style="--url: url(./rss.svg)"
+        href=" https://whyy1.github.io/index.xml "
+        target="_blank"
+      ></a>
+      
+    </nav>
+    
+  </div>
+</header>
+
+
+    <main
+      class="prose prose-neutral relative mx-auto min-h-[calc(100%-10rem)] max-w-3xl px-8 pt-20 pb-32 dark:prose-invert"
+    >
+      
+
+<article>
+  <header class="mb-20">
+    <h1 class="!my-0 pb-2.5">Http</h1>
+
+    
+    <div class="text-sm opacity-60">
+      
+      <time>Feb 21, 2023</time>
+      
+      
+    </div>
+    
+  </header>
+
+  <section><h3 id="tcpip四层网络模型">TCP/IP四层网络模型</h3>
+<ol>
+<li>应用层（协议:HTTP(超文本传送协议),FTP(文件传送协议),Telnet(远程终端协议),DNS(域名系统),SMTP(简单邮件传送协议)）</li>
+</ol>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/cb49769dd23c4f9f83a7bc0dd8871cb8~tplv-k3u1fbpfcp-watermark.image?" alt="image.png"><br>
+服务于用户的层次，工作在操作系统中的用户态，应用层以下工作在内核态。</p>
+<ol start="2">
+<li>传输层 （协议:TCP,UDP）</li>
+</ol>
+<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/81926aaa07a540babfcbd7450a8014d5~tplv-k3u1fbpfcp-watermark.image?" alt="image.png"><br>
+<strong>TCP(传输控制协议):</strong> 大部分应用使用的传输层协议，比如HTTP应用层协议。相比UDP它的特点就是能做到可靠传输，而依赖的就是<strong>流量控制</strong>、<strong>超时重传</strong>、<strong>拥塞控制</strong>、等机制，都是为了保证数据包能可靠传输数据包大小超过MSS(TCP 最大报文段长度为1460=1500-20(tcp头)-20(IP头))。<br>
+超时重传：TCP发送方发送报文后，需要接收方返回确认报文，只有接收到确认报文才会继续发送报文。不然的话超过计时器时间没有接收到确认报文，就会重新发送之前的报文。（需要对发送报文和确认报文进行编号）
+确认丢失：当接收到重复的确认报文丢弃并继续发送
+TCP报文首部字段：20字节</p>
+<ul>
+<li>源端口和目的端口各2字节</li>
+<li><strong>序号</strong>:4字节，当前报文段第一个字节的序号，例如序号为301.长度为200字节</li>
+<li><strong>确认号</strong>:4字节，代表下一个报文段的第一个字节数序号，按照上面说法这个值为：501，即501之前的都收到了</li>
+<li><strong>确认ACK:</strong> 1bit，ACK为1时确认号字段才有效，建立连接后全都置为1</li>
+<li><strong>同步SYN:</strong> 1bit,置为1时为请求连接状态或接收连接状态，SYN为1、ACK为0时代表请求连接报文，连接成功后SYN、ACK都为1</li>
+<li>终止FIN:1bit,为1时用于释放连接</li>
+<li>窗口:2字节，0~2^16-1,用于表示发送此报文一方的接收窗口</li>
+<li>数据偏移</li>
+<li>保留</li>
+<li>紧急URG:1bit,置为1代表紧急报文要尽快优先传送,1字节</li>
+<li>推送PSH:1bit,</li>
+<li>复位RST:1bit,为1代表TCP连接出现差错，需要重新创建连接</li>
+</ul>
+<p><strong>UDP(用户报数据报协议)</strong>:只在IP数据报的基础上增加了很少一些功能，复用和分用，特点：尽最大的可能传输，不保证可靠交付、无连接的、UDP首部开销小(<strong>8字节:2源端口2目的端口2长度2检验和</strong>)、没有拥塞控制、</p>
+<ol start="3">
+<li>网络层(协议:IP)</li>
+</ol>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/d533a26c74bf4a7289c2a25cdc98f8e6~tplv-k3u1fbpfcp-watermark.image?" alt="image.png">
+IP协议会将传输层的报文作为数据部分，再加上IP包头组装成IP报文，一般分片为一个MTU(1500字节)，</p>
+<ol start="4">
+<li>数据链路层</li>
+</ol>
+<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/51d0093d6254475a8a9bffa56cf682d5~tplv-k3u1fbpfcp-watermark.image?" alt="image.png"></p>
+<h3 id="tcp三次握手">TCP三次握手</h3>
+<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ad1c6b5ab64c4c0e836cb0af3b0bb478~tplv-k3u1fbpfcp-watermark.image?" alt="image.png"></p>
+</section>
+
+  
+  
+
+  
+  
+  
+  <nav class="mt-24 flex rounded-lg bg-black/[3%] text-lg dark:bg-white/[8%]">
+    
+    
+    <a
+      class="ml-auto flex w-1/2 items-center justify-end p-6 pl-3 no-underline"
+      href="https://whyy1.github.io/post/go-micro/"
+      ><span>Go-micro框架使用踩坑笔记</span><span class="ml-1.5">→</span></a
+    >
+    
+  </nav>
+  
+
+  
+  
+  <div id="disqus_thread"></div>
+  <script>
+    const disqusShortname = 'YOUR_DISQUS_SHORTNAME';
+    const script = document.createElement('script');
+    script.src = 'https://' + disqusShortname + '.disqus.com/embed.js';
+    script.setAttribute('data-timestamp', +new Date());
+    document.head.appendChild(script);
+  </script>
+  
+</article>
+
+
+    </main>
+
+    <footer class="opaco mx-auto flex h-[5rem] max-w-3xl items-center px-8 text-[0.9em] opacity-60">
+  <div class="mr-auto">
+    &copy; 2023
+    <a class="link" href="https://whyy1.github.io/">歪衣的学习笔记</a>
+  </div>
+  <a class="link mx-6" href="https://gohugo.io/" rel="noopener" target="_blank">Powered by Hugo️️</a
+  >️
+  <a class="link" href="https://github.com/nanxiaobei/hugo-paper" rel="noopener" target="_blank"
+    >▷ Paper 6</a
+  >
+</footer>
+
+  </body>
+</html>

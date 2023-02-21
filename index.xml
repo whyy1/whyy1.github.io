@@ -6,7 +6,21 @@
     <description>Recent content on 歪衣的学习笔记</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 17 Dec 2022 21:20:07 +0800</lastBuildDate><atom:link href="https://whyy1.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 21 Feb 2023 19:03:23 +0800</lastBuildDate><atom:link href="https://whyy1.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Http</title>
+      <link>https://whyy1.github.io/post/http/</link>
+      <pubDate>Tue, 21 Feb 2023 19:03:23 +0800</pubDate>
+      
+      <guid>https://whyy1.github.io/post/http/</guid>
+      <description>TCP/IP四层网络模型 应用层（协议:HTTP(超文本传送协议),FTP(文件传送协议),Telnet(远程终端协议),DNS(域名系统),SMTP(简单邮件传送协议)） 服务于用户的层次，工作在操作系统中的用户态，应用层以下工作在内核态。
+传输层 （协议:TCP,UDP） TCP(传输控制协议): 大部分应用使用的传输层协议，比如HTTP应用层协议。相比UDP它的特点就是能做到可靠传输，而依赖的就是流量控制、超时重传、拥塞控制、等机制，都是为了保证数据包能可靠传输数据包大小超过MSS(TCP 最大报文段长度为1460=1500-20(tcp头)-20(IP头))。
+超时重传：TCP发送方发送报文后，需要接收方返回确认报文，只有接收到确认报文才会继续发送报文。不然的话超过计时器时间没有接收到确认报文，就会重新发送之前的报文。（需要对发送报文和确认报文进行编号） 确认丢失：当接收到重复的确认报文丢弃并继续发送 TCP报文首部字段：20字节
+源端口和目的端口各2字节 序号:4字节，当前报文段第一个字节的序号，例如序号为301.长度为200字节 确认号:4字节，代表下一个报文段的第一个字节数序号，按照上面说法这个值为：501，即501之前的都收到了 确认ACK: 1bit，ACK为1时确认号字段才有效，建立连接后全都置为1 同步SYN: 1bit,置为1时为请求连接状态或接收连接状态，SYN为1、ACK为0时代表请求连接报文，连接成功后SYN、ACK都为1 终止FIN:1bit,为1时用于释放连接 窗口:2字节，0~2^16-1,用于表示发送此报文一方的接收窗口 数据偏移 保留 紧急URG:1bit,置为1代表紧急报文要尽快优先传送,1字节 推送PSH:1bit, 复位RST:1bit,为1代表TCP连接出现差错，需要重新创建连接 UDP(用户报数据报协议):只在IP数据报的基础上增加了很少一些功能，复用和分用，特点：尽最大的可能传输，不保证可靠交付、无连接的、UDP首部开销小(8字节:2源端口2目的端口2长度2检验和)、没有拥塞控制、
+网络层(协议:IP) IP协议会将传输层的报文作为数据部分，再加上IP包头组装成IP报文，一般分片为一个MTU(1500字节)，
+数据链路层 TCP三次握手 </description>
+    </item>
+    
     <item>
       <title>Go-micro框架使用踩坑笔记</title>
       <link>https://whyy1.github.io/post/go-micro/</link>
