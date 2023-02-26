@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html
+  class="not-ready text-sm lg:text-base"
+  style="--bg: #faf6f1"
+  lang="en-us"
+>
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+  
+  <title>Interview1 - 歪衣的学习笔记</title>
+
+  
+  <meta name="theme-color" />
+  
+  <meta name="description" content="最近刚刚结束一个后端的笔试，里面有两道编程题，都不算很难。但是苦于答题语言只给了Java，而自己已经很久不写Java而且也不用Java刷题，所以只写了出了第一道。所以现在用Go重新来做一下这两道编程题
+越是看起来简单的事情，越是要动手做起来
+编程题1 给定两个数组，一个数组代表一个N进制数，数组的上每一位N进制数用10进制表示。例如
+//16进制数6a7e表示为数组arra arra := []int{6, 10, 7,14} //16进制数3bcd表示为数组arrb arrb := []int{3, 11, 12,13} //他们的和为 result：=[]int{10, 6 ,4 ,11} 思路很简单，首先先将两个数组反转过来，然后对两个数组的每一位进行求和存进结果数组，如果这一位的和大于N就取余，然后在下一位加1。最后循环完两个数组后对结果再进行一次反转。
+func addRadixArray(a, b []int, redix int) []int { result := make([]int, len(a)&#43;1) revere(a) revere(b) for i := 0; i &lt; len(a) || i &lt; len(b); i&#43;&#43; { if i &lt; len(a) { result[i] &#43;= a[i] } if i &lt; len(b) { result[i] &#43;= b[i] } if result[i]/redix != 0 { result[i&#43;1] = result[i] / redix result[i] %= redix } } //fmt." />
+  <meta name="author" content="" />
+  
+
+  
+  
+  
+  
+  
+  
+  <link rel="preload stylesheet" as="style" href="https://whyy1.github.io/main.min.css" />
+
+  
+
+  
+  
+  
+    
+  
+  <link
+    rel="preload"
+    as="image"
+    href="https://whyy1.github.io/theme.png"
+  />
+
+  
+  
+  
+  <link rel="preload" as="image" href="https://cdn.whyy1.top/avatar.svg" />
+  
+  
+
+  
+  <link rel="preload" as="image" href="https://whyy1.github.io/github.svg" />
+  
+  <link rel="preload" as="image" href="https://whyy1.github.io/rss.svg" />
+  
+
+  
+  <link rel="icon" href="https://whyy1.github.io/favicon.ico" />
+  <link rel="apple-touch-icon" href="https://whyy1.github.io/apple-touch-icon.png" />
+
+  
+  <meta name="generator" content="Hugo 0.106.0-DEV">
+
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <meta property="og:title" content="Interview1" />
+<meta property="og:description" content="最近刚刚结束一个后端的笔试，里面有两道编程题，都不算很难。但是苦于答题语言只给了Java，而自己已经很久不写Java而且也不用Java刷题，所以只写了出了第一道。所以现在用Go重新来做一下这两道编程题
+越是看起来简单的事情，越是要动手做起来
+编程题1 给定两个数组，一个数组代表一个N进制数，数组的上每一位N进制数用10进制表示。例如
+//16进制数6a7e表示为数组arra arra := []int{6, 10, 7,14} //16进制数3bcd表示为数组arrb arrb := []int{3, 11, 12,13} //他们的和为 result：=[]int{10, 6 ,4 ,11} 思路很简单，首先先将两个数组反转过来，然后对两个数组的每一位进行求和存进结果数组，如果这一位的和大于N就取余，然后在下一位加1。最后循环完两个数组后对结果再进行一次反转。
+func addRadixArray(a, b []int, redix int) []int { result := make([]int, len(a)&#43;1) revere(a) revere(b) for i := 0; i &lt; len(a) || i &lt; len(b); i&#43;&#43; { if i &lt; len(a) { result[i] &#43;= a[i] } if i &lt; len(b) { result[i] &#43;= b[i] } if result[i]/redix != 0 { result[i&#43;1] = result[i] / redix result[i] %= redix } } //fmt." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://whyy1.github.io/post/interview1/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2023-02-26T19:52:42+08:00" />
+<meta property="article:modified_time" content="2023-02-26T19:52:42+08:00" />
+
+
+  
+  <meta itemprop="name" content="Interview1">
+<meta itemprop="description" content="最近刚刚结束一个后端的笔试，里面有两道编程题，都不算很难。但是苦于答题语言只给了Java，而自己已经很久不写Java而且也不用Java刷题，所以只写了出了第一道。所以现在用Go重新来做一下这两道编程题
+越是看起来简单的事情，越是要动手做起来
+编程题1 给定两个数组，一个数组代表一个N进制数，数组的上每一位N进制数用10进制表示。例如
+//16进制数6a7e表示为数组arra arra := []int{6, 10, 7,14} //16进制数3bcd表示为数组arrb arrb := []int{3, 11, 12,13} //他们的和为 result：=[]int{10, 6 ,4 ,11} 思路很简单，首先先将两个数组反转过来，然后对两个数组的每一位进行求和存进结果数组，如果这一位的和大于N就取余，然后在下一位加1。最后循环完两个数组后对结果再进行一次反转。
+func addRadixArray(a, b []int, redix int) []int { result := make([]int, len(a)&#43;1) revere(a) revere(b) for i := 0; i &lt; len(a) || i &lt; len(b); i&#43;&#43; { if i &lt; len(a) { result[i] &#43;= a[i] } if i &lt; len(b) { result[i] &#43;= b[i] } if result[i]/redix != 0 { result[i&#43;1] = result[i] / redix result[i] %= redix } } //fmt."><meta itemprop="datePublished" content="2023-02-26T19:52:42+08:00" />
+<meta itemprop="dateModified" content="2023-02-26T19:52:42+08:00" />
+<meta itemprop="wordCount" content="259">
+<meta itemprop="keywords" content="" />
+  
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Interview1"/>
+<meta name="twitter:description" content="最近刚刚结束一个后端的笔试，里面有两道编程题，都不算很难。但是苦于答题语言只给了Java，而自己已经很久不写Java而且也不用Java刷题，所以只写了出了第一道。所以现在用Go重新来做一下这两道编程题
+越是看起来简单的事情，越是要动手做起来
+编程题1 给定两个数组，一个数组代表一个N进制数，数组的上每一位N进制数用10进制表示。例如
+//16进制数6a7e表示为数组arra arra := []int{6, 10, 7,14} //16进制数3bcd表示为数组arrb arrb := []int{3, 11, 12,13} //他们的和为 result：=[]int{10, 6 ,4 ,11} 思路很简单，首先先将两个数组反转过来，然后对两个数组的每一位进行求和存进结果数组，如果这一位的和大于N就取余，然后在下一位加1。最后循环完两个数组后对结果再进行一次反转。
+func addRadixArray(a, b []int, redix int) []int { result := make([]int, len(a)&#43;1) revere(a) revere(b) for i := 0; i &lt; len(a) || i &lt; len(b); i&#43;&#43; { if i &lt; len(a) { result[i] &#43;= a[i] } if i &lt; len(b) { result[i] &#43;= b[i] } if result[i]/redix != 0 { result[i&#43;1] = result[i] / redix result[i] %= redix } } //fmt."/>
+
+  
+  
+</head>
+
+  <body class="text-black duration-200 ease-out dark:text-white">
+    <header class="mx-auto flex h-[5rem] max-w-3xl px-8 lg:justify-center">
+  <div class="relative z-50 mr-auto flex items-center">
+    <a class="-translate-x-[1px] -translate-y-0.5 text-3xl font-bold" href="https://whyy1.github.io/"
+      >歪衣的学习笔记</a
+    >
+    <a
+      class="btn-dark ml-6 h-6 w-6 shrink-0 cursor-pointer [background:url(./theme.svg)_left_center/cover_no-repeat] dark:invert dark:[background-position:right]"
+    ></a>
+  </div>
+
+  <a
+    class="btn-menu relative z-50 -mr-8 flex h-[5rem] w-[5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2.5 lg:hidden"
+  ></a>
+
+  
+  <script>
+    
+    const htmlClass = document.documentElement.classList;
+    setTimeout(() => {
+      htmlClass.remove('not-ready');
+    }, 10);
+
+    
+    const btnMenu = document.querySelector('.btn-menu');
+    btnMenu.addEventListener('click', () => {
+      htmlClass.toggle('open');
+    });
+
+    
+    const metaTheme = document.querySelector('meta[name="theme-color"]');
+    const lightBg = `"#faf6f1"`.replace(/"/g, '');
+    const setDark = (isDark) => {
+      metaTheme.setAttribute('content', isDark ? '#000' : lightBg);
+      htmlClass[isDark ? 'add' : 'remove']('dark');
+      localStorage.setItem('dark', isDark);
+    };
+
+    
+    const darkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+    if (htmlClass.contains('dark')) {
+      setDark(true);
+    } else {
+      const darkVal = localStorage.getItem('dark');
+      setDark(darkVal ? darkVal === 'true' : darkScheme.matches);
+    }
+
+    
+    darkScheme.addEventListener('change', (event) => {
+      setDark(event.matches);
+    });
+
+    
+    const btnDark = document.querySelector('.btn-dark');
+    btnDark.addEventListener('click', () => {
+      setDark(localStorage.getItem('dark') !== 'true');
+    });
+  </script>
+
+  <div
+    class="nav-wrapper fixed inset-x-0 top-full z-40 flex h-full select-none flex-col justify-center pb-16 duration-200 dark:bg-black lg:static lg:h-auto lg:flex-row lg:!bg-transparent lg:pb-0 lg:transition-none"
+  >
+    
+    
+
+    
+    <nav
+      class="mt-12 flex justify-center space-x-10 dark:invert lg:mt-0 lg:ml-12 lg:items-center lg:space-x-6"
+    >
+      
+      <a
+        class="h-8 w-8 [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
+        style="--url: url(./github.svg)"
+        href=" https://github.com/whyy1 "
+        target="_blank"
+      ></a>
+      
+      <a
+        class="h-8 w-8 [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
+        style="--url: url(./rss.svg)"
+        href=" https://whyy1.github.io/index.xml "
+        target="_blank"
+      ></a>
+      
+    </nav>
+    
+  </div>
+</header>
+
+
+    <main
+      class="prose prose-neutral relative mx-auto min-h-[calc(100%-10rem)] max-w-3xl px-8 pt-20 pb-32 dark:prose-invert"
+    >
+      
+
+<article>
+  <header class="mb-20">
+    <h1 class="!my-0 pb-2.5">Interview1</h1>
+
+    
+    <div class="text-sm opacity-60">
+      
+      <time>Feb 26, 2023</time>
+      
+      
+    </div>
+    
+  </header>
+
+  <section><p>最近刚刚结束一个后端的笔试，里面有两道编程题，都不算很难。但是苦于答题语言只给了Java，而自己已经很久不写Java而且也不用Java刷题，所以只写了出了第一道。所以现在用Go重新来做一下这两道编程题</p>
+<blockquote>
+<p>越是看起来简单的事情，越是要动手做起来</p>
+</blockquote>
+<h1 id="编程题1">编程题1</h1>
+<p>给定两个数组，一个数组代表一个N进制数，数组的上每一位N进制数用10进制表示。例如</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-golang" data-lang="golang"><span style="display:flex;"><span><span style="color:#75715e">//16进制数6a7e表示为数组arra
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">arra</span> <span style="color:#f92672">:=</span> []<span style="color:#66d9ef">int</span>{<span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">7</span>,<span style="color:#ae81ff">14</span>}
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//16进制数3bcd表示为数组arrb
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">arrb</span> <span style="color:#f92672">:=</span> []<span style="color:#66d9ef">int</span>{<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">11</span>, <span style="color:#ae81ff">12</span>,<span style="color:#ae81ff">13</span>}
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//他们的和为
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">result</span><span style="color:#960050;background-color:#1e0010">：</span>=[]<span style="color:#66d9ef">int</span>{<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">6</span> ,<span style="color:#ae81ff">4</span> ,<span style="color:#ae81ff">11</span>}
+</span></span></code></pre></div><p><strong>思路</strong>很简单，首先先将两个数组反转过来，然后对两个数组的每一位进行求和存进结果数组，如果这一位的和大于N就取余，然后在下一位加1。最后循环完两个数组后对结果再进行一次反转。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">addRadixArray</span>(<span style="color:#a6e22e">a</span>, <span style="color:#a6e22e">b</span> []<span style="color:#66d9ef">int</span>, <span style="color:#a6e22e">redix</span> <span style="color:#66d9ef">int</span>) []<span style="color:#66d9ef">int</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">result</span> <span style="color:#f92672">:=</span> make([]<span style="color:#66d9ef">int</span>, len(<span style="color:#a6e22e">a</span>)<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">revere</span>(<span style="color:#a6e22e">a</span>)
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">revere</span>(<span style="color:#a6e22e">b</span>)
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; len(<span style="color:#a6e22e">a</span>) <span style="color:#f92672">||</span> <span style="color:#a6e22e">i</span> &lt; len(<span style="color:#a6e22e">b</span>); <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">i</span> &lt; len(<span style="color:#a6e22e">a</span>) {
+</span></span><span style="display:flex;"><span>         <span style="color:#a6e22e">result</span>[<span style="color:#a6e22e">i</span>] <span style="color:#f92672">+=</span> <span style="color:#a6e22e">a</span>[<span style="color:#a6e22e">i</span>]
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">i</span> &lt; len(<span style="color:#a6e22e">b</span>) {
+</span></span><span style="display:flex;"><span>         <span style="color:#a6e22e">result</span>[<span style="color:#a6e22e">i</span>] <span style="color:#f92672">+=</span> <span style="color:#a6e22e">b</span>[<span style="color:#a6e22e">i</span>]
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">result</span>[<span style="color:#a6e22e">i</span>]<span style="color:#f92672">/</span><span style="color:#a6e22e">redix</span> <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span> {
+</span></span><span style="display:flex;"><span>         <span style="color:#a6e22e">result</span>[<span style="color:#a6e22e">i</span><span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>] = <span style="color:#a6e22e">result</span>[<span style="color:#a6e22e">i</span>] <span style="color:#f92672">/</span> <span style="color:#a6e22e">redix</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#a6e22e">result</span>[<span style="color:#a6e22e">i</span>] <span style="color:#f92672">%=</span> <span style="color:#a6e22e">redix</span>
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">//fmt.Println(result)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">revere</span>(<span style="color:#a6e22e">result</span>)
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">result</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">revere</span>(<span style="color:#a6e22e">arr</span> []<span style="color:#66d9ef">int</span>) []<span style="color:#66d9ef">int</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; len(<span style="color:#a6e22e">arr</span>)<span style="color:#f92672">/</span><span style="color:#ae81ff">2</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">j</span> <span style="color:#f92672">:=</span> len(<span style="color:#a6e22e">arr</span>) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> <span style="color:#a6e22e">i</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">//k := arr[i]
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      <span style="color:#75715e">//arr[i] = arr[j]
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      <span style="color:#75715e">//arr[j] = k
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      <span style="color:#75715e">//多重赋值语句，下面等于上面3行的两数交换语句
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      <span style="color:#a6e22e">arr</span>[<span style="color:#a6e22e">i</span>], <span style="color:#a6e22e">arr</span>[<span style="color:#a6e22e">j</span>] = <span style="color:#a6e22e">arr</span>[<span style="color:#a6e22e">j</span>], <span style="color:#a6e22e">arr</span>[<span style="color:#a6e22e">i</span>]
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">arr</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">arra</span> <span style="color:#f92672">:=</span> []<span style="color:#66d9ef">int</span>{<span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">14</span>}
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">arrb</span> <span style="color:#f92672">:=</span> []<span style="color:#66d9ef">int</span>{<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">11</span>, <span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">13</span>}
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">redix</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">16</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;第一个数&#34;</span>, <span style="color:#a6e22e">arra</span>)
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;第二个数&#34;</span>, <span style="color:#a6e22e">arrb</span>)
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">sumArray</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">addRadixArray</span>(<span style="color:#a6e22e">arra</span>, <span style="color:#a6e22e">arrb</span>, <span style="color:#a6e22e">redix</span>)
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">redix</span>, <span style="color:#e6db74">&#34;进制下的和为&#34;</span>, <span style="color:#a6e22e">sumArray</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>代码也很简单，不过Go中没有数组翻转的函数，在写反转函数时又了解到Go的一个多重赋值语句的使用<code>arr[i], arr[j] = arr[j], arr[i]</code>，就相当于arr[i]和arr[j]进行交换，不需要使用一个中间变量来进行两数交换。</p>
+<h1 id="编程题2">编程题2</h1>
+<p><strong>题目</strong>对于任意输入的一段文本，需要判断该文本是否包含了至少2个行业词库中的词。 请实现一个方法来满足该需求。注意: 1.匹配时忽略字母大小写; 2.相同的词出现多次也只算1个. 3.尽可能考虑执行高效。<br>
+行业词库词汇示例:[nodejs] [微服务] [定时任务] [JavaScript] [浏览器] [并发] [Rabbit] [MQ] [数据库] [MySQL]<br>
+测试用例: &ldquo;MySQL是世界上最流行的开源数据库”，返回 true<br>
+<strong>思路</strong>将这些词语用map存起来，接着遍历这个map，用<code>strings.Contains(text,term)</code>函数来判断text文本中是否含有term这些热门词汇，如果有计数器加1，当计数器大于等于2时就返回true。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">containsIndustryTerms</span>(<span style="color:#a6e22e">text</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">industryTerms</span> <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#66d9ef">bool</span>) <span style="color:#66d9ef">bool</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">text</span> = <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">ToLower</span>(<span style="color:#a6e22e">text</span>)
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">text</span>)
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">count</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">term</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">industryTerms</span> {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">Contains</span>(<span style="color:#a6e22e">text</span>, <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">ToLower</span>(<span style="color:#a6e22e">term</span>)) {
+</span></span><span style="display:flex;"><span>         <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">term</span>)
+</span></span><span style="display:flex;"><span>         <span style="color:#a6e22e">count</span><span style="color:#f92672">++</span>
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">count</span> <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">2</span> {
+</span></span><span style="display:flex;"><span>         <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">count</span> <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">text</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;Mysql是世界上最流行的开源数据库&#34;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">industryTerms</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#66d9ef">bool</span>{
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;nodejs&#34;</span>:     <span style="color:#66d9ef">true</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;微服务&#34;</span>:        <span style="color:#66d9ef">true</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;定时任务&#34;</span>:       <span style="color:#66d9ef">true</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;JavaScript&#34;</span>: <span style="color:#66d9ef">true</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;浏览器&#34;</span>:        <span style="color:#66d9ef">true</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;并发&#34;</span>:         <span style="color:#66d9ef">true</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;Rabbit MQ&#34;</span>:  <span style="color:#66d9ef">true</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;数据库&#34;</span>:        <span style="color:#66d9ef">true</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;MySQL&#34;</span>:      <span style="color:#66d9ef">true</span>,
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">text</span>, <span style="color:#e6db74">&#34;是否包含两个行业词库中的词&#34;</span>, <span style="color:#a6e22e">containsIndustryTerms</span>(<span style="color:#a6e22e">text</span>, <span style="color:#a6e22e">industryTerms</span>))
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>这个其实也不难，主要是当时时间快没了，然后答题编辑器给出的代码很乱，然后语法又不是记得很清楚，最后就懒得做了。现在来说就是一个后悔，主要原因还是自己基础不够扎实，要开始复习一下算法题了。</p>
+</section>
+
+  
+  
+
+  
+  
+  
+  <nav class="mt-24 flex rounded-lg bg-black/[3%] text-lg dark:bg-white/[8%]">
+    
+    
+    <a
+      class="ml-auto flex w-1/2 items-center justify-end p-6 pl-3 no-underline"
+      href="https://whyy1.github.io/post/redis/"
+      ><span>Redis小记</span><span class="ml-1.5">→</span></a
+    >
+    
+  </nav>
+  
+
+  
+  
+  <div id="disqus_thread"></div>
+  <script>
+    const disqusShortname = 'YOUR_DISQUS_SHORTNAME';
+    const script = document.createElement('script');
+    script.src = 'https://' + disqusShortname + '.disqus.com/embed.js';
+    script.setAttribute('data-timestamp', +new Date());
+    document.head.appendChild(script);
+  </script>
+  
+</article>
+
+
+    </main>
+
+    <footer class="opaco mx-auto flex h-[5rem] max-w-3xl items-center px-8 text-[0.9em] opacity-60">
+  <div class="mr-auto">
+    &copy; 2023
+    <a class="link" href="https://whyy1.github.io/">歪衣的学习笔记</a>
+  </div>
+  <a class="link mx-6" href="https://gohugo.io/" rel="noopener" target="_blank">Powered by Hugo️️</a
+  >️
+  <a class="link" href="https://github.com/nanxiaobei/hugo-paper" rel="noopener" target="_blank"
+    >▷ Paper 6</a
+  >
+</footer>
+
+  </body>
+</html>

@@ -6,7 +6,20 @@
     <description>Recent content on 歪衣的学习笔记</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 22 Feb 2023 23:12:13 +0800</lastBuildDate><atom:link href="https://whyy1.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 26 Feb 2023 19:52:42 +0800</lastBuildDate><atom:link href="https://whyy1.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Interview1</title>
+      <link>https://whyy1.github.io/post/interview1/</link>
+      <pubDate>Sun, 26 Feb 2023 19:52:42 +0800</pubDate>
+      
+      <guid>https://whyy1.github.io/post/interview1/</guid>
+      <description>最近刚刚结束一个后端的笔试，里面有两道编程题，都不算很难。但是苦于答题语言只给了Java，而自己已经很久不写Java而且也不用Java刷题，所以只写了出了第一道。所以现在用Go重新来做一下这两道编程题
+越是看起来简单的事情，越是要动手做起来
+编程题1 给定两个数组，一个数组代表一个N进制数，数组的上每一位N进制数用10进制表示。例如
+//16进制数6a7e表示为数组arra arra := []int{6, 10, 7,14} //16进制数3bcd表示为数组arrb arrb := []int{3, 11, 12,13} //他们的和为 result：=[]int{10, 6 ,4 ,11} 思路很简单，首先先将两个数组反转过来，然后对两个数组的每一位进行求和存进结果数组，如果这一位的和大于N就取余，然后在下一位加1。最后循环完两个数组后对结果再进行一次反转。
+func addRadixArray(a, b []int, redix int) []int { result := make([]int, len(a)+1) revere(a) revere(b) for i := 0; i &amp;lt; len(a) || i &amp;lt; len(b); i++ { if i &amp;lt; len(a) { result[i] += a[i] } if i &amp;lt; len(b) { result[i] += b[i] } if result[i]/redix != 0 { result[i+1] = result[i] / redix result[i] %= redix } } //fmt.</description>
+    </item>
+    
     <item>
       <title>Redis小记</title>
       <link>https://whyy1.github.io/post/redis/</link>
