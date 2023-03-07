@@ -48,15 +48,14 @@
   <meta name="theme-color" />
   
   <meta name="description" content="最近把自己一个小玩意儿用docker部署到服务器后，开始尝试了解kubernetes，但是看了一眼阿里云k8s的收费情况，作为学生党当然是选择白嫖。现阶段只是了解学习的阶段，所以选择使用minikube来学习了解k8s。参考文档
-Kubernetes 集群 Kubernetes 协调一个高可用计算机集群，每个计算机作为独立单元互相连接工作。 一个 Kubernetes 集群包含两种类型的资源:
+Kubernetes 集群 Kubernetes (K8S) 是一个容器化 应用提供集群部署和管理的开源工具。
+高可用，不宕机，自动灾难恢复 灰度更新，不影响业务正常运转 一键回滚到历史版本 方便的伸缩扩展（应用伸缩，机器加减）、提供负载均衡 有一个完善的生态 Kubernetes 协调一个高可用计算机集群，每个计算机作为独立单元互相连接工作。 一个 Kubernetes 集群包含两种类型的资源:
 Master 调度整个集群
 Master节点负责管理整个集群，控制工作节点。 Nodes 负责运行应用
 Node是一个虚拟机或者物理机，作为一个工作节点。它在 Kubernetes 集群中充当工作机器的角色，应该具有Kubelet：管理 Node 而且是 Node 与 Master 通信的代理以及用于处理容器操作的工具。
 Master 管理集群，Node 用于托管正在运行的应用。 Deployment （部署） 创建 Kubernetes Deployment 配置，Deployment 指挥 Kubernetes 如何创建和更新应用程序的实例。通过修改Deployment文件来控制kubernetes来创建或是修改Pod。个人理解类似于dockerfile，表示应该如何创建Pods。
 相关命令
-# 查看 deployment kubectl get deployment # 创建命令，可以指定镜像版本 kubectl create deployment hello-node --image=registry.k8s.io/echoserver:1.4 # 也可以通过pod.yaml来部署Pod kubectl apply -f .\pod.yaml # 删除deployment kubectl delete deployment hello-minikube Pods kubernetes调度、管理的最小单位，一个Pod里面可以包含一个或多个容器，每个 Pod 有自己的虚拟IP。是运行一个应用程序的最小单元。
-相关命令
-# 查看Pods kubectl get pods # 通过命令行运行 kubectl run testapp --image=ccr." />
+# 查看 deployment kubectl get deployment # 创建命令，可以指定镜像版本 kubectl create deployment hello-node --image=registry.k8s.io/echoserver:1.4 # 也可以通过pod.yaml来部署Pod kubectl apply -f .\pod.yaml # 删除deployment kubectl delete deployment hello-minikube Pods kubernetes调度、管理的最小单位，一个Pod里面可以包含一个或多个容器，每个 Pod 有自己的虚拟IP。是运行一个应用程序的最小单元。" />
   <meta name="author" content="" />
   
 
@@ -115,15 +114,14 @@ Master 管理集群，Node 用于托管正在运行的应用。 Deployment （�
   
   <meta property="og:title" content="Kubernetes" />
 <meta property="og:description" content="最近把自己一个小玩意儿用docker部署到服务器后，开始尝试了解kubernetes，但是看了一眼阿里云k8s的收费情况，作为学生党当然是选择白嫖。现阶段只是了解学习的阶段，所以选择使用minikube来学习了解k8s。参考文档
-Kubernetes 集群 Kubernetes 协调一个高可用计算机集群，每个计算机作为独立单元互相连接工作。 一个 Kubernetes 集群包含两种类型的资源:
+Kubernetes 集群 Kubernetes (K8S) 是一个容器化 应用提供集群部署和管理的开源工具。
+高可用，不宕机，自动灾难恢复 灰度更新，不影响业务正常运转 一键回滚到历史版本 方便的伸缩扩展（应用伸缩，机器加减）、提供负载均衡 有一个完善的生态 Kubernetes 协调一个高可用计算机集群，每个计算机作为独立单元互相连接工作。 一个 Kubernetes 集群包含两种类型的资源:
 Master 调度整个集群
 Master节点负责管理整个集群，控制工作节点。 Nodes 负责运行应用
 Node是一个虚拟机或者物理机，作为一个工作节点。它在 Kubernetes 集群中充当工作机器的角色，应该具有Kubelet：管理 Node 而且是 Node 与 Master 通信的代理以及用于处理容器操作的工具。
 Master 管理集群，Node 用于托管正在运行的应用。 Deployment （部署） 创建 Kubernetes Deployment 配置，Deployment 指挥 Kubernetes 如何创建和更新应用程序的实例。通过修改Deployment文件来控制kubernetes来创建或是修改Pod。个人理解类似于dockerfile，表示应该如何创建Pods。
 相关命令
-# 查看 deployment kubectl get deployment # 创建命令，可以指定镜像版本 kubectl create deployment hello-node --image=registry.k8s.io/echoserver:1.4 # 也可以通过pod.yaml来部署Pod kubectl apply -f .\pod.yaml # 删除deployment kubectl delete deployment hello-minikube Pods kubernetes调度、管理的最小单位，一个Pod里面可以包含一个或多个容器，每个 Pod 有自己的虚拟IP。是运行一个应用程序的最小单元。
-相关命令
-# 查看Pods kubectl get pods # 通过命令行运行 kubectl run testapp --image=ccr." />
+# 查看 deployment kubectl get deployment # 创建命令，可以指定镜像版本 kubectl create deployment hello-node --image=registry.k8s.io/echoserver:1.4 # 也可以通过pod.yaml来部署Pod kubectl apply -f .\pod.yaml # 删除deployment kubectl delete deployment hello-minikube Pods kubernetes调度、管理的最小单位，一个Pod里面可以包含一个或多个容器，每个 Pod 有自己的虚拟IP。是运行一个应用程序的最小单元。" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://whyy1.github.io/post/kubernetes/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2022-11-10T22:46:20+08:00" />
@@ -133,31 +131,29 @@ Master 管理集群，Node 用于托管正在运行的应用。 Deployment （�
   
   <meta itemprop="name" content="Kubernetes">
 <meta itemprop="description" content="最近把自己一个小玩意儿用docker部署到服务器后，开始尝试了解kubernetes，但是看了一眼阿里云k8s的收费情况，作为学生党当然是选择白嫖。现阶段只是了解学习的阶段，所以选择使用minikube来学习了解k8s。参考文档
-Kubernetes 集群 Kubernetes 协调一个高可用计算机集群，每个计算机作为独立单元互相连接工作。 一个 Kubernetes 集群包含两种类型的资源:
+Kubernetes 集群 Kubernetes (K8S) 是一个容器化 应用提供集群部署和管理的开源工具。
+高可用，不宕机，自动灾难恢复 灰度更新，不影响业务正常运转 一键回滚到历史版本 方便的伸缩扩展（应用伸缩，机器加减）、提供负载均衡 有一个完善的生态 Kubernetes 协调一个高可用计算机集群，每个计算机作为独立单元互相连接工作。 一个 Kubernetes 集群包含两种类型的资源:
 Master 调度整个集群
 Master节点负责管理整个集群，控制工作节点。 Nodes 负责运行应用
 Node是一个虚拟机或者物理机，作为一个工作节点。它在 Kubernetes 集群中充当工作机器的角色，应该具有Kubelet：管理 Node 而且是 Node 与 Master 通信的代理以及用于处理容器操作的工具。
 Master 管理集群，Node 用于托管正在运行的应用。 Deployment （部署） 创建 Kubernetes Deployment 配置，Deployment 指挥 Kubernetes 如何创建和更新应用程序的实例。通过修改Deployment文件来控制kubernetes来创建或是修改Pod。个人理解类似于dockerfile，表示应该如何创建Pods。
 相关命令
-# 查看 deployment kubectl get deployment # 创建命令，可以指定镜像版本 kubectl create deployment hello-node --image=registry.k8s.io/echoserver:1.4 # 也可以通过pod.yaml来部署Pod kubectl apply -f .\pod.yaml # 删除deployment kubectl delete deployment hello-minikube Pods kubernetes调度、管理的最小单位，一个Pod里面可以包含一个或多个容器，每个 Pod 有自己的虚拟IP。是运行一个应用程序的最小单元。
-相关命令
-# 查看Pods kubectl get pods # 通过命令行运行 kubectl run testapp --image=ccr."><meta itemprop="datePublished" content="2022-11-10T22:46:20+08:00" />
+# 查看 deployment kubectl get deployment # 创建命令，可以指定镜像版本 kubectl create deployment hello-node --image=registry.k8s.io/echoserver:1.4 # 也可以通过pod.yaml来部署Pod kubectl apply -f .\pod.yaml # 删除deployment kubectl delete deployment hello-minikube Pods kubernetes调度、管理的最小单位，一个Pod里面可以包含一个或多个容器，每个 Pod 有自己的虚拟IP。是运行一个应用程序的最小单元。"><meta itemprop="datePublished" content="2022-11-10T22:46:20+08:00" />
 <meta itemprop="dateModified" content="2022-11-10T22:46:20+08:00" />
-<meta itemprop="wordCount" content="158">
+<meta itemprop="wordCount" content="167">
 <meta itemprop="keywords" content="" />
   
   <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Kubernetes"/>
 <meta name="twitter:description" content="最近把自己一个小玩意儿用docker部署到服务器后，开始尝试了解kubernetes，但是看了一眼阿里云k8s的收费情况，作为学生党当然是选择白嫖。现阶段只是了解学习的阶段，所以选择使用minikube来学习了解k8s。参考文档
-Kubernetes 集群 Kubernetes 协调一个高可用计算机集群，每个计算机作为独立单元互相连接工作。 一个 Kubernetes 集群包含两种类型的资源:
+Kubernetes 集群 Kubernetes (K8S) 是一个容器化 应用提供集群部署和管理的开源工具。
+高可用，不宕机，自动灾难恢复 灰度更新，不影响业务正常运转 一键回滚到历史版本 方便的伸缩扩展（应用伸缩，机器加减）、提供负载均衡 有一个完善的生态 Kubernetes 协调一个高可用计算机集群，每个计算机作为独立单元互相连接工作。 一个 Kubernetes 集群包含两种类型的资源:
 Master 调度整个集群
 Master节点负责管理整个集群，控制工作节点。 Nodes 负责运行应用
 Node是一个虚拟机或者物理机，作为一个工作节点。它在 Kubernetes 集群中充当工作机器的角色，应该具有Kubelet：管理 Node 而且是 Node 与 Master 通信的代理以及用于处理容器操作的工具。
 Master 管理集群，Node 用于托管正在运行的应用。 Deployment （部署） 创建 Kubernetes Deployment 配置，Deployment 指挥 Kubernetes 如何创建和更新应用程序的实例。通过修改Deployment文件来控制kubernetes来创建或是修改Pod。个人理解类似于dockerfile，表示应该如何创建Pods。
 相关命令
-# 查看 deployment kubectl get deployment # 创建命令，可以指定镜像版本 kubectl create deployment hello-node --image=registry.k8s.io/echoserver:1.4 # 也可以通过pod.yaml来部署Pod kubectl apply -f .\pod.yaml # 删除deployment kubectl delete deployment hello-minikube Pods kubernetes调度、管理的最小单位，一个Pod里面可以包含一个或多个容器，每个 Pod 有自己的虚拟IP。是运行一个应用程序的最小单元。
-相关命令
-# 查看Pods kubectl get pods # 通过命令行运行 kubectl run testapp --image=ccr."/>
+# 查看 deployment kubectl get deployment # 创建命令，可以指定镜像版本 kubectl create deployment hello-node --image=registry.k8s.io/echoserver:1.4 # 也可以通过pod.yaml来部署Pod kubectl apply -f .\pod.yaml # 删除deployment kubectl delete deployment hello-minikube Pods kubernetes调度、管理的最小单位，一个Pod里面可以包含一个或多个容器，每个 Pod 有自己的虚拟IP。是运行一个应用程序的最小单元。"/>
 
   
   
@@ -274,6 +270,14 @@ Master 管理集群，Node 用于托管正在运行的应用。 Deployment （�
 
   <section><p>最近把自己一个小玩意儿用docker部署到服务器后，开始尝试了解kubernetes，但是看了一眼阿里云k8s的收费情况，作为学生党当然是选择白嫖。现阶段只是了解学习的阶段，所以选择使用minikube来学习了解k8s。<a href="https://k8s.easydoc.net/docs/dRiQjyTY/28366845/6GiNOzyZ/puf7fjYr">参考文档</a></p>
 <h2 id="kubernetes-集群">Kubernetes 集群</h2>
+<p>Kubernetes (K8S) 是一个容器化 应用提供集群部署和管理的开源工具。</p>
+<ul>
+<li>高可用，不宕机，自动灾难恢复</li>
+<li>灰度更新，不影响业务正常运转</li>
+<li>一键回滚到历史版本</li>
+<li>方便的伸缩扩展（应用伸缩，机器加减）、提供负载均衡</li>
+<li>有一个完善的生态</li>
+</ul>
 <p><strong>Kubernetes 协调一个高可用计算机集群，每个计算机作为独立单元互相连接工作。</strong> 一个 Kubernetes 集群包含两种类型的资源:</p>
 <ul>
 <li><strong>Master</strong> 调度整个集群<br>

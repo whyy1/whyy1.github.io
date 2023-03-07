@@ -84,7 +84,7 @@ go get github.com/go-micro/plugins/v4/registry/consul
       
       <guid>https://whyy1.github.io/post/grpc/</guid>
       <description>其实之前一直有了解微服务的概念，并且也写过一篇笔记记录相关概念，现在终于开始实操。最直观的认知就是，通过RPC框架的网络通信，可以实现不同语言之间的通信，通过protobuf来进行序列化message信息体，来实现通信。在客户端只需要注册微服务，然后远程调用就可以实现类似于本地函数的调用。
-下面是gRPC基础调用例子实现：
+protobuf(Google Protocol Buffers)是Google提供一个具有高效的协议数据交换格式工具库(类似Json)，但相比于Json，Protobuf有更高的转化效率，时间效率和空间效率都是JSON的3-5倍。采用了二进制字节的序列化方式，特别适合对数据大小和传输速率比较敏感的场合使用。 下面是gRPC基础调用例子实现：
 首先需要定义proto文件，定义微服务以及消息体：
 定义好如下文件，运行protoc --go_out=. --go-grpc_out=. .\hello.proto命令。就会在当前目录下生成*.pb.go文件,生成go文件，以便使用，尽量不要去修改这个文件。
 //指定版本信息，默认为proto2 syntax = &amp;#34;proto3&amp;#34;; //后期生成go文件的包名，与输出文件在同一包下 package pb; //指定生成的两个*.pb.go文件输出到哪 //&amp;#34;/&amp;#34;为当前路径&amp;#34;/pb&amp;#34;则为pb文件夹下 option go_package = &amp;#34;/pb&amp;#34;; //定义消息体为Person message Person{ // 名字 string name = 1; // 年龄 int32 age = 2 ; } //定义RPC服务为HelloService service HelloService { //定义HelloService服务中的Hello函数 //入参和出参都是上方的Person，如果出参不同，需要另外定义message信息体 rpc Hello (Person)returns (Person); } 编写server端，注册gRPC服务提供服务
@@ -152,15 +152,14 @@ B+树索引适合用来做范围查询，而HASH适合做等值查询、搜索�
       
       <guid>https://whyy1.github.io/post/kubernetes/</guid>
       <description>最近把自己一个小玩意儿用docker部署到服务器后，开始尝试了解kubernetes，但是看了一眼阿里云k8s的收费情况，作为学生党当然是选择白嫖。现阶段只是了解学习的阶段，所以选择使用minikube来学习了解k8s。参考文档
-Kubernetes 集群 Kubernetes 协调一个高可用计算机集群，每个计算机作为独立单元互相连接工作。 一个 Kubernetes 集群包含两种类型的资源:
+Kubernetes 集群 Kubernetes (K8S) 是一个容器化 应用提供集群部署和管理的开源工具。
+高可用，不宕机，自动灾难恢复 灰度更新，不影响业务正常运转 一键回滚到历史版本 方便的伸缩扩展（应用伸缩，机器加减）、提供负载均衡 有一个完善的生态 Kubernetes 协调一个高可用计算机集群，每个计算机作为独立单元互相连接工作。 一个 Kubernetes 集群包含两种类型的资源:
 Master 调度整个集群
 Master节点负责管理整个集群，控制工作节点。 Nodes 负责运行应用
 Node是一个虚拟机或者物理机，作为一个工作节点。它在 Kubernetes 集群中充当工作机器的角色，应该具有Kubelet：管理 Node 而且是 Node 与 Master 通信的代理以及用于处理容器操作的工具。
 Master 管理集群，Node 用于托管正在运行的应用。 Deployment （部署） 创建 Kubernetes Deployment 配置，Deployment 指挥 Kubernetes 如何创建和更新应用程序的实例。通过修改Deployment文件来控制kubernetes来创建或是修改Pod。个人理解类似于dockerfile，表示应该如何创建Pods。
 相关命令
-# 查看 deployment kubectl get deployment # 创建命令，可以指定镜像版本 kubectl create deployment hello-node --image=registry.k8s.io/echoserver:1.4 # 也可以通过pod.yaml来部署Pod kubectl apply -f .\pod.yaml # 删除deployment kubectl delete deployment hello-minikube Pods kubernetes调度、管理的最小单位，一个Pod里面可以包含一个或多个容器，每个 Pod 有自己的虚拟IP。是运行一个应用程序的最小单元。
-相关命令
-# 查看Pods kubectl get pods # 通过命令行运行 kubectl run testapp --image=ccr.</description>
+# 查看 deployment kubectl get deployment # 创建命令，可以指定镜像版本 kubectl create deployment hello-node --image=registry.k8s.io/echoserver:1.4 # 也可以通过pod.yaml来部署Pod kubectl apply -f .\pod.yaml # 删除deployment kubectl delete deployment hello-minikube Pods kubernetes调度、管理的最小单位，一个Pod里面可以包含一个或多个容器，每个 Pod 有自己的虚拟IP。是运行一个应用程序的最小单元。</description>
     </item>
     
     <item>
