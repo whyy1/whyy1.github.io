@@ -6,7 +6,17 @@
     <description>Recent content in Posts on 歪衣的学习笔记</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 26 Feb 2023 19:52:42 +0800</lastBuildDate><atom:link href="https://whyy1.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 12 Apr 2023 22:06:20 +0800</lastBuildDate><atom:link href="https://whyy1.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Interview</title>
+      <link>https://whyy1.github.io/post/interview/</link>
+      <pubDate>Wed, 12 Apr 2023 22:06:20 +0800</pubDate>
+      
+      <guid>https://whyy1.github.io/post/interview/</guid>
+      <description>数据库金额使用怎么字段存储 在mysql中，金额用DECIMAL类型。DECIMAL类型是专门为财务相关问题而设计的数据类型，能够解决数据的范围和精度的问题，常用于货币数据，如价格，工资，帐户余额等；它实际上是以字符串的形式存放的，可在定义时划定整数部分以及小数部分的位数，语法DECIMAL(M,D)，参数M是数字的最大数（精度），参数D是小数点右侧数字的数目（标度）。
+服务器突然宕机，这个时候事务会提交嘛？ 如果事务还未提交，可以选择重做。 如果redo logo已经刷新到磁盘，可以选择回滚，或者是提交,因为redo log重做日志已经持久化，可以继续完成事务提交。 如果在提交之后宕机，内存映射中变更的数据还来不及刷回磁盘，重新执行一边redo logo把数据刷回磁盘。 Golang中金额数量使用Bigint也装不下怎么办 使用字符型存储 使用大数big包，使用int64进行转换，并且还拥有相关的加减乘除操作函数。 </description>
+    </item>
+    
     <item>
       <title>后端笔试总结</title>
       <link>https://whyy1.github.io/post/interview1/</link>
