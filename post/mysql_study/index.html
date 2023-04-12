@@ -161,7 +161,7 @@ Hash索引 Hash索引基于Hash表实现，只有查询条件精确匹配Hash索
 B&#43;树索引适合用来做范围查询，而HASH适合做等值查询、搜索复杂度为O（1） 二级索引 也是使用B&#43;树存储，但是和聚簇索引不同的是，二级索引的叶子节点保存的是主键值。在使用二级索引列作为条件进行查询时，会先检索二级索引来获得主键值，然后再去查主键索引的B&#43;树来获得数据，也就是回表。但是如果这时候需要获得的是主键值，就不需要再去查主键索引的B&#43;树，而是直接获得主键值。
 如何减少回表操作 将需要查询的字段创建联合索引，尽量使用覆盖索引来查询所需要的数据。 尽量不要使用Select *来查询数据，而是指定具体字段 可以把热门数据进行缓存，避免多次查询。 联合索引存在最左匹配原则 假设A."><meta itemprop="datePublished" content="2022-11-14T23:50:17+08:00" />
 <meta itemprop="dateModified" content="2022-11-14T23:50:17+08:00" />
-<meta itemprop="wordCount" content="120">
+<meta itemprop="wordCount" content="263">
 <meta itemprop="keywords" content="" />
   
   <meta name="twitter:card" content="summary"/>
@@ -372,6 +372,73 @@ B+树的叶子节点使用双链表链接，可以更好的进行范围查询。
 <li>经常需要使用<code>WHERE</code>查询条件的字段，这样能够提高整个表的查询速度，如果查询条件是多个列时，使用联合索引。</li>
 <li>经常用于<code>GROUP BY</code>和<code>OREDER BY</code>的字段，这样在查询的时候就不需要再次排序，因为基于B+树的有序性，建立索引之后的记录都是排序的。</li>
 </ol>
+<h2 id="mysql中的锁">MySQL中的锁</h2>
+<h3 id="全局锁">全局锁</h3>
+<pre tabindex="0"><code>//加全局锁语句
+flush tables with read lock
+
+//释放全局锁
+unlock tables
+</code></pre><p><strong>全局锁</strong>执行之后数据库处于只读状态，不可修改，其他线程下的<code>insert、delete、update、alter table、drop table</code>等对数据库数据和结构修改的操作都会被阻塞。  <br>
+<strong>使用场景</strong>:适用于做全库逻辑备份的时候，不会因为数据或表结构的更新，而出现备份文件的数据与预期的不一样。</p>
+<h3 id="表级锁">表级锁</h3>
+<pre tabindex="0"><code>//表级别的共享锁，也就是读锁；
+lock tables t_student read;
+//表级别的独占锁，也就是写锁；
+lock tables t_stuent write;
+//会释放当前会话的所有表锁；
+unlock tables
+</code></pre><p><strong>表级锁</strong>使用表级锁表除了会限制别的线程的读写外，也会限制本线程接下来的读写操作。<br>
+<strong>尽量避免</strong>在使用 InnoDB 引擎的表使用表锁，因为表锁的颗粒度太大，会影响并发性能，InnoDB 牛逼的地方在于实现了颗粒度更细的行级锁。</p>
+<h4 id="元数据锁mdl为了防止读取数据时表结构改变的情况或者相反情况">元数据锁(MDL)(为了防止读取数据时，表结构改变的情况，或者相反情况)</h4>
+<p><strong>元数据锁</strong>不需要显式的进行调用，它会在进行数据库进行CRUD操作时加上MDL读锁，在改变表结构时加上MDL写锁。</p>
+<ul>
+<li>加MDL读锁是为了在修改或查询数据时，防止表结构变更。</li>
+<li>加MDL写锁是为了在改变表结构时阻止CRUD操作，直到表结构变更完成，释放MDL写锁</li>
+</ul>
+<p>MDL是在<strong>事务提交后才会释放</strong>，这意味着事务执行期间，MDL是一直持有的。申请 MDL 锁的操作会形成一个队列，队列中<strong>写锁获取优先级高于读锁</strong>。因此在有MDL读锁的情况，可以继续进行CRUD操作，但是一旦有MDL写锁，后续的CRUD操作都会被阻塞。</p>
+<h4 id="意向锁为了快速判断表里是否有记录被加锁">意向锁(为了快速判断表里是否有记录被加锁)</h4>
+<p><strong>意向锁</strong>是InnoDB引擎在对<strong>表的某些记录</strong>加上共享锁/独占锁之前，需要加上一个<strong>表级别的</strong>意向共享锁/意向独占锁。<br>
+在进行<strong>插入、更新、删除</strong>操作，需要先对表加上意向独占锁，然后再对该记录加独占锁。<br>
+<strong>普通的 select 是不会加行级锁</strong>的，普通的 select 语句是利用 MVCC 实现一致性读，是无锁的。</p>
+<pre tabindex="0"><code>//select 也是可以对记录加共享锁和独占锁
+//先在表上加上意向共享锁，然后对读取的记录加共享锁
+select ... lock in share mode;
+//先表上加上意向独占锁，然后对读取的记录加独占锁
+select ... for update;
+</code></pre><p><strong>意向锁之间不会冲突，但是会和表级共享锁和独占锁起冲突，满足读读共享、读写互斥、写写互斥</strong></p>
+<h4 id="auto-inc锁为了保证表主键顺序递增的锁执行语句立即释放">AUTO-INC锁(为了保证表主键顺序递增的锁，执行语句立即释放)</h4>
+<p>在<strong>插入数据</strong>时，会加一个表级别的<strong>AUTO-INC锁</strong>特殊的表锁机制，锁不是再一个事务提交后才释放，而是再执行完插入语句后就会立即释放。在一个事务持有AUTO-INC锁时，其他事务的插入操作被阻塞，保证的表主键的递增<br>
+<strong>MySQL 5.1.22版本</strong>后，InnoDB 存储引擎提供了一种轻量级的锁来实现自增。
+一样也是在插入数据的时候，会为被 AUTO_INCREMENT 修饰的字段加上轻量级锁，然后给该字段赋值一个自增的值，就把这个轻量级锁释放了，而不需要等待整个插入语句执行完后才释放锁。
+(个人理解是，在插入语句时加锁直接给自增字段赋值为自增值，对该字段赋值完成后直接释放，不需要等到插入语句完全执行之后才释放。)
+可以设置模式为innodb_autoinc_lock_mode = 1：，这样在单个语句插入时，自增锁在申请后立即释放。但批量插入时，语句执行完后才会释放。</p>
+<h3 id="行级锁innodb支持myisam不支持">行级锁(InnoDB支持，MyISAM不支持)</h3>
+<p>普通的select语句是不会对记录加锁的</p>
+<pre tabindex="0"><code>//对读取的记录加共享锁
+select ... lock in share mode;
+
+//对读取的记录加独占锁
+select ... for update;
+</code></pre><p>行级锁有三种</p>
+<ul>
+<li>Record Lock(记录锁)</li>
+<li>Gap Lock(间隙锁，不包含记录本身)</li>
+<li>Next-Key Lock(Record Lock + Gap Lock 范围锁，包含记录本身)
+<img src="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/%E9%94%81/x%E9%94%81%E5%92%8Cs%E9%94%81.png" alt="image.png"></li>
+</ul>
+<h4 id="record-lock记录锁锁定数据记录">Record Lock(记录锁,锁定数据记录)</h4>
+<p>Record Lock 称为记录锁，锁住的是一条记录。当使用<code> select * from t_test where id = 1 for update;</code>，就是给查询的数据加上了独占锁X锁，此时其他的S锁和X锁都被阻塞，其他事务无法对这些数据进行修改。当事务执行commit后，事务过程中生成的锁都会被释放。</p>
+<h4 id="gap-lock间隙锁锁定记录的范围不允许对数据范围进行操作不包含记录本身">Gap Lock(间隙锁，锁定记录的范围，不允许对数据范围进行操作，不包含记录本身)</h4>
+<p>Gap Lock 称为间隙锁，只存在于<strong>可重复读隔离级别</strong>，目的是为了解决可重复读隔离级别下<strong>幻读</strong>的现象。<br>
+锁定数据范围，例如有ID范围3~6的间隙锁，就不允许插入ID为4的语句，防止了幻读。<br>
+间隙锁之间是兼容的，即两个事务可以同时持有包含共同间隙范围的间隙锁，并不存在互斥关系，因为间隙锁的目的是防止插入幻影记录而提出的。</p>
+<h4 id="record-lock临键锁锁定数据范围以及范围内的记录不同范围内读锁可以兼容">Record Lock(临键锁,锁定数据范围以及范围内的记录，不同范围内读锁可以兼容)</h4>
+<p>Next-Key Lock 称为临键锁，是 Record Lock + Gap Lock 的组合，锁定一个范围，并且锁定记录本身。
+锁定数据范围和数据，例如有ID范围3~6的间隙锁，就不允许插入该范围的数据，也不允许修改该范围的数据。<br>
+因为临键锁是记录锁和行锁的组合，所以在相同范围内的临键锁会阻塞，不同范围内的可以兼容。</p>
+<h4 id="插入意向锁在插入时判断该位置是否有间隙锁如果有增加一个插入意向锁">插入意向锁(在插入时判断该位置是否有间隙锁，如果有增加一个插入意向锁)</h4>
+<p>一个事务在插入一条记录的之前，需要判断插入位置是否已被其他事务加了间隙锁（next-key lock 也包含间隙锁）。</p>
 <h2 id="mysql的引擎">MySQL的引擎</h2>
 <h4 id="innodb引擎">InnoDB引擎</h4>
 <p>假设有my_test 的database有个t_order表，则在/var/lib/mysql/my_test目录下有
